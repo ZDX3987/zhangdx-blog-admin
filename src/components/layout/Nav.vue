@@ -1,0 +1,73 @@
+<template>
+  <div class="bg-color">
+    <h4 class="nav-title">ZHANGDX</h4>
+    <el-menu
+      default-active="2"
+      background-color="#304156"
+      text-color="#bfcbd9"
+      active-text-color="#409eff"
+    >
+      <el-menu-item index="1">
+        <i class="el-icon-s-home"></i>
+        <span slot="title">首页</span>
+      </el-menu-item>
+      <el-submenu index="2">
+        <template slot="title">
+          <i class="el-icon-document"></i>
+          <span>文章管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="2-1">文章列表</el-menu-item>
+          <el-menu-item index="2-2">发布文章</el-menu-item>
+          <el-menu-item index="2-3">草稿箱</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-menu-item index="3">
+        <i class="el-icon-collection-tag"></i>
+        <span slot="title">分类标签管理</span>
+      </el-menu-item>
+      <el-submenu index>
+        <template slot="title">
+          <i class="el-icon-setting"></i>
+          <span>系统设置</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="4-1">内容设置</el-menu-item>
+          <el-menu-item index="4-2">个人信息设置</el-menu-item>
+          <el-menu-item index="4-3">系统用户设置</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-menu-item index="5">
+        <a href="http://www.zhangdx.cn">
+          <i class="el-icon-s-promotion"></i>
+          <span slot="title">博客主页</span>
+        </a>
+      </el-menu-item>
+    </el-menu>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Nav",
+};
+</script>
+
+<style scope>
+.bg-color {
+  background-color: #304156;
+}
+.nav-title {
+  margin: 0;
+  height: 50px;
+  line-height: 50px;
+  color: #fff;
+}
+.el-menu {
+  text-align: left;
+}
+a {
+  color: #bfcbd9;
+  text-decoration: none;
+}
+</style>
