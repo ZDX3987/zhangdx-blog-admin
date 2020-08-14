@@ -58,8 +58,8 @@ export default {
   data() {
     return {
       loginParam: {
-        username: "",
-        password: ""
+        username: "zdx",
+        password: "123456"
       },
       rules: {
         username: [

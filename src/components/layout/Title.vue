@@ -25,7 +25,9 @@
                 <i class="fa fa-caret-down"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="fa fa-user-o">个人中心</el-dropdown-item>
+                <router-link :to="{name: 'UserCenter', params: userInfo}">
+                  <el-dropdown-item icon="fa fa-user-o">个人中心</el-dropdown-item>
+                </router-link>
                 <el-dropdown-item divided icon="fa fa-edit">写文章</el-dropdown-item>
                 <el-dropdown-item>草稿箱</el-dropdown-item>
                 <el-dropdown-item divided icon="fa fa-sign-out">退出登录</el-dropdown-item>

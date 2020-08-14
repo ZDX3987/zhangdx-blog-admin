@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Regist from '@/components/Regist'
 import Index from '@/components/index/Index'
 import Error from '@/components/common/Error'
+import UserCenter from '@/components/usercenter/UserCenter'
 
 Vue.use(Router)
 
@@ -22,7 +23,14 @@ export default new Router({
     {
       path: '/index',
       name: 'Index',
-      component: Index
+      component: Index,
+      children: [
+        {
+          path: '/user-center',
+          name: 'UserCenter',
+          component: UserCenter
+        }
+      ]
     },
     {
       path: '/error',
