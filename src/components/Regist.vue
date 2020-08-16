@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="regist-page">
     <Bg />
     <el-row>
       <el-col :span="10" :offset="7">
@@ -181,6 +181,9 @@ export default {
 </script>
 
 <style scope>
+.regist-page {
+  text-align: center;
+}
 .regist-title {
   margin-top: 20px;
   color: rgb(176, 183, 189);

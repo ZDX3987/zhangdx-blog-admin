@@ -10,17 +10,13 @@
             <el-breadcrumb-item>活动详情</el-breadcrumb-item>
           </el-breadcrumb>
         </el-col>
-        <el-col :span="10">
+        <el-col :span="2" :offset="8">
           <div class="right-content">
             <el-dropdown trigger="click">
               <span class="el-dropdown-link">
-                <el-avatar
-                  :size="40"
-                  icon="el-icon-user-solid"
-                  @error="avatarErrorHandler"
-                  :title="userInfo.username"
-                >
-                  <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+                <el-avatar :size="40" @error="avatarErrorHandler" :title="userInfo.username">
+                  <img v-if="!userInfo.avatar" :src="circleUrl" />
+                  {{userInfo.username}}
                 </el-avatar>
                 <i class="fa fa-caret-down"></i>
               </span>
@@ -46,7 +42,7 @@ export default {
   data() {
     return {
       circleUrl:
-        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80",
       userInfo: {},
     };
   },

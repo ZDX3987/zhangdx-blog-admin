@@ -62,6 +62,7 @@ export default {
   height: 50px;
   line-height: 50px;
   color: #fff;
+  text-align: center;
 }
 .el-menu {
   text-align: left;

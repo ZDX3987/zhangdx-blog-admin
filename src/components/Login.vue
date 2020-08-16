@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-page">
     <Bg />
     <el-row>
       <el-col :span="10" :offset="7">
@@ -99,6 +99,9 @@ export default {
 </script>
 
 <style scope>
+.login-page {
+  text-align: center;
+}
 .login-title {
   margin-top: 100px;
   color: rgb(176, 183, 189);
