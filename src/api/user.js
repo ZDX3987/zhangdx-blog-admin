@@ -10,6 +10,13 @@ const userapi = {
     },
     getCurrUser() {
         return http.get('/api/curruser');
+    },
+    uploadAvatar(file) {
+        return http.post('/api/avatar', file, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
-} 
+}
 export default userapi

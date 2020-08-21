@@ -180,7 +180,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 .regist-page {
   text-align: center;
 }
@@ -194,7 +194,7 @@ export default {
 .el-input {
   font-size: 100%;
 }
-.el-input input {
+.el-input >>> input {
   background-color: rgb(0, 30, 66);
   border: 1px solid rgb(58, 95, 119);
   height: 45px;

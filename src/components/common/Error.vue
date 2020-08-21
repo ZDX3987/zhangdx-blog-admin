@@ -37,6 +37,6 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 @import url("../../../static/404/css/style.css");
 </style>

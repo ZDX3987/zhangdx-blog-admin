@@ -8,12 +8,13 @@
             <el-link
               :underline="false"
               type="primary"
-              @click="dialogFormVisible=true"
+              @click="isModifying=true"
+              :disabled="isModifying"
               style="float: right;"
             >修改资料</el-link>
           </div>
-          <div class="info-content">
-            <el-image class="mid-avatar" :src="avatar" fit="fill">
+          <div class="mid-avatar">
+            <el-image v-if="!isModifying" :src="avatar" fit="fill">
               <div slot="placeholder" class="image-slot">
                 加载中
                 <span class="dot">...</span>
@@ -22,21 +23,32 @@
                 <i class="el-icon-picture-outline"></i>
               </div>
             </el-image>
+            <el-upload
+              v-if="isModifying"
+              class="avatar-uploader"
+              action="#"
+              :http-request="uploadAvatar"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="avatar" :src="avatar" class="avatar" />
+              <i class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </div>
+          <div v-if="!isModifying" class="info-content">
             <h3>{{userInfo.nickname}}</h3>
             <p>{{userInfo.authorities}}</p>
           </div>
-          <div class="modify-content">
-            <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-              <el-form :model="userInfo">
-                <el-form-item label="活动名称" label-width="80px">
-                  <el-input v-model="userInfo.username" autocomplete="off"></el-input>
-                </el-form-item>
-              </el-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-              </div>
-            </el-dialog>
+          <div v-if="isModifying" class="modify-content">
+            <el-form :model="userInfo">
+              <el-form-item label="昵称" label-width="80px">
+                <el-input v-model="userInfo.nickname" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="个人介绍" label-width="80px">
+                <el-input v-model="userInfo.introduce" autocomplete="off"></el-input>
+              </el-form-item>
+            </el-form>
           </div>
         </el-card>
       </el-col>
@@ -51,8 +63,7 @@ export default {
   data() {
     return {
       userInfo: {},
-      dialogTableVisible: false,
-      dialogFormVisible: false,
+      isModifying: false,
       avatar:
         "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80",
     };
@@ -64,11 +75,32 @@ export default {
     calDaysOfDate(date) {
       return calDaysOfDate(date);
     },
+    handleAvatarSuccess(res, file) {
+      this.avatar = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 5;
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
+    uploadAvatar(http) {
+      var form = new FormData();
+			form.append('file', http.file);
+      this.$api.user.uploadAvatar(form).then(res => {
+
+      });
+    }
   },
 };
 </script>
 
-<style scope>
+<style scoped>
 .user-base-info {
   width: 95%;
   margin-left: 5%;
@@ -78,9 +110,34 @@ export default {
   text-align: center;
 }
 .mid-avatar {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.mid-avatar .el-image,
+.avatar-uploader img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  text-align: center;
+}
+.avatar-uploader img {
+  float: left;
+  transition: all 0.5s;
+}
+.avatar-uploader i {
+  font-size: 35px;
+  color: #fff;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  display: block;
+  float: left;
+  margin-left: -100px;
+  transition: all 0.5s;
+  border-radius: 50%;
+  opacity: 0;
+}
+.avatar-uploader i:hover {
+  background-color: #000;
+  opacity: 0.7;
 }
 </style>
