@@ -113,8 +113,11 @@ export default {
       this.$api.user.updateUserInfo(this.userInfo).then(
         (res) => {
           this.userInfo = res.data;
+          this.isModifying = false;
         },
-        (error) => {}
+        (error) => {
+          console.log(error);
+        }
       );
     },
   },

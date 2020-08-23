@@ -38,7 +38,7 @@ const service = axios.create({
 
 service.interceptors.request.use(
     config => {
-        const token = localStorage.getItem("Authorization");
+        const token = sessionStorage.getItem("Authorization");
         token && (config.headers.Authorization = token);
         return config;
     },
@@ -67,7 +67,7 @@ function storageToken(response) {
     if (response.config.url === '/api/login') {
         let token = response.headers.authorization;
         if (token) {
-            localStorage.setItem("Authorization", token);
+            sessionStorage.setItem("Authorization", token);
         }
     }
 }

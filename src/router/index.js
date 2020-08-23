@@ -5,6 +5,7 @@ import Regist from '@/components/Regist'
 import Index from '@/components/index/Index'
 import Error from '@/components/common/Error'
 import UserCenter from '@/components/usercenter/UserCenter'
+import Articlelist from '@/components/article/ArticleList'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
           path: '/user-center',
           name: 'UserCenter',
           component: UserCenter
+        },
+        {
+          path: '/article-list',
+          name: 'ArticleList',
+          component: Articlelist
         }
       ]
     },

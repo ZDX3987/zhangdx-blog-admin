@@ -7,17 +7,21 @@
       text-color="#bfcbd9"
       active-text-color="#409eff"
     >
-      <el-menu-item index="1">
-        <i class="el-icon-s-home"></i>
-        <span slot="title">首页</span>
-      </el-menu-item>
+      <router-link :to="{name: 'Index'}">
+        <el-menu-item index="1">
+          <i class="el-icon-s-home"></i>
+          <span slot="title">首页</span>
+        </el-menu-item>
+      </router-link>
       <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-document"></i>
           <span>文章管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="2-1">文章列表</el-menu-item>
+          <el-menu-item index="2-1">
+            <router-link :to="{name: 'ArticleList'}">文章列表</router-link>
+          </el-menu-item>
           <el-menu-item index="2-2">发布文章</el-menu-item>
           <el-menu-item index="2-3">草稿箱</el-menu-item>
         </el-menu-item-group>
