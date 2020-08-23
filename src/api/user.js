@@ -11,6 +11,9 @@ const userapi = {
     getCurrUser() {
         return http.get('/api/curruser');
     },
+    updateUserInfo(userInfo) {
+        return http.post('/api/user', userInfo);
+    },
     uploadAvatar(file) {
         return http.post('/api/avatar', file, {
             headers: {

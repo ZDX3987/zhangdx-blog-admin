@@ -53,9 +53,11 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 .bg-color {
   background-color: #304156;
+  display: block;
+  height: 100%;
 }
 .nav-title {
   margin: 0;

@@ -14,7 +14,7 @@
             >修改资料</el-link>
           </div>
           <div class="mid-avatar">
-            <el-image v-if="!isModifying" :src="avatar" fit="fill">
+            <el-image v-if="!isModifying" :src="userInfo.avatar" fit="fill">
               <div slot="placeholder" class="image-slot">
                 加载中
                 <span class="dot">...</span>
@@ -32,21 +32,30 @@
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
             >
-              <img v-if="avatar" :src="avatar" class="avatar" />
-              <i class="el-icon-plus avatar-uploader-icon"></i>
+              <img v-if="userInfo.avatar" :src="userInfo.avatar" class="avatar" />
+              <i class="fa fa-camera avatar-uploader-icon"></i>
             </el-upload>
           </div>
           <div v-if="!isModifying" class="info-content">
             <h3>{{userInfo.nickname}}</h3>
-            <p>{{userInfo.authorities}}</p>
+            <p>{{userInfo.introduce}}</p>
           </div>
           <div v-if="isModifying" class="modify-content">
-            <el-form :model="userInfo">
+            <el-form :model="userInfo" label-position="left" size="small">
               <el-form-item label="昵称" label-width="80px">
                 <el-input v-model="userInfo.nickname" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="个人介绍" label-width="80px">
-                <el-input v-model="userInfo.introduce" autocomplete="off"></el-input>
+                <el-input
+                  maxlength="50"
+                  show-word-limit
+                  v-model="userInfo.introduce"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+              <el-form-item class="modify-btn" size="small">
+                <el-button type="primary" @click="modifySubmit">提交</el-button>
+                <el-button @click="isModifying=false">取消</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -91,11 +100,23 @@ export default {
     },
     uploadAvatar(http) {
       var form = new FormData();
-			form.append('file', http.file);
-      this.$api.user.uploadAvatar(form).then(res => {
-
-      });
-    }
+      form.append("file", http.file);
+      form.append("id", this.userInfo.id);
+      this.$api.user.uploadAvatar(form).then(
+        (res) => {
+          this.userInfo.avatar = res;
+        },
+        (error) => {}
+      );
+    },
+    modifySubmit() {
+      this.$api.user.updateUserInfo(this.userInfo).then(
+        (res) => {
+          this.userInfo = res.data;
+        },
+        (error) => {}
+      );
+    },
   },
 };
 </script>
@@ -139,5 +160,8 @@ export default {
 .avatar-uploader i:hover {
   background-color: #000;
   opacity: 0.7;
+}
+.modify-btn {
+  text-align: center;
 }
 </style>

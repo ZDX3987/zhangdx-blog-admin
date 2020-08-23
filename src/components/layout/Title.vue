@@ -15,7 +15,7 @@
             <el-dropdown trigger="click">
               <span class="el-dropdown-link">
                 <el-avatar :size="40" @error="avatarErrorHandler" :title="userInfo.username">
-                  <img v-if="!userInfo.avatar" :src="circleUrl" />
+                  <img v-if="userInfo.avatar" :src="userInfo.avatar" />
                   {{userInfo.username}}
                 </el-avatar>
                 <i class="fa fa-caret-down"></i>
@@ -62,7 +62,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .title-content {
   background-color: #fff;
   width: 100%;
@@ -78,6 +78,7 @@ export default {
 .el-breadcrumb {
   padding-left: 5%;
 }
-.el-dropdown-link {
+.el-dropdown-menu a {
+  text-decoration: none;
 }
 </style>
