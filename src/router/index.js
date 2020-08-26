@@ -6,6 +6,7 @@ import Index from '@/components/index/Index'
 import Error from '@/components/common/Error'
 import UserCenter from '@/components/usercenter/UserCenter'
 import Articlelist from '@/components/article/ArticleList'
+import PublishArticle from '@/components/article/PublishArticle'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
           path: '/article-list',
           name: 'ArticleList',
           component: Articlelist
+        },
+        {
+          path: 'publish',
+          name: 'PublishArticle',
+          component: PublishArticle
         }
       ]
     },

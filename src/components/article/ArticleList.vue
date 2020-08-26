@@ -1,8 +1,21 @@
 <template>
   <div>
     <div class="list-content">
+      <div class="search-article">
+        <el-form :inline="true">
+          <el-form-item :model="queryParams" label="作者" size="small">
+            <el-input v-model="queryParams.authorName" placeholder="请输入作者名字"></el-input>
+          </el-form-item>
+          <el-form-item :model="queryParams" label="作者" size="small">
+            <el-input v-model="queryParams.authorName"></el-input>
+          </el-form-item>
+          <el-form-item size="small">
+            <el-button type="primary" @click="query">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
       <el-table
-        border
+        header-row-class-name="table-header"
         :default-sort="{prop: 'createDate', order: 'descending'}"
         :data="articleList"
       >
@@ -51,6 +64,9 @@ export default {
           status: "已发布",
         },
       ],
+      queryParams: {
+        authorName: "",
+      },
     };
   },
 };
@@ -58,15 +74,15 @@ export default {
 
 <style scoped>
 .list-content {
-  width: 98%;
-  margin: 0 auto;
   background-color: #fff;
-  margin-top: 20px;
-}
-.el-table {
 }
 .page-list {
   margin-top: 20px;
   padding-left: 20px;
+  padding-bottom: 20px;
+}
+.search-article {
+  padding-top: 20px;
+  padding-left: 30px;
 }
 </style>

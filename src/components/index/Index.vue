@@ -6,7 +6,7 @@
       </el-aside>
       <el-main>
         <Title />
-        <router-view></router-view>
+        <router-view class="router-main"></router-view>
       </el-main>
     </el-container>
   </div>
@@ -34,6 +34,11 @@ export default {
 }
 .el-main {
   padding: 0;
+}
+.router-main {
+  width: 98%;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 .el-aside {
   display: block;

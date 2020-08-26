@@ -126,8 +126,6 @@ export default {
 
 <style scoped>
 .user-base-info {
-  width: 95%;
-  margin-left: 5%;
   background-color: #fff;
 }
 .info-content {
