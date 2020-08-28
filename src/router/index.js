@@ -15,32 +15,50 @@ export default new Router({
     {
       path: '/',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        title: '登录'
+      }
     },
     {
       path: '/regist',
       name: 'Regist',
-      component: Regist
+      component: Regist,
+      meta: {
+        title: '注册'
+      }
     },
     {
       path: '/index',
       name: 'Index',
       component: Index,
+      meta: {
+        title: '首页'
+      },
       children: [
         {
           path: '/user-center',
           name: 'UserCenter',
-          component: UserCenter
+          component: UserCenter,
+          meta: {
+            title: '个人中心'
+          }
         },
         {
           path: '/article-list',
           name: 'ArticleList',
-          component: Articlelist
+          component: Articlelist,
+          meta: {
+            title: '文章列表'
+          }
         },
         {
           path: 'publish',
           name: 'PublishArticle',
-          component: PublishArticle
+          component: PublishArticle,
+          meta: {
+            title: '新建文章'
+          }
         }
       ]
     },
