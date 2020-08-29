@@ -37,8 +37,7 @@ export default {
 }
 .router-main {
   width: 98%;
-  margin: 0 auto;
-  margin-top: 20px;
+  margin: 20px auto;
 }
 .el-aside {
   display: block;
