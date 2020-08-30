@@ -91,7 +91,7 @@ export default {
           this.articleInfo.status = 1;
           let form = new FormData();
           form.append("file", this.fileList[0].raw);
-          form.append("articleInfo", JSON.stringify(this.articleInfo));
+          form.append("articleJSON", JSON.stringify(this.articleInfo));
           this.$api.article
             .saveArticle(form)
             .then(
