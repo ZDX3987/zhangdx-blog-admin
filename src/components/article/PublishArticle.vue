@@ -15,6 +15,7 @@
                 :auto-upload="false"
                 :limit="1"
                 :file-list="fileList"
+                :on-change="handleChange"
               >
                 <i slot="default" class="el-icon-plus"></i>
                 <div slot="file" slot-scope="{file}">
@@ -25,13 +26,6 @@
                       @click="handlePictureCardPreview(file)"
                     >
                       <i class="el-icon-zoom-in"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleDownload(file)"
-                    >
-                      <i class="el-icon-download"></i>
                     </span>
                     <span
                       v-if="!disabled"
@@ -74,7 +68,6 @@ export default {
         title: "",
         text: "",
         coverImg: "",
-        authorId: "",
         status: "",
       },
       dialogImageUrl: "",
@@ -87,31 +80,26 @@ export default {
     };
   },
   mounted() {
-    this.editor = new Editor("#editor");
-    this.editor.customConfig.onchange = (html) => {
-      this.editorContent = html;
-    };
-    this.editor.customConfig.uploadImgServer = "/api/article/upload";
-    this.editor.customConfig.uploadFileName = "file";
-    this.editor.customConfig.zIndex = 1;
-    this.editor.customConfig.pasteFilterStyle = false;
-    this.editor.create();
+    this.initEditor();
   },
   methods: {
-    handleRemove(file) {
-      this.$refs.upload.clearFiles();
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    handleDownload(file) {
-      console.log(file);
-    },
     publish(form) {
       this.$refs[form].validate((valid) => {
         if (valid && this.validArticle()) {
-          this.$message.success("发布成功");
+          this.articleInfo.text = this.editor.txt.html();
+          this.articleInfo.coverImg = this.fileList[0].name;
+          this.articleInfo.status = 1;
+          let form = new FormData();
+          form.append("file", this.fileList[0].raw);
+          form.append("articleInfo", JSON.stringify(this.articleInfo));
+          this.$api.article
+            .saveArticle(form)
+            .then(
+              (res) => {
+                this.$message.success("发布成功");
+              },
+              (error) => {}
+            );
         }
       });
     },
@@ -120,7 +108,32 @@ export default {
         this.$message.error("请输入文章内容");
         return false;
       }
+      if (this.fileList.length == 0) {
+        this.$message.error("请先上传文章封面图片");
+        return false;
+      }
       return true;
+    },
+    handleRemove(file) {
+      this.$refs.upload.clearFiles();
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleChange(file, fileList) {
+      this.fileList = fileList;
+    },
+    initEditor() {
+      this.editor = new Editor("#editor");
+      this.editor.customConfig.onchange = (html) => {
+        this.editorContent = html;
+      };
+      this.editor.customConfig.uploadImgServer = "/api/article/upload";
+      this.editor.customConfig.uploadFileName = "file";
+      this.editor.customConfig.zIndex = 1;
+      this.editor.customConfig.pasteFilterStyle = false;
+      this.editor.create();
     },
   },
 };

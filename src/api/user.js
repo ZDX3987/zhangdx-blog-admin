@@ -9,13 +9,13 @@ const userapi = {
         return http.post('/api/regist', params);
     },
     getCurrUser() {
-        return http.get('/api/curruser');
+        return http.get('/api/user/curruser');
     },
     updateUserInfo(userInfo) {
-        return http.post('/api/user', userInfo);
+        return http.post('/api/user/user', userInfo);
     },
     uploadAvatar(file) {
-        return http.post('/api/avatar', file, {
+        return http.post('/api/user/avatar', file, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
