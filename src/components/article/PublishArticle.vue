@@ -44,10 +44,10 @@
           </el-form>
           <div id="editor" class="my-editor"></div>
           <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start">
-            <el-button type="primary" @click="publish('form')">发布</el-button>
+            <el-button type="primary" @click="save('form', 1)">发布</el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="保存至草稿箱" placement="top-end">
-            <el-button>保存</el-button>
+            <el-button @click="save('form', 0)">保存</el-button>
           </el-tooltip>
         </div>
       </el-tab-pane>
@@ -83,12 +83,12 @@ export default {
     this.initEditor();
   },
   methods: {
-    publish(form) {
+    save(form, articleStatus) {
       this.$refs[form].validate((valid) => {
         if (valid && this.validArticle()) {
           this.articleInfo.text = this.editor.txt.html();
           this.articleInfo.coverImg = this.fileList[0].name;
-          this.articleInfo.status = 1;
+          this.articleInfo.status = articleStatus;
           let form = new FormData();
           form.append("file", this.fileList[0].raw);
           form.append("articleJSON", JSON.stringify(this.articleInfo));
@@ -96,9 +96,9 @@ export default {
             .saveArticle(form)
             .then(
               (res) => {
-                this.$message.success("发布成功");
+                this.$message.success(res.msg);
               },
-              (error) => {}
+              (error) => this.$message.success(error.msg)
             );
         }
       });
