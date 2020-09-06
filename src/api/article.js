@@ -7,6 +7,9 @@ const articleapi = {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    getArticleByPage(formData) {
+        return http.post('/api/article/articles', formData);
     }
 }
 
