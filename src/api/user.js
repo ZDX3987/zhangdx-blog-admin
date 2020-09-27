@@ -9,7 +9,7 @@ const userapi = {
         return http.post('/api/regist', params);
     },
     logout() {
-        return http.post('/api/logout');
+        return http.get ('/api/logout');
     },
     getCurrUser() {
         return http.get('/api/user/curruser');

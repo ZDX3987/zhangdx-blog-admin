@@ -40,7 +40,7 @@
           @size-change="queryArticle(pageIndex)"
           @current-change="queryArticle(pageIndex)"
           :current-page="pageIndex"
-          :page-sizes="[15, 30, 50, 100]"
+          :page-sizes="[15, 30, 50]"
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"

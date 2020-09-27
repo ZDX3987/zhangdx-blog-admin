@@ -8,28 +8,39 @@
               v-for="route in routeList"
               :key="route.name"
               :to="{ name: route.name }"
-            >{{route.meta.title}}</el-breadcrumb-item>
+              >{{ route.meta.title }}</el-breadcrumb-item
+            >
           </el-breadcrumb>
         </el-col>
         <el-col :span="2" :offset="8">
           <div class="right-content">
             <el-dropdown trigger="click" @command="handleCommand">
               <span class="el-dropdown-link">
-                <el-avatar :size="40" @error="avatarErrorHandler" :title="userInfo.username">
+                <el-avatar
+                  :size="40"
+                  @error="avatarErrorHandler"
+                  :title="userInfo.username"
+                >
                   <img v-if="userInfo.avatar" :src="userInfo.avatar" />
-                  {{userInfo.username}}
+                  {{ userInfo.username }}
                 </el-avatar>
                 <i class="fa fa-caret-down"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <router-link :to="{name: 'UserCenter', params: userInfo}">
-                  <el-dropdown-item icon="fa fa-user-o">个人中心</el-dropdown-item>
+                <router-link :to="{ name: 'UserCenter', params: userInfo }">
+                  <el-dropdown-item icon="fa fa-user-o"
+                    >个人中心</el-dropdown-item
+                  >
                 </router-link>
-                <router-link :to="{name: 'PublishArticle'}">
-                  <el-dropdown-item divided icon="fa fa-edit">写文章</el-dropdown-item>
+                <router-link :to="{ name: 'PublishArticle' }">
+                  <el-dropdown-item divided icon="fa fa-edit"
+                    >写文章</el-dropdown-item
+                  >
                 </router-link>
                 <el-dropdown-item>草稿箱</el-dropdown-item>
-                <el-dropdown-item divided icon="fa fa-sign-out" command="logout">退出登录</el-dropdown-item>
+                <el-dropdown-item divided icon="fa fa-sign-out" command="logout"
+                  >退出登录</el-dropdown-item
+                >
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -67,18 +78,21 @@ export default {
   },
   methods: {
     handleCommand(command) {
-      console.log(command);
       if (command === "logout") {
-        this.$api.user.logout().then(
-          (res) => {
-            this.$router.push({ name: "Login" });
-          },
-          (error) => {}
-        );
+        this.logout();
       }
     },
     avatarErrorHandler() {
       return true;
+    },
+    logout() {
+      this.$api.user.logout().then(
+        (res) => {
+          this.$message.success(res.msg)
+          this.$router.push({ name: "Login" });
+        },
+        (error) => {}
+      );
     },
   },
 };
