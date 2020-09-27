@@ -8,6 +8,9 @@ const userapi = {
     regist(params) {
         return http.post('/api/regist', params);
     },
+    logout() {
+        return http.post('/api/logout');
+    },
     getCurrUser() {
         return http.get('/api/user/curruser');
     },

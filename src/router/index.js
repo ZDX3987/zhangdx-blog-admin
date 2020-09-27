@@ -11,6 +11,7 @@ import PublishArticle from '@/components/article/PublishArticle'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
