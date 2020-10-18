@@ -6,7 +6,10 @@
       </el-aside>
       <el-main>
         <Title />
-        <router-view class="router-main" v-wechat-title='$route.meta.title  + " - ZHANGDX的博客"'></router-view>
+        <router-view
+          class="router-main"
+          v-wechat-title="$route.meta.title + ' - ZHANGDX的博客'"
+        ></router-view>
       </el-main>
     </el-container>
   </div>

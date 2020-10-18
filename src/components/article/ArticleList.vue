@@ -18,6 +18,7 @@
         header-row-class-name="table-header"
         :default-sort="{prop: 'createDate', order: 'descending'}"
         :data="articleList"
+        @row-dblclick="previewArticle"
       >
         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
         <el-table-column prop="title" label="标题" width="300" align="center"></el-table-column>
@@ -63,7 +64,7 @@ export default {
       pageSize: 15,
       pageIndex: 0,
       total: 0,
-      queryStatus: [0, 1],
+      queryStatus: [0, 1, 2],
       sort: "DESC",
       statusEnum: [
         { text: "已保存", type: "" },
@@ -91,6 +92,9 @@ export default {
         },
         (error) => {}
       );
+    },
+    previewArticle(row) {
+      this.$router.push({name: 'ArticlePreview', params: {id: row.id}})
     },
     dateFormat(row, column) {
       return this.$options.filters['dateFormat'](row.createDate, 'yyyy-MM-dd')

@@ -7,6 +7,7 @@ import Error from '@/components/common/Error'
 import UserCenter from '@/components/usercenter/UserCenter'
 import Articlelist from '@/components/article/ArticleList'
 import PublishArticle from '@/components/article/PublishArticle'
+import ArticlePreview from '@/components/article/ArticlePreview'
 
 Vue.use(Router)
 
@@ -51,6 +52,14 @@ export default new Router({
           component: Articlelist,
           meta: {
             title: '文章列表'
+          }
+        },
+        {
+          path: '/article/:id',
+          name: 'ArticlePreview',
+          component: ArticlePreview,
+          meta: {
+            title: '文章预览'
           }
         },
         {

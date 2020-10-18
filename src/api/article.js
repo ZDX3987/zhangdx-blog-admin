@@ -10,6 +10,12 @@ const articleapi = {
     },
     getArticleByPage(formData) {
         return http.post('/api/article/articles', formData);
+    },
+    getArticleById(id) {
+        return http.get('/api/article/article/' + id);
+    },
+    toCheckArticle(id) {
+        return http.post('/api/article/check-article/' + id);
     }
 }
 
