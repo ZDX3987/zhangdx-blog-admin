@@ -37,12 +37,7 @@
             <router-link :to="{name: 'Regist'}">忘记密码</router-link>
           </el-link>
         </div>
-        <div class="copyright">
-          <p>
-            <a href="http://beian.miit.gov.cn">豫 ICP 备 20019985 号</a>
-            Copyright © 2020 版权所有 ZDX_3987
-          </p>
-        </div>
+        <CopyRight />
       </el-col>
     </el-row>
   </div>
@@ -50,10 +45,12 @@
 
 <script>
 import Bg from "./layout/Bg";
+import CopyRight from './common/CopyRight';
 export default {
   name: "Login",
   components: {
-    Bg
+    Bg,
+    CopyRight
   },
   data() {
     return {
@@ -108,6 +105,7 @@ export default {
 }
 .login-content {
   padding-top: 50px;
+  margin-bottom: 130px;
 }
 
 .el-input {
@@ -125,14 +123,5 @@ export default {
 .regist-link a {
   color: #fff;
   text-decoration: none;
-}
-.copyright {
-  margin-top: 130px;
-  color: rgb(176, 183, 189);
-  font-size: 14px;
-}
-.copyright a {
-    color: rgb(176, 183, 189);
-    text-decoration: none;
 }
 </style>

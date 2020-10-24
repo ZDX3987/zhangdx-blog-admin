@@ -17,9 +17,8 @@ export default {
 .hp-bg {
   background-size: cover;
   width: 100%;
-  height: 800px;
+  height: 100%;
   position: fixed;
-  top: -50px;
   left: 0;
   z-index: -100;
 }

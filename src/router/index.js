@@ -75,7 +75,10 @@ export default new Router({
     {
       path: '/error',
       name: 'Error',
-      component: Error
+      component: Error,
+      meta: {
+        title: '页面找不到了'
+      }
     }
   ]
 })

@@ -78,6 +78,7 @@
             </el-form-item>
           </el-form>
         </div>
+        <CopyRight />
       </el-col>
     </el-row>
   </div>
@@ -85,10 +86,12 @@
 
 <script>
 import Bg from "./layout/Bg";
+import CopyRight from './common/CopyRight';
 export default {
   name: "Regist",
   components: {
-    Bg
+    Bg,
+    CopyRight
   },
   data() {
     var repassword = (rule, value, callback) => {
@@ -190,6 +193,7 @@ export default {
 }
 .regist-content {
   padding-top: 10px;
+  margin-bottom: 50px;
 }
 .el-input {
   font-size: 100%;

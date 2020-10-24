@@ -1,42 +1,65 @@
 <template>
   <div>
-    <div class="agileits-main">
-      <div class="agileinfo-row">
-        <div class="w3layouts-errortext">
-          <h2>
-            4<span>0</span>4
-          </h2>
-          <h1>抱歉！我迷路了</h1>
-          <p class="w3lstext">
-            请确认您需要的地址  
-            <a href="#">|</a> 或者联系网站管理员处理
-          </p>
-          <div class="agile-search">
-            <input type="submit" value="返回" />
-            <input type="submit" value="Search" />
-          </div>
-        </div>
-      </div>
+    <div class="error-content">
+      <el-image :src="imgUrl" fit="cover"></el-image>
+      <p>啊~哦~ 您要查看的页面不存在或已删除！</p>
+      <p>请检查您输入的网址是否正确，或者点击链接继续浏览空间</p>
+      <button class="back-btn" @click="back()">返回首页</button>
+      <CopyRight />
     </div>
-    <!-- //main -->
-    <!-- copyright -->
-    <div class="copyright w3-agile">
-      <p>
-            <a href="http://beian.miit.gov.cn">豫 ICP 备 20019985 号</a>
-            Copyright © 2020 版权所有 ZDX_3987
-          </p>
-    </div>
-    <!-- //copyright -->
   </div>
 </template>
 
 <script>
+import CopyRight from "./CopyRight";
 export default {
   name: "Error",
-  created() {}
+  data() {
+    return {
+      imgUrl: "static/images/notfound.gif",
+    };
+  },
+  components: {
+    CopyRight,
+  },
+  methods: {
+    back() {
+      this.$router.go(-1);
+    }
+  }
 };
 </script>
 
 <style scoped>
-@import url("../../../static/404/css/style.css");
+.error-content {
+  margin: 0 auto;
+  width: 40%;
+  text-align: center;
+}
+p:nth-of-type(1) {
+  font-size: 24px;
+}
+p:nth-of-type(2) {
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+.back-btn {
+  width: 200px;
+  height: 50px;
+  background-color: #55bd66;
+  border-radius: 50px;
+  font-size: 18px;
+  color: #fff;
+  transition: all 0.5s;
+  border: none;
+  margin-bottom: 60px;
+  outline:none;
+  cursor: pointer;
+}
+.back-btn:hover {
+  border: 1px solid #666;
+  background-color: #FFF;
+  color: #666;
+
+}
 </style>
