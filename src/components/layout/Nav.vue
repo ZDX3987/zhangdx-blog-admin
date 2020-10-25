@@ -1,4 +1,4 @@
-<template>
+.<template>
   <div class="bg-color">
     <h4 class="nav-title">ZHANGDX</h4>
     <el-menu
@@ -29,8 +29,10 @@
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="3">
-        <i class="el-icon-collection-tag"></i>
-        <span slot="title">分类标签管理</span>
+        <router-link :to="{name: 'Category'}">
+          <i class="el-icon-collection-tag"></i>
+          分类标签管理
+        </router-link>
       </el-menu-item>
       <el-submenu index>
         <template slot="title">

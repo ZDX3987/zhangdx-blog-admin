@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import Regist from '@/components/Regist'
-import Index from '@/components/index/Index'
-import Error from '@/components/common/Error'
-import UserCenter from '@/components/usercenter/UserCenter'
-import Articlelist from '@/components/article/ArticleList'
-import PublishArticle from '@/components/article/PublishArticle'
-import ArticlePreview from '@/components/article/ArticlePreview'
+import Category from "../components/category/Category";
+import Login from "../components/Login";
+import Regist from "../components/Regist";
+import Index from "../components/index/Index";
+import UserCenter from "../components/usercenter/UserCenter";
+import ArticlePreview from "../components/article/ArticlePreview";
+import PublishArticle from "../components/article/PublishArticle";
+import ArticleList from "../components/article/ArticleList";
 
 Vue.use(Router)
 
@@ -49,7 +49,7 @@ export default new Router({
         {
           path: '/article-list',
           name: 'ArticleList',
-          component: Articlelist,
+          component: ArticleList,
           meta: {
             title: '文章列表'
           }
