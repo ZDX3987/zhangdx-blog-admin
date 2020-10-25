@@ -69,6 +69,14 @@ export default new Router({
           meta: {
             title: '新建文章'
           }
+        },
+        {
+          path: 'category',
+          name: 'Category',
+          component: Category,
+          meta: {
+            title: '分类标签管理'
+          }
         }
       ]
     },
