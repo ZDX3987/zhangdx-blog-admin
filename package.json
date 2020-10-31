@@ -13,6 +13,8 @@
     "axios": "^0.19.2",
     "element-ui": "^2.13.2",
     "font-awesome": "^4.7.0",
+    "marked": "^1.2.2",
+    "mavon-editor": "^2.9.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-wechat-title": "^2.0.7",

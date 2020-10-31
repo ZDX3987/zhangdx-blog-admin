@@ -32,12 +32,13 @@
         :src="articleDTO.coverImg"
         fit="scale-down"
       ></el-image>
-      <div class="article-text" v-html="articleDTO.text"></div>
+      <div class="article-text markdown-body" v-html="articleDTO.text"></div>
     </div>
   </div>
 </template>
 
 <script>
+import marked from "marked";
 export default {
   name: "ArticlePreview",
   data() {
@@ -62,12 +63,16 @@ export default {
           this.$api.article.toCheckArticle(this.articleDTO.id).then(res => {
               this.$message.success(res.msg);
           }).catch(error => this.$message.error(res.msg));
+      },
+      convertHtml(markdownText) {
+        return marked(markdownText);
       }
   }
 };
 </script>
 
 <style scoped>
+@import '../../../node_modules/mavon-editor/dist/css/index.css';
 .article-content {
   background-color: #fff;
   padding: 40px;
