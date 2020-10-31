@@ -117,7 +117,11 @@ export default {
         return false;
       }
       if (this.fileList.length === 0) {
-        this.$message.error("请先上传文章封面图片");
+        this.$message.error("请上传文章封面图片");
+        return false;
+      }
+      if (this.articleInfo.categories.length === 0) {
+        this.$message.error("请选择文章分类标签");
         return false;
       }
       return true;

@@ -53,6 +53,7 @@ export default {
       .getArticleById(this.articleId)
       .then((res) => {
         this.articleDTO = res.data;
+        this.$route.meta.title = this.articleDTO.title;
       })
       .catch((error) => {
         console.log(error);

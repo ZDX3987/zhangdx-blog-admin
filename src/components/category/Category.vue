@@ -8,15 +8,24 @@
           </el-button-group>
         </el-col>
       </el-row>
-      <el-table :data="categoryList" header-row-class-name="table-header">
+      <el-table :data="categoryList" v-loading="loading" header-row-class-name="table-header">
         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
         <el-table-column prop="cateName" label="名称" width="280" align="center"></el-table-column>
         <el-table-column prop="parentCate.cateName" label="父标签" width="280" align="center"></el-table-column>
         <el-table-column prop="articleCount" label="文章数量" width="100" align="center"></el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" type="primary" @click="editCate(scope.$index, scope.row)">编辑</el-button>
+            <el-popconfirm
+              confirmButtonText='好的'
+              cancelButtonText='不用了'
+              icon="el-icon-info"
+              title="确定删除这个分类标签吗？"
+              @onConfirm="deleteCate(scope.$index, scope.row)"
+            >
+              <el-button size="mini" type="danger" slot="reference">删除
+              </el-button>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -36,7 +45,7 @@
             <el-input v-model="cateForm.cateName"></el-input>
           </el-form-item>
           <el-form-item label="父标签" label-width="100px">
-            <el-input :value="selectRow === null ? '' : selectRow.cateName" readonly
+            <el-input :value="cateForm.parentCate === null ? '' : cateForm.parentCate.cateName" readonly
                       v-on:dblclick.native="selectCate"></el-input>
           </el-form-item>
         </el-form>
@@ -60,6 +69,7 @@ export default {
       total: 0,
       pageIndex: 0,
       pageSize: 15,
+      loading: false,
       categoryList: [],
       dialogFormVisible: false,
       selectRow: null,
@@ -82,13 +92,22 @@ export default {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize
     }
+    this.loading = true;
     this.$api.article.getAllCategory(params).then(res => {
       this.categoryList = res.data.elements;
+      this.loading = false;
     }).catch(error => this.$message.error(error.msg));
   },
   methods: {
     addCate() {
       this.dialogFormVisible = true;
+    },
+    editCate(index, row) {
+      this.cateForm = row;
+      this.dialogFormVisible = true;
+    },
+    deleteCate(index, row) {
+      console.log(row)
     },
     selectCate() {
       this.$refs.categoryDialog.cateDialogVisible = true;
@@ -104,10 +123,10 @@ export default {
       });
     },
     onSelectRow(row) {
-      this.cateForm.parentCate = this.selectRow = row;
+      this.cateForm.parentCate = row;
     },
     categoryDialogClose() {
-      this.selectRow = null;
+      this.cateForm.parentCate = null;
     }
   }
 
@@ -123,6 +142,7 @@ export default {
   margin-top: 2%;
   margin-left: 2%;
 }
+
 .page-list {
   margin-top: 20px;
   padding-left: 20px;
