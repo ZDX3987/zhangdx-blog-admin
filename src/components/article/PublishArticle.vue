@@ -19,7 +19,7 @@
               >
                 <i slot="default" class="el-icon-plus"></i>
                 <div slot="file" slot-scope="{file}">
-                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
+                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt/>
                   <span class="el-upload-list__item-actions">
                     <span
                       class="el-upload-list__item-preview"
@@ -38,8 +38,19 @@
                 </div>
               </el-upload>
               <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="dialogImageUrl" alt />
+                <img width="100%" :src="dialogImageUrl" alt/>
               </el-dialog>
+            </el-form-item>
+            <el-form-item label="文章标签">
+              <el-tag class="article-cate-list"
+                      v-for="cate in articleInfo.categories"
+                      :key="cate.id"
+                      closable
+                      :type="cate.type"
+                      @close="spliceCate(cate)">
+                {{ cate.cateName }}
+              </el-tag>
+              <el-button type="primary" size="small" @click="openCateDialog">添加标签</el-button>
             </el-form-item>
           </el-form>
           <div id="editor" class="my-editor"></div>
@@ -53,14 +64,19 @@
       </el-tab-pane>
       <el-tab-pane label="MarkDown编辑器">配置管理</el-tab-pane>
     </el-tabs>
+    <CategoryDialog ref="categoryDialog" @onSelect="onSelectCate"/>
   </div>
 </template>
 
 <script>
 import Editor from "wangeditor";
+import CategoryDialog from "../dialog/CategoryDialog";
 
 export default {
   name: "Publish",
+  components: {
+    CategoryDialog
+  },
   data() {
     return {
       editor: null,
@@ -69,12 +85,13 @@ export default {
         text: "",
         coverImg: "",
         status: "",
+        categories: []
       },
       dialogImageUrl: "",
       dialogVisible: false,
       disabled: false,
       articleRules: {
-        title: [{ required: true, message: "请输入文章标题", trigger: "blur" }],
+        title: [{required: true, message: "请输入文章标题", trigger: "blur"}],
       },
       fileList: [],
     };
@@ -104,11 +121,11 @@ export default {
       });
     },
     validArticle() {
-      if (this.editor.txt.text() == "") {
+      if (this.editor.txt.text() === "") {
         this.$message.error("请输入文章内容");
         return false;
       }
-      if (this.fileList.length == 0) {
+      if (this.fileList.length === 0) {
         this.$message.error("请先上传文章封面图片");
         return false;
       }
@@ -135,6 +152,19 @@ export default {
       this.editor.customConfig.pasteFilterStyle = false;
       this.editor.create();
     },
+    openCateDialog() {
+      this.$refs.categoryDialog.cateDialogVisible = true;
+    },
+    onSelectCate(row) {
+      if (this.articleInfo.categories.includes(row)) {
+        this.$message.warning('该标签已添加，不能重复添加');
+        return;
+      }
+      this.articleInfo.categories.push(row);
+    },
+    spliceCate(cate) {
+      this.articleInfo.categories.splice(this.articleInfo.categories.indexOf(cate), 1);
+    }
   },
 };
 </script>
@@ -143,7 +173,12 @@ export default {
 .title-input {
   width: 50%;
 }
+
 .my-editor {
   margin-bottom: 20px;
+}
+
+.article-cate-list {
+  margin-right: 10px;
 }
 </style>

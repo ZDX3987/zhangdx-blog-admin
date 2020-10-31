@@ -22,7 +22,6 @@ export default {
     return {
       cateDialogVisible: false,
       cateList: [],
-      selectRow: null,
       total: 0,
       pageIndex: 0,
       pageSize: 15,
@@ -39,7 +38,7 @@ export default {
   },
   methods: {
     handleCurrentChange(row) {
-      this.selectRow = row;
+      this.$emit('onSelect', row);
       this.cateDialogVisible = false;
     }
   }

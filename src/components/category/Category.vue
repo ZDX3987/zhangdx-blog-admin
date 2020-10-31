@@ -21,6 +21,7 @@
         </el-table-column>
       </el-table>
       <el-pagination
+        class="page-list"
         background
         layout="prev, pager, next"
         :total="total">
@@ -28,13 +29,15 @@
       <el-dialog class="category-dialog" title="新建标签"
                  :visible.sync="dialogFormVisible"
                  :close-on-click-modal="false"
-                 :destroy-on-close="true">
+                 :destroy-on-close="true"
+                 @close="categoryDialogClose">
         <el-form :model="cateForm" :rules="cateRules" ref="cateForm">
           <el-form-item label="标签名称" prop="cateName" label-width="100px">
             <el-input v-model="cateForm.cateName"></el-input>
           </el-form-item>
           <el-form-item label="父标签" label-width="100px">
-            <el-input v-model="cateForm.parentId" :value="selectRow == null ? '' : selectRow.cateName" readonly v-on:dblclick.native="selectCate"></el-input>
+            <el-input :value="selectRow === null ? '' : selectRow.cateName" readonly
+                      v-on:dblclick.native="selectCate"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -42,7 +45,7 @@
           <el-button type="primary" @click="submitCate('cateForm')">确 定</el-button>
         </div>
       </el-dialog>
-      <CategoryDialog ref="categoryDialog" :select-row="selectRow"/>
+      <CategoryDialog ref="categoryDialog" @onSelect="onSelectRow"/>
     </div>
   </div>
 </template>
@@ -62,7 +65,7 @@ export default {
       selectRow: null,
       cateForm: {
         cateName: '',
-        parentId: ''
+        parentCate: ''
       },
       cateRules: {
         cateName: [
@@ -99,6 +102,12 @@ export default {
           }).catch(error => this.$message.error(error.msg));
         }
       });
+    },
+    onSelectRow(row) {
+      this.cateForm.parentCate = this.selectRow = row;
+    },
+    categoryDialogClose() {
+      this.selectRow = null;
     }
   }
 
@@ -113,5 +122,10 @@ export default {
 .btn-group {
   margin-top: 2%;
   margin-left: 2%;
+}
+.page-list {
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
 }
 </style>
