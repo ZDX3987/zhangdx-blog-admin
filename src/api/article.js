@@ -26,7 +26,14 @@ const articleapi = {
     return http.put('/api/category/category', category, {
       headers: {
         'Content-Type': 'application/json'
-      }});
+      }
+    });
+  },
+  delArticle(articleId) {
+    return http.delete('/api/article/article/' + articleId);
+  },
+  delCategory(cateId) {
+    return http.delete('/api/category/category/' + cateId);
   }
 }
 

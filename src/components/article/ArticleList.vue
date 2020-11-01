@@ -6,9 +6,6 @@
           <el-form-item :model="queryParams" label="作者" size="small">
             <el-input v-model="queryParams.authorName" placeholder="请输入作者名字"></el-input>
           </el-form-item>
-          <el-form-item :model="queryParams" label="作者" size="small">
-            <el-input v-model="queryParams.authorName"></el-input>
-          </el-form-item>
           <el-form-item size="small">
             <el-button type="primary" @click="queryArticle(pageIndex)">查询</el-button>
           </el-form-item>
@@ -112,7 +109,10 @@ export default {
       console.log(row)
     },
     deleteArticle(index, row) {
-      console.log(row)
+      this.$api.article.delArticle(row.id).then(res => {
+        this.$message.success(res.msg);
+        this.queryArticle(0);
+      }).catch(error => this.$message.error(error.msg));
     },
     dateFormat(row, column) {
       return this.$options.filters['dateFormat'](row.createDate, 'yyyy-MM-dd')

@@ -88,17 +88,20 @@ export default {
     CategoryDialog
   },
   created() {
-    let params = {
-      pageIndex: this.pageIndex,
-      pageSize: this.pageSize
-    }
-    this.loading = true;
-    this.$api.article.getAllCategory(params).then(res => {
-      this.categoryList = res.data.elements;
-      this.loading = false;
-    }).catch(error => this.$message.error(error.msg));
+    this.query();
   },
   methods: {
+    query() {
+      let params = {
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize
+      }
+      this.loading = true;
+      this.$api.article.getAllCategory(params).then(res => {
+        this.categoryList = res.data.elements;
+        this.loading = false;
+      }).catch(error => this.$message.error(error.msg));
+    },
     addCate() {
       this.dialogFormVisible = true;
     },
@@ -107,7 +110,10 @@ export default {
       this.dialogFormVisible = true;
     },
     deleteCate(index, row) {
-      console.log(row)
+      this.$api.article.delCategory(row.id).then(res => {
+        this.$message.success(res.msg);
+        this.query();
+      }).catch(error => this.$message.error(error.msg));
     },
     selectCate() {
       this.$refs.categoryDialog.cateDialogVisible = true;
@@ -118,6 +124,7 @@ export default {
           this.$api.article.addCategory(this.cateForm).then(res => {
             this.$message.success(res.msg);
             this.dialogFormVisible = false;
+            this.query();
           }).catch(error => this.$message.error(error.msg));
         }
       });
