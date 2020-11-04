@@ -1,11 +1,14 @@
-.<template>
+.
+<template>
   <div class="bg-color">
-    <h4 class="nav-title">ZHANGDX</h4>
+    <h4 class="nav-title" v-show="!isCollapse">ZHANGDX</h4>
     <el-menu
       default-active="2"
       background-color="#304156"
       text-color="#bfcbd9"
       active-text-color="#409eff"
+      :collapse="isCollapse"
+      class="menu-list"
     >
       <router-link :to="{name: 'Index'}">
         <el-menu-item index="1">
@@ -28,12 +31,12 @@
           <el-menu-item index="2-3">草稿箱</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="3">
-        <router-link :to="{name: 'Category'}">
+      <router-link :to="{name: 'Category'}">
+        <el-menu-item index="3">
           <i class="el-icon-collection-tag"></i>
-          分类标签管理
-        </router-link>
-      </el-menu-item>
+          <span slot="title">分类标签管理</span>
+        </el-menu-item>
+      </router-link>
       <el-submenu index>
         <template slot="title">
           <i class="el-icon-setting"></i>
@@ -58,6 +61,11 @@
 <script>
 export default {
   name: "Nav",
+  data() {
+    return {
+      isCollapse: false
+    }
+  }
 };
 </script>
 
@@ -67,6 +75,7 @@ export default {
   display: block;
   height: 100%;
 }
+
 .nav-title {
   margin: 0;
   height: 50px;
@@ -74,9 +83,13 @@ export default {
   color: #fff;
   text-align: center;
 }
-.el-menu {
+
+.menu-list {
   text-align: left;
+  margin-right: 0;
+
 }
+
 a {
   color: #bfcbd9;
   text-decoration: none;
