@@ -24,6 +24,10 @@ export default {
 .copyright {
   color: rgb(176, 183, 189);
   font-size: 14px;
+  position: absolute;
+  height: 30px;
+  bottom: 20px;
+  left: 0; right: 0;
 }
 .copyright a {
   color: rgb(176, 183, 189);

@@ -193,7 +193,7 @@ export default {
 }
 .regist-content {
   padding-top: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 10%;
 }
 .el-input {
   font-size: 100%;

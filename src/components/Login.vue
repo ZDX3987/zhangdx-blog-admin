@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <Bg />
+    <Bg/>
     <el-row>
       <el-col :span="10" :offset="7">
         <h1 class="login-title">登录</h1>
@@ -27,7 +27,8 @@
                 :disabled="login_loading"
                 type="primary"
                 @click="login('form')"
-              >登录</el-button>
+              >登录
+              </el-button>
             </el-form-item>
           </el-form>
           <el-link class="regist-link" type="success" :underline="false">
@@ -37,15 +38,16 @@
             <router-link :to="{name: 'Regist'}">忘记密码</router-link>
           </el-link>
         </div>
-        <CopyRight />
       </el-col>
     </el-row>
+    <CopyRight/>
   </div>
 </template>
 
 <script>
 import Bg from "./layout/Bg";
 import CopyRight from './common/CopyRight';
+
 export default {
   name: "Login",
   components: {
@@ -55,8 +57,8 @@ export default {
   data() {
     return {
       loginParam: {
-        username: "zdx",
-        password: "123456"
+        username: "",
+        password: ""
       },
       rules: {
         username: [
@@ -83,11 +85,11 @@ export default {
         if (valid) {
           this.login_loading = true;
           this.$api.user.login(this.loginParam).then(res => {
-              this.login_loading = false;
-              this.$message.success(res.msg + '，欢迎！' + this.loginParam.username);
-              this.$router.push({name: 'Index'});
+            this.login_loading = false;
+            this.$message.success(res.msg + '，欢迎！' + this.loginParam.username);
+            this.$router.push({name: 'Index'});
           }).catch(error => this.login_loading = false);
-          
+
         }
       });
     }
@@ -98,28 +100,36 @@ export default {
 <style scoped>
 .login-page {
   text-align: center;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
 }
+
 .login-title {
-  margin-top: 100px;
   color: rgb(176, 183, 189);
+  margin-top: 20%;
 }
+
 .login-content {
-  padding-top: 50px;
-  margin-bottom: 130px;
+  padding-top: 8%;
+  margin-bottom: 20%;
 }
 
 .el-input {
   font-size: 110%;
 }
+
 .el-input >>> input {
   background-color: rgb(0, 30, 66);
   border: 1px solid rgb(58, 95, 119);
   height: 50px;
   color: #fff;
 }
+
 .el-button {
   width: 100%;
 }
+
 .regist-link a {
   color: #fff;
   text-decoration: none;
