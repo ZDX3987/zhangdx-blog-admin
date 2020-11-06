@@ -55,6 +55,7 @@
         </a>
       </el-menu-item>
     </el-menu>
+    <button @click="toggleMenuCollapse()">切换</button>
   </div>
 </template>
 
@@ -64,6 +65,11 @@ export default {
   data() {
     return {
       isCollapse: false
+    }
+  },
+  methods: {
+    toggleMenuCollapse() {
+      this.isCollapse = !this.isCollapse;
     }
   }
 };

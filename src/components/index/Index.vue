@@ -1,7 +1,7 @@
 <template>
   <div class="index-content">
     <el-container>
-      <el-aside width="220px">
+      <el-aside>
         <Nav />
       </el-aside>
       <el-main>

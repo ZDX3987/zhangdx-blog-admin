@@ -1,45 +1,47 @@
 <template>
-  <div class="login-page">
+  <div>
     <Bg/>
-    <el-row>
-      <el-col :span="10" :offset="7">
-        <h1 class="login-title">登录</h1>
-        <div class="login-content">
-          <el-form ref="form" :model="loginParam" :rules="rules">
-            <el-form-item prop="username">
-              <el-input
-                v-model="loginParam.username"
-                prefix-icon="fa fa-user"
-                placeholder="请输入用户名"
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-              <el-input
-                v-model="loginParam.password"
-                prefix-icon="fa fa-lock"
-                show-password
-                placeholder="请输入密码"
-              ></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button
-                :loading="login_loading"
-                :disabled="login_loading"
-                type="primary"
-                @click="login('form')"
-              >登录
-              </el-button>
-            </el-form-item>
-          </el-form>
-          <el-link class="regist-link" type="success" :underline="false">
-            <router-link :to="{name: 'Regist'}">注册</router-link>
-          </el-link>&nbsp;&nbsp;|&nbsp;&nbsp;
-          <el-link class="regist-link" type="success" :underline="false">
-            <router-link :to="{name: 'Regist'}">忘记密码</router-link>
-          </el-link>
-        </div>
-      </el-col>
-    </el-row>
+    <div class="login-page">
+      <el-row>
+        <el-col :span="10" :offset="7">
+          <h1 class="login-title">登录</h1>
+          <div class="login-content">
+            <el-form ref="form" :model="loginParam" :rules="rules">
+              <el-form-item prop="username">
+                <el-input
+                  v-model="loginParam.username"
+                  prefix-icon="fa fa-user"
+                  placeholder="请输入用户名"
+                ></el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                <el-input
+                  v-model="loginParam.password"
+                  prefix-icon="fa fa-lock"
+                  show-password
+                  placeholder="请输入密码"
+                ></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  :loading="login_loading"
+                  :disabled="login_loading"
+                  type="primary"
+                  @click="login('form')"
+                >登录
+                </el-button>
+              </el-form-item>
+            </el-form>
+            <el-link class="regist-link" type="success" :underline="false">
+              <router-link :to="{name: 'Regist'}">注册</router-link>
+            </el-link>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <el-link class="regist-link" type="success" :underline="false">
+              <router-link :to="{name: 'Regist'}">忘记密码</router-link>
+            </el-link>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
     <CopyRight/>
   </div>
 </template>
@@ -102,7 +104,6 @@ export default {
   text-align: center;
   margin: 0 auto;
   height: 100%;
-  position: relative;
 }
 
 .login-title {
