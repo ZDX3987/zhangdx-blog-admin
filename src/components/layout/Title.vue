@@ -2,13 +2,18 @@
   <div>
     <div class="title-content">
       <el-row>
-        <el-col :span="14">
+        <el-col :span="1">
+          <p @click="menuToggle"
+             :class="menuCollapse ? 'el-icon-s-unfold menu-toggle' : 'el-icon-s-fold menu-toggle'"></p>
+        </el-col>
+        <el-col :span="13">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item
               v-for="route in routeList"
               :key="route.name"
               :to="{ name: route.name }"
-              >{{ route.meta.title }}</el-breadcrumb-item
+            >{{ route.meta.title }}
+            </el-breadcrumb-item
             >
           </el-breadcrumb>
         </el-col>
@@ -21,7 +26,7 @@
                   @error="avatarErrorHandler"
                   :title="userInfo.username"
                 >
-                  <img v-if="userInfo.avatar" :src="userInfo.avatar" />
+                  <img v-if="userInfo.avatar" :src="userInfo.avatar"/>
                   {{ userInfo.username }}
                 </el-avatar>
                 <i class="fa fa-caret-down"></i>
@@ -29,17 +34,20 @@
               <el-dropdown-menu slot="dropdown">
                 <router-link :to="{ name: 'UserCenter', params: userInfo }">
                   <el-dropdown-item icon="fa fa-user-o"
-                    >个人中心</el-dropdown-item
+                  >个人中心
+                  </el-dropdown-item
                   >
                 </router-link>
                 <router-link :to="{ name: 'PublishArticle' }">
                   <el-dropdown-item divided icon="fa fa-edit"
-                    >写文章</el-dropdown-item
+                  >写文章
+                  </el-dropdown-item
                   >
                 </router-link>
                 <el-dropdown-item>草稿箱</el-dropdown-item>
                 <el-dropdown-item divided icon="fa fa-sign-out" command="logout"
-                  >退出登录</el-dropdown-item
+                >退出登录
+                </el-dropdown-item
                 >
               </el-dropdown-menu>
             </el-dropdown>
@@ -59,6 +67,7 @@ export default {
         "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80",
       userInfo: {},
       routeList: this.$route.matched,
+      menuCollapse: false
     };
   },
   created() {
@@ -67,7 +76,8 @@ export default {
       .then((res) => {
         this.userInfo = res.data;
       })
-      .catch((error) => {});
+      .catch((error) => {
+      });
   },
   watch: {
     $route: {
@@ -89,11 +99,16 @@ export default {
       this.$api.user.logout().then(
         (res) => {
           this.$message.success(res.msg)
-          this.$router.push({ name: "Login" });
+          this.$router.push({name: "Login"});
         },
-        (error) => {}
+        (error) => {
+        }
       );
     },
+    menuToggle() {
+      this.menuCollapse = !this.menuCollapse;
+      this.$emit('menuCollapse', this.menuCollapse);
+    }
   },
 };
 </script>
@@ -104,17 +119,26 @@ export default {
   width: 100%;
   height: 50px;
 }
+
 .title-content .el-breadcrumb {
   line-height: 50px;
 }
+
 .right-content {
   height: 50px;
   padding: 5px 0;
 }
+
 .el-breadcrumb {
   padding-left: 5%;
 }
+
 .el-dropdown-menu a {
   text-decoration: none;
+}
+
+.menu-toggle {
+  font-size: 22px;
+  margin-left: 20px;
 }
 </style>

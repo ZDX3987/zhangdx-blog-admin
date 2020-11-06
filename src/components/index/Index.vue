@@ -1,11 +1,9 @@
 <template>
   <div class="index-content">
     <el-container>
-      <el-aside>
-        <Nav />
-      </el-aside>
+      <Nav :isCollapse="isCollapse"/>
       <el-main>
-        <Title />
+        <Title @menuCollapse="menuCollapse"/>
         <router-view
           class="router-main"
           v-wechat-title="$route.meta.title + ' - ZHANGDX的博客'"
@@ -18,12 +16,24 @@
 <script>
 import Nav from "../layout/Nav";
 import Title from "../layout/Title";
+
 export default {
   name: "Index",
   components: {
     Nav,
     Title,
   },
+  data() {
+    return {
+      isCollapse: false
+    }
+  },
+  methods: {
+    menuCollapse(isCollapse) {
+      console.log(this.isCollapse);
+      this.isCollapse = isCollapse;
+    }
+  }
 };
 </script>
 
@@ -32,16 +42,20 @@ export default {
   background-color: #eff1f4;
   height: 100%;
 }
+
 .el-container {
   height: 100%;
 }
+
 .el-main {
   padding: 0;
 }
+
 .router-main {
   width: 98%;
   margin: 20px auto;
 }
+
 .el-aside {
   display: block;
   position: relative;

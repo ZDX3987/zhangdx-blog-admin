@@ -1,7 +1,6 @@
-.
 <template>
-  <div class="bg-color">
-    <h4 class="nav-title" v-show="!isCollapse">ZHANGDX</h4>
+  <el-scrollbar wrapClass="scrollbar-wrapper" class="bg-color">
+    <h4 class="nav-title">{{isCollapse ? 'Z' :title }}</h4>
     <el-menu
       default-active="2"
       background-color="#304156"
@@ -55,8 +54,7 @@
         </a>
       </el-menu-item>
     </el-menu>
-    <button @click="toggleMenuCollapse()">切换</button>
-  </div>
+  </el-scrollbar>
 </template>
 
 <script>
@@ -64,13 +62,11 @@ export default {
   name: "Nav",
   data() {
     return {
-      isCollapse: false
+      title: 'ZHANGDX',
     }
   },
+  props: ['isCollapse'],
   methods: {
-    toggleMenuCollapse() {
-      this.isCollapse = !this.isCollapse;
-    }
   }
 };
 </script>
@@ -78,7 +74,6 @@ export default {
 <style scoped>
 .bg-color {
   background-color: #304156;
-  display: block;
   height: 100%;
 }
 
@@ -92,8 +87,11 @@ export default {
 
 .menu-list {
   text-align: left;
-  margin-right: 0;
-
+  min-height: 100%;
+  min-width: 100%;
+}
+.menu-list:not(.el-menu--collapse) {
+  width: 200px;
 }
 
 a {
