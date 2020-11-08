@@ -48,6 +48,7 @@ export default {
 }
 
 .el-main {
+  width: 80%;
   padding: 0;
 }
 
