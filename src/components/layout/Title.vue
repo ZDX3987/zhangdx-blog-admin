@@ -2,13 +2,13 @@
   <div>
     <div class="title-content">
       <el-row>
-        <el-col :span="2">
+        <el-col :span="1">
           <div class="menu-toggle">
             <i @click="menuToggle"
                :class="menuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
           </div>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="13">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item
               v-for="route in routeList"
@@ -144,7 +144,5 @@ export default {
   height: 100%;
   line-height: 53px;
   text-align: center;
-}
-.menu-toggle i {
 }
 </style>
