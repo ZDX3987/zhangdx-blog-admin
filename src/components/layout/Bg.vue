@@ -7,7 +7,8 @@ export default {
   name: "Bg",
   data() {
     return {
-      bg_img: ["background-image: url('/static/images/hp-bg.jpg');"]
+      bg_img: ["background-image: url('http://file.zhangdx.cn/hp-bg.jpg');"],
+      img: ['http://file.zhangdx.cn/hp-bg.jpg', '/static/images/hp-bg.jpg']
     };
   }
 };

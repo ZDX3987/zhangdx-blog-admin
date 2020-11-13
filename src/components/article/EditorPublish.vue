@@ -138,13 +138,13 @@ export default {
     },
     initEditor() {
       this.editor = new Editor("#editor");
-      this.editor.customConfig.onchange = (html) => {
+      this.editor.config.onchange = (html) => {
         this.editorContent = html;
       };
-      this.editor.customConfig.uploadImgServer = "/api/article/upload";
-      this.editor.customConfig.uploadFileName = "file";
-      this.editor.customConfig.zIndex = 1;
-      this.editor.customConfig.pasteFilterStyle = false;
+      this.editor.config.uploadImgServer = "/api/article/upload";
+      this.editor.config.uploadFileName = "file";
+      this.editor.config.zIndex = 1;
+      this.editor.config.pasteFilterStyle = false;
       this.editor.create();
     },
     openCateDialog() {
