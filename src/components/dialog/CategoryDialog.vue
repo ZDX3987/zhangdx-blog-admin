@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog title="标签列表" :visible.sync="cateDialogVisible">
-      <el-table :data="cateList" @current-change="handleCurrentChange">
+      <el-table :data="cateList" @row-click="handleCurrentChange">
         <el-table-column type="index" label="序号" width="150"></el-table-column>
         <el-table-column property="cateName" label="标签名称" width="200"></el-table-column>
         <el-table-column property="articleCount" label="文章数量"></el-table-column>

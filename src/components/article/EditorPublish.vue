@@ -75,7 +75,9 @@ export default {
         text: "",
         coverImg: "",
         status: "",
-        categories: []
+        categories: [],
+        source: 1, // 文章来源：富文本编辑器
+        digest: ''
       },
       dialogImageUrl: "",
       dialogVisible: false,
@@ -96,7 +98,9 @@ export default {
           this.articleInfo.text = this.editor.txt.html();
           this.articleInfo.coverImg = this.fileList[0].name;
           this.articleInfo.status = articleStatus;
+          this.articleInfo.digest = this.genArticleDigest(this.editor.txt.text(), 100);
           let form = new FormData();
+          console.log(this.articleInfo)
           form.append("file", this.fileList[0].raw);
           form.append("articleJSON", JSON.stringify(this.articleInfo));
           this.$api.article
@@ -159,6 +163,9 @@ export default {
     },
     spliceCate(cate) {
       this.articleInfo.categories.splice(this.articleInfo.categories.indexOf(cate), 1);
+    },
+    genArticleDigest(text, length) {
+      return text ? text.substring(0, length) : '';
     }
   },
 }

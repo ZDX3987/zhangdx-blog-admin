@@ -78,7 +78,9 @@ export default {
         text: "",
         coverImg: "",
         status: "",
-        categories: []
+        categories: [],
+        source: 2, // 文章来源：markdown编辑器
+        digest: ''
       },
       dialogImageUrl: "",
       dialogVisible: false,
@@ -86,7 +88,7 @@ export default {
       articleRules: {
         title: [{required: true, message: "请输入文章标题", trigger: "blur"}],
       },
-      fileList: [],
+      fileList: []
     };
   },
   methods: {
@@ -150,6 +152,10 @@ export default {
     },
     markdownChange(markdown, html) {
       this.articleInfo.text = html;
+      this.articleInfo.digest = this.genArticleDigest(markdown, 100);
+    },
+    genArticleDigest(text, length) {
+      return text ? text.substring(0, length) : '';
     }
   }
 }
