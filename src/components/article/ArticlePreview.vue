@@ -21,7 +21,8 @@
         <el-col :span="4" :offset="8">
           <el-popconfirm v-if="articleDTO.status === 1" title="确定通过该文章吗？" @onConfirm="checkArticle">
             <el-button type="primary" slot="reference" icon="fa fa-check-circle"
-              >通过审核</el-button
+            >通过审核
+            </el-button
             >
           </el-popconfirm>
         </el-col>
@@ -32,13 +33,15 @@
         :src="articleDTO.coverImg"
         fit="scale-down"
       ></el-image>
-      <div class="article-text markdown-body" v-html="articleDTO.text"></div>
+      <div id="showText" ref="showText"></div>
     </div>
   </div>
 </template>
 
 <script>
 import marked from "marked";
+import VditorPreview from 'vditor/dist/method.min'
+
 export default {
   name: "ArticlePreview",
   data() {
@@ -48,49 +51,63 @@ export default {
     };
   },
   created() {
+    VditorPreview.mermaidRender(document);
     this.articleId = this.$route.params.id;
     this.$api.article
       .getArticleById(this.articleId)
       .then((res) => {
         this.articleDTO = res.data;
         this.$route.meta.title = this.articleDTO.title;
+        this.renderArticle(this.articleDTO);
       })
       .catch((error) => {
-        console.log(error);
+        this.$message.error(error);
       });
   },
   methods: {
-      checkArticle() {
-          this.$api.article.toCheckArticle(this.articleDTO.id).then(res => {
-              this.$message.success(res.msg);
-          }).catch(error => this.$message.error(res.msg));
-      },
-      convertHtml(markdownText) {
-        return marked(markdownText);
-      }
+    renderArticle(article) {
+      this.$nextTick(() => {
+        if (article.source === 2) {
+          VditorPreview.preview(this.$refs.showText, article.text);
+        } else {
+          this.$refs.showText.innerHTML = article.text;
+        }
+      });
+    },
+    checkArticle() {
+      this.$api.article.toCheckArticle(this.articleDTO.id).then(res => {
+        this.$message.success(res.msg);
+      }).catch(error => this.$message.error(res.msg));
+    },
+    convertHtml(markdownText) {
+      return marked(markdownText);
+    }
   }
 };
 </script>
 
 <style scoped>
-@import '../../../node_modules/mavon-editor/dist/css/index.css';
 .article-content {
   background-color: #fff;
   padding: 40px;
 }
+
 .article-title {
   margin: 0;
 }
+
 .article-info {
   margin-top: 20px;
   height: 40px;
   line-height: 40px;
   color: #999;
 }
+
 .article-author {
   line-height: 40px;
   height: 40px;
 }
+
 .article-coverImg {
   width: 30%;
 }
