@@ -27,7 +27,9 @@
           <el-menu-item index="2-2">
             <router-link :to="{name: 'PublishArticle'}">发布文章</router-link>
           </el-menu-item>
-          <el-menu-item index="2-3">草稿箱</el-menu-item>
+          <el-menu-item index="2-3">
+            <router-link :to="{name: 'DraftBox'}">草稿箱</router-link>
+          </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <router-link :to="{name: 'Category'}">

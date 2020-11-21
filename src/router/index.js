@@ -8,6 +8,7 @@ import UserCenter from "../components/usercenter/UserCenter";
 import ArticlePreview from "../components/article/ArticlePreview";
 import PublishArticle from "../components/article/PublishArticle";
 import ArticleList from "../components/article/ArticleList";
+import DraftBox from "../components/article/DraftBox"
 
 Vue.use(Router)
 
@@ -63,7 +64,7 @@ export default new Router({
           }
         },
         {
-          path: 'publish',
+          path: '/publish',
           name: 'PublishArticle',
           component: PublishArticle,
           meta: {
@@ -71,7 +72,15 @@ export default new Router({
           }
         },
         {
-          path: 'category',
+          path: '/draftbox',
+          name: 'DraftBox',
+          component: DraftBox,
+          meta: {
+            title: '草稿箱'
+          }
+        },
+        {
+          path: '/category',
           name: 'Category',
           component: Category,
           meta: {
