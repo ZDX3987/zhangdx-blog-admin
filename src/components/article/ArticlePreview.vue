@@ -50,7 +50,7 @@ export default {
       articleDTO: "",
     };
   },
-  created() {
+  mounted() {
     VditorPreview.mermaidRender(document);
     this.articleId = this.$route.params.id;
     this.$api.article
@@ -69,6 +69,8 @@ export default {
       this.$nextTick(() => {
         if (article.source === 2) {
           VditorPreview.preview(this.$refs.showText, article.text);
+          VditorPreview.outlineRender(VditorPreview.md2html(article.text), this.$refs.showText)
+
         } else {
           this.$refs.showText.innerHTML = article.text;
         }
