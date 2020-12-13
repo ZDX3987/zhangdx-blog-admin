@@ -90,6 +90,17 @@ export default {
       contentEditor: ''
     };
   },
+  props: [
+    'operate',
+    'articleSource',
+    'updateArticle'
+  ],
+  watch: {
+    updateArticle: function (newArticle) {
+      this.updateArticle = newArticle;
+      this.setUpdateData();
+    }
+  },
   mounted() {
     this.initVditor();
   },
@@ -101,6 +112,11 @@ export default {
         counter: {enable: true, type: "text"},
         enable: false
       });
+    },
+    setUpdateData() {
+      this.articleInfo.title = this.updateArticle.title;
+      this.articleInfo.categories = this.updateArticle.categories;
+      this.articleInfo.coverImg = this.updateArticle.coverImg;
     },
     save(form, articleStatus) {
       this.$refs[form].validate((valid) => {

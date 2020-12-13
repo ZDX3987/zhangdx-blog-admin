@@ -88,6 +88,10 @@ export default {
       fileList: [],
     };
   },
+  props: [
+    'operate',
+    'articleSource'
+  ],
   mounted() {
     this.initEditor();
   },
@@ -100,7 +104,6 @@ export default {
           this.articleInfo.status = articleStatus;
           this.articleInfo.digest = this.genArticleDigest(this.editor.txt.text(), 100);
           let form = new FormData();
-          console.log(this.articleInfo)
           form.append("file", this.fileList[0].raw);
           form.append("articleJSON", JSON.stringify(this.articleInfo));
           this.$api.article

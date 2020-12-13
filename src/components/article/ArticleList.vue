@@ -106,7 +106,7 @@ export default {
       this.$router.push({name: 'ArticlePreview', params: {id: row.id}})
     },
     editArticle(index, row) {
-      console.log(row)
+      this.$router.push({name: 'PublishArticle', params: {operate: 'update', article: row}})
     },
     deleteArticle(index, row) {
       this.$api.article.delArticle(row.id).then(res => {

@@ -91,6 +91,10 @@ export default {
       fileList: []
     };
   },
+  props: [
+    'operate',
+    'articleSource'
+  ],
   methods: {
     save(form, articleStatus) {
       this.$refs[form].validate((valid) => {
