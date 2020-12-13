@@ -2,7 +2,7 @@
   <div>
     <footer class="copyright">
       <p>
-        <a href="http://beian.miit.gov.cn">豫 ICP 备 20019985 号</a>
+        <a href="http://beian.miit.gov.cn">豫 ICP 备 20019985 - 2 号</a>
         Copyright © {{ currentYear }} 版权所有 ZDX_3987
       </p>
     </footer>

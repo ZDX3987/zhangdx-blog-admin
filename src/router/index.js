@@ -23,14 +23,14 @@ export default new Router({
         title: '登录'
       }
     },
-    {
-      path: '/regist',
-      name: 'Regist',
-      component: Regist,
-      meta: {
-        title: '注册'
-      }
-    },
+    // {
+    //   path: '/regist',
+    //   name: 'Regist',
+    //   component: Regist,
+    //   meta: {
+    //     title: '注册'
+    //   }
+    // },
     {
       path: '/index',
       name: 'Index',

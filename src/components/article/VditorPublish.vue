@@ -98,7 +98,8 @@ export default {
       this.contentEditor = new Vditor('vditor', {
         minHeight: 400,
         placeholder: '请在此处输入内容...',
-        counter: {enable: true, type: "text"}
+        counter: {enable: true, type: "text"},
+        enable: false
       });
     },
     save(form, articleStatus) {

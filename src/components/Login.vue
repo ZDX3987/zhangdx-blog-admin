@@ -32,12 +32,12 @@
                 </el-button>
               </el-form-item>
             </el-form>
-            <el-link class="regist-link" type="success" :underline="false">
-              <router-link :to="{name: 'Regist'}">注册</router-link>
-            </el-link>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <el-link class="regist-link" type="success" :underline="false">
-              <router-link :to="{name: 'Regist'}">忘记密码</router-link>
-            </el-link>
+<!--            <el-link class="regist-link" type="success" :underline="false">-->
+<!--              <router-link :to="{name: 'Regist'}">注册</router-link>-->
+<!--            </el-link>&nbsp;&nbsp;|&nbsp;&nbsp;-->
+<!--            <el-link class="regist-link" type="success" :underline="false">-->
+<!--              <router-link :to="{name: 'Regist'}">忘记密码</router-link>-->
+<!--            </el-link>-->
           </div>
         </el-col>
       </el-row>

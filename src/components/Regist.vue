@@ -131,8 +131,8 @@ export default {
           },
           {
             min: 6,
-            max: 10,
-            message: '密码长度在6到10个字符',
+            max: 20,
+            message: '密码长度在6到20个字符',
             trigger: "blur"
           }
         ],
