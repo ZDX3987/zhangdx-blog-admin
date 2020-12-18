@@ -32,12 +32,12 @@
                 </el-button>
               </el-form-item>
             </el-form>
-<!--            <el-link class="regist-link" type="success" :underline="false">-->
-<!--              <router-link :to="{name: 'Regist'}">注册</router-link>-->
-<!--            </el-link>&nbsp;&nbsp;|&nbsp;&nbsp;-->
-<!--            <el-link class="regist-link" type="success" :underline="false">-->
-<!--              <router-link :to="{name: 'Regist'}">忘记密码</router-link>-->
-<!--            </el-link>-->
+            <!--            <el-link class="regist-link" type="success" :underline="false">-->
+            <!--              <router-link :to="{name: 'Regist'}">注册</router-link>-->
+            <!--            </el-link>&nbsp;&nbsp;|&nbsp;&nbsp;-->
+            <!--            <el-link class="regist-link" type="success" :underline="false">-->
+            <!--              <router-link :to="{name: 'Regist'}">忘记密码</router-link>-->
+            <!--            </el-link>-->
           </div>
         </el-col>
       </el-row>
@@ -81,6 +81,9 @@ export default {
       login_loading: false
     };
   },
+  created() {
+    this.enterLogin();
+  },
   methods: {
     login(form) {
       this.$refs[form].validate(valid => {
@@ -91,9 +94,15 @@ export default {
             this.$message.success(res.msg + '，欢迎！' + this.loginParam.username);
             this.$router.push({name: 'Index'});
           }).catch(error => this.login_loading = false);
-
         }
       });
+    },
+    enterLogin() {
+      document.onkeydown = e => {
+        if (e.keyCode === 13) {
+          this.login('form');
+        }
+      }
     }
   }
 };

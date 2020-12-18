@@ -44,7 +44,9 @@
           <span>系统设置</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="4-1">内容设置</el-menu-item>
+          <el-menu-item index="4-1">
+            <router-link :to="{name: 'ContentSettings'}">内容设置</router-link>
+          </el-menu-item>
           <el-menu-item index="4-2">个人信息设置</el-menu-item>
           <el-menu-item index="4-3">系统用户设置</el-menu-item>
         </el-menu-item-group>

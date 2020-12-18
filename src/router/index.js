@@ -9,6 +9,7 @@ import ArticlePreview from "../components/article/ArticlePreview";
 import PublishArticle from "../components/article/PublishArticle";
 import ArticleList from "../components/article/ArticleList";
 import DraftBox from "../components/article/DraftBox"
+import ContentSettings from "../components/settings/content/ContentSettings";
 
 Vue.use(Router)
 
@@ -48,7 +49,7 @@ export default new Router({
           }
         },
         {
-          path: '/article-list',
+          path: '/article/list',
           name: 'ArticleList',
           component: ArticleList,
           meta: {
@@ -64,7 +65,7 @@ export default new Router({
           }
         },
         {
-          path: '/publish',
+          path: '/article/publish',
           name: 'PublishArticle',
           component: PublishArticle,
           meta: {
@@ -72,7 +73,7 @@ export default new Router({
           }
         },
         {
-          path: '/draftbox',
+          path: '/article/draftbox',
           name: 'DraftBox',
           component: DraftBox,
           meta: {
@@ -85,6 +86,14 @@ export default new Router({
           component: Category,
           meta: {
             title: '分类标签管理'
+          }
+        },
+        {
+          path: '/settings/content',
+          name: 'ContentSettings',
+          component: ContentSettings,
+          meta: {
+            title: '内容设置'
           }
         }
       ]
