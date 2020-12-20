@@ -13,7 +13,7 @@
         <el-table-column prop="cateName" label="名称" width="280" align="center"></el-table-column>
         <el-table-column prop="parentCate.cateName" label="父标签" width="280" align="center"></el-table-column>
         <el-table-column prop="articleCount" label="文章数量" width="100" align="center"></el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="editCate(scope.$index, scope.row)">编辑</el-button>
             <el-popconfirm

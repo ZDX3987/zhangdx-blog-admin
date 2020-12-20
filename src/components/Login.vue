@@ -92,7 +92,7 @@ export default {
           this.$api.user.login(this.loginParam).then(res => {
             this.login_loading = false;
             this.$message.success(res.msg + '，欢迎！' + this.loginParam.username);
-            this.$router.push({name: 'Index'});
+            this.$router.push({name: 'Home'});
           }).catch(error => this.login_loading = false);
         }
       });

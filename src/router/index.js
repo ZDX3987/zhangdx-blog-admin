@@ -10,6 +10,7 @@ import PublishArticle from "../components/article/PublishArticle";
 import ArticleList from "../components/article/ArticleList";
 import DraftBox from "../components/article/DraftBox"
 import ContentSettings from "../components/settings/content/ContentSettings";
+import Home from "../components/home/Home";
 
 Vue.use(Router)
 
@@ -33,13 +34,18 @@ export default new Router({
     //   }
     // },
     {
-      path: '/index',
+      path: '/',
       name: 'Index',
       component: Index,
       meta: {
         title: '首页'
       },
       children: [
+        {
+          path: '/index',
+          name: 'Home',
+          component: Home
+        },
         {
           path: '/user-center',
           name: 'UserCenter',

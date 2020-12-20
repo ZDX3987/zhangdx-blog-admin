@@ -28,7 +28,7 @@
             <el-tag :type="statusEnum[scope.row.status].type">{{ statusEnum[scope.row.status].text }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="editArticle(scope.$index, scope.row)">编辑</el-button>
             <el-popconfirm

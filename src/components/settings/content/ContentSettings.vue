@@ -4,7 +4,9 @@
       <el-tab-pane label="菜单设置">
         <MenuSettings/>
       </el-tab-pane>
-      <el-tab-pane label="友链设置">友链设置</el-tab-pane>
+      <el-tab-pane label="友链设置">
+        <FriendshipLinkSettings/>
+      </el-tab-pane>
       <el-tab-pane label="分享设置">分享设置</el-tab-pane>
     </el-tabs>
   </div>
@@ -12,11 +14,13 @@
 
 <script>
 import MenuSettings from "./MenuSettings";
+import FriendshipLinkSettings from "./FriendshipLinkSettings";
 
 export default {
   name: "ContentSettings",
   components: {
-    MenuSettings
+    MenuSettings,
+    FriendshipLinkSettings
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar wrapClass="scrollbar-wrapper" class="bg-color">
-    <h4 class="nav-title">{{isCollapse ? 'Z' :title }}</h4>
+    <h4 class="nav-title">{{ isCollapse ? 'Z' : title }}</h4>
     <el-menu
       default-active="2"
       background-color="#304156"
@@ -9,7 +9,7 @@
       :collapse="isCollapse"
       class="menu-list"
     >
-      <router-link :to="{name: 'Index'}">
+      <router-link :to="{name: 'Home'}">
         <el-menu-item index="1">
           <i class="el-icon-s-home"></i>
           <span slot="title">首页</span>
@@ -70,8 +70,7 @@ export default {
     }
   },
   props: ['isCollapse'],
-  methods: {
-  }
+  methods: {}
 };
 </script>
 
@@ -94,6 +93,7 @@ export default {
   min-height: 100%;
   min-width: 100%;
 }
+
 .menu-list:not(.el-menu--collapse) {
   width: 200px;
 }
