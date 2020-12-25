@@ -87,7 +87,10 @@ export default {
       this.dialogFormVisible = true;
     },
     deleteLink(index, row) {
-
+      this.$api.settings.deleteFriendshipLink(row.id).then(res => {
+        this.$message.success(res.msg);
+        this.query();
+      }).catch(error => this.$message.error(error.msg))
     },
     submitLink(formName) {
       this.$refs[formName].validate((valid) => {

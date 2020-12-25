@@ -13,6 +13,10 @@ const settingsapi = {
         'Content-Type': 'application/json'
       }
     })
+  },
+
+  deleteFriendshipLink(linkId) {
+    return http.delete('/api/settings/friendship-link/' + linkId);
   }
 }
 
