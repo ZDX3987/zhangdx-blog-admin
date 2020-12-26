@@ -99,14 +99,14 @@ export default {
       return isJPG && isLt2M;
     },
     uploadAvatar(http) {
-      var form = new FormData();
+      let form = new FormData();
       form.append("file", http.file);
-      form.append("id", this.userInfo.id);
+      form.append("userInfo", JSON.stringify(this.userInfo));
       this.$api.user.uploadAvatar(form).then(
         (res) => {
-          this.userInfo.avatar = res;
+          this.userInfo.avatar = res.data.avatar;
         },
-        (error) => {}
+        (error) => this.$message.error(res.msg)
       );
     },
     modifySubmit() {

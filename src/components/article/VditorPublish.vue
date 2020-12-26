@@ -106,12 +106,24 @@ export default {
   },
   methods: {
     initVditor() {
+      let that = this;
       this.contentEditor = new Vditor('vditor', {
         minHeight: 400,
         placeholder: '请在此处输入内容...',
         counter: {enable: true, type: "text"},
-        enable: false
+        cache: {
+          enable: false,
+        },
+        upload: {
+          handler(files) {
+            console.log(files)
+            that.customUploadFile(files);
+          },
+          linkToImgUrl: null
+        }
       });
+    },
+    customUploadFile(files) {
     },
     setUpdateData() {
       this.articleInfo.title = this.updateArticle.title;
