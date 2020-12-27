@@ -148,8 +148,11 @@ export default {
       this.editor.config.onchange = (html) => {
         this.editorContent = html;
       };
-      this.editor.config.uploadImgServer = "/api/article/upload";
-      this.editor.config.uploadFileName = "file";
+      this.editor.config.uploadImgServer = "/api/article/article/editor-upload";
+      this.editor.config.uploadImgHeaders = {
+        'Authorization': sessionStorage.getItem("Authorization")
+      }
+      this.editor.config.uploadFileName = 'file';
       this.editor.config.zIndex = 1;
       this.editor.config.pasteFilterStyle = false;
       this.editor.create();
@@ -169,7 +172,10 @@ export default {
     },
     genArticleDigest(text, length) {
       return text ? text.substring(0, length) : '';
-    }
+    },
+    dateFormat(date) {
+      return this.$options.filters['dateFormat'](date, 'yyyyMMddhhmmss')
+    },
   },
 }
 </script>

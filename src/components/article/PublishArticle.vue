@@ -34,7 +34,7 @@ export default {
   name: "Publish",
   components: {
     EditorPublish,
-    MarkdownPublish,
+    // MarkdownPublish,
     CategoryDialog,
     VditorPublish
   },

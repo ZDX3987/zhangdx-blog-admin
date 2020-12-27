@@ -115,15 +115,30 @@ export default {
           enable: false,
         },
         upload: {
-          handler(files) {
-            console.log(files)
-            that.customUploadFile(files);
+          url: '/api/article/article/upload',
+          linkToImgUrl: '/api/article/article/upload',
+          headers: {
+            'Authorization': sessionStorage.getItem("Authorization")
           },
-          linkToImgUrl: null
+          format(files, responseText) {
+            let responseParse = JSON.parse(responseText)
+            let result = {
+              "msg": responseParse.msg,
+              "code": 0,
+              "data": {
+                "errFiles": [],
+                "succMap": {
+                  [files[0].name]: responseParse.data
+                }
+              }
+            }
+            return JSON.stringify(result);
+          }
         }
       });
     },
-    customUploadFile(files) {
+    dateFormat(date) {
+      return this.$options.filters['dateFormat'](date, 'yyyyMMddhhmmss')
     },
     setUpdateData() {
       this.articleInfo.title = this.updateArticle.title;

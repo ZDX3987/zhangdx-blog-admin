@@ -18,6 +18,13 @@ const articleapi = {
     return http.post('/api/article/check-article/' + id);
   },
 
+  uploadArticleFile(formData) {
+    return http.post('/api/article/article/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  },
 
   getAllCategory(params) {
     return http.get('/api/category/categories', {params: params});
