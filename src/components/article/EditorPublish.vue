@@ -153,6 +153,11 @@ export default {
         'Authorization': sessionStorage.getItem("Authorization")
       }
       this.editor.config.uploadFileName = 'file';
+      this.editor.config.uploadImgHooks = {
+        customInsert: function (insertImgFn, result) {
+          insertImgFn(result.data);
+        }
+      }
       this.editor.config.zIndex = 1;
       this.editor.config.pasteFilterStyle = false;
       this.editor.create();
