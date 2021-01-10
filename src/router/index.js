@@ -11,6 +11,7 @@ import ArticleList from "../components/article/ArticleList";
 import DraftBox from "../components/article/DraftBox"
 import ContentSettings from "../components/settings/content/ContentSettings";
 import Home from "../components/home/Home";
+import TopicList from "../components/topic/TopicList";
 
 Vue.use(Router)
 
@@ -84,6 +85,14 @@ export default new Router({
           component: DraftBox,
           meta: {
             title: '草稿箱'
+          }
+        },
+        {
+          path: '/article/topic',
+          name: 'TopicList',
+          component: TopicList,
+          meta: {
+            title: '专题列表'
           }
         },
         {

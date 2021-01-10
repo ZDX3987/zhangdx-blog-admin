@@ -32,26 +32,32 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <router-link :to="{name: 'Category'}">
+      <router-link :to="{name: 'TopicList'}">
         <el-menu-item index="3">
+          <i class="el-icon-collection"></i>
+          <span slot="title">专题管理</span>
+        </el-menu-item>
+      </router-link>
+      <router-link :to="{name: 'Category'}">
+        <el-menu-item index="4">
           <i class="el-icon-collection-tag"></i>
           <span slot="title">分类标签管理</span>
         </el-menu-item>
       </router-link>
-      <el-submenu index>
+      <el-submenu index="5">
         <template slot="title">
           <i class="el-icon-setting"></i>
           <span>系统设置</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="4-1">
+          <el-menu-item index="5-1">
             <router-link :to="{name: 'ContentSettings'}">内容设置</router-link>
           </el-menu-item>
-          <el-menu-item index="4-2">个人信息设置</el-menu-item>
-          <el-menu-item index="4-3">系统用户设置</el-menu-item>
+          <el-menu-item index="5-2">个人信息设置</el-menu-item>
+          <el-menu-item index="5-3">系统用户设置</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="5">
+      <el-menu-item index="6">
         <a href="http://www.zhangdx.cn">
           <i class="el-icon-s-promotion"></i>
           <span slot="title">博客主页</span>
