@@ -52,11 +52,14 @@
         </el-form-item>
       </el-form>
       <div id="editor" class="my-editor"></div>
-      <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start">
+      <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start" v-if="operate!=='update'">
         <el-button type="primary" @click="save('form', 1)">发布</el-button>
       </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="保存至草稿箱" placement="top-end">
+      <el-tooltip class="item" effect="dark" content="保存至草稿箱" placement="top-end" v-if="operate!=='update'">
         <el-button @click="save('form', 0)">保存</el-button>
+      </el-tooltip>
+      <el-tooltip class="item" effect="dark" content="保存本次修改" placement="top-end" v-if="operate==='update'">
+        <el-button type="primary" @click="save('form', articleInfo.status)">保存</el-button>
       </el-tooltip>
     </div>
   </div>
@@ -64,6 +67,7 @@
 
 <script>
 import Editor from "wangeditor";
+import {getFileNameByUrl} from "../../util/file-util";
 
 export default {
   name: "EditorPublish",
@@ -90,12 +94,24 @@ export default {
   },
   props: [
     'operate',
-    'articleSource'
+    'articleSource',
+    'updateArticle'
   ],
+  watch: {
+    updateArticle: function (newArticle) {
+      this.updateArticle = newArticle;
+      this.setUpdateData();
+    }
+  },
   mounted() {
     this.initEditor();
   },
   methods: {
+    setUpdateData() {
+      this.articleInfo = this.updateArticle;
+      this.fileList.push({name: getFileNameByUrl(this.updateArticle.coverImg), url: this.updateArticle.coverImg});
+      this.editor.txt.html(this.updateArticle.text);
+    },
     save(form, articleStatus) {
       this.$refs[form].validate((valid) => {
         if (valid && this.validArticle()) {

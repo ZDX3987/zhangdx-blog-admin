@@ -16,7 +16,7 @@ export default {
   name: "Error",
   data() {
     return {
-      imgUrl: "static/images/notfound.gif",
+      imgUrl: "https://file.zhangdx.cn/notfound.gif",
     };
   },
   components: {

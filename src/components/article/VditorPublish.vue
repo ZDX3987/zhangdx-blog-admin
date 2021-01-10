@@ -52,11 +52,14 @@
         </el-form-item>
       </el-form>
       <div id="vditor"></div>
-      <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start">
+      <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start" v-if="operate!=='update'">
         <el-button type="primary" @click="save('form', 1)">发布</el-button>
       </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="保存至草稿箱" placement="top-end">
+      <el-tooltip class="item" effect="dark" content="保存至草稿箱" placement="top-end" v-if="operate!=='update'">
         <el-button @click="save('form', 0)">保存</el-button>
+      </el-tooltip>
+      <el-tooltip class="item" effect="dark" content="保存本次修改" placement="top-end" v-if="operate==='update'">
+        <el-button type="primary" @click="save('form', articleInfo.status)">保存</el-button>
       </el-tooltip>
     </div>
   </div>
@@ -65,12 +68,12 @@
 <script>
 import Vditor from 'vditor'
 import "vditor/dist/index.css"
+import {getFileNameByUrl} from "../../util/file-util";
 
 export default {
   name: "VditorPublish",
   data() {
     return {
-      editor: null,
       articleInfo: {
         title: "",
         text: "",
@@ -141,9 +144,9 @@ export default {
       return this.$options.filters['dateFormat'](date, 'yyyyMMddhhmmss')
     },
     setUpdateData() {
-      this.articleInfo.title = this.updateArticle.title;
-      this.articleInfo.categories = this.updateArticle.categories;
-      this.articleInfo.coverImg = this.updateArticle.coverImg;
+      this.articleInfo = this.updateArticle;
+      this.fileList.push({name: getFileNameByUrl(this.updateArticle.coverImg), url: this.updateArticle.coverImg});
+      this.contentEditor.setValue(this.updateArticle.text);
     },
     save(form, articleStatus) {
       this.$refs[form].validate((valid) => {

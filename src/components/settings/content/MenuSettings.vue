@@ -13,13 +13,13 @@
             type="text"
             size="mini"
             @click="() => append(data)">
-            Append
+            添加
           </el-button>
           <el-button
             type="text"
             size="mini"
             @click="() => remove(node, data)">
-            Delete
+            删除
           </el-button>
         </span>
       </span>
