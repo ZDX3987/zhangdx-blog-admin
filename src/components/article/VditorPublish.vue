@@ -69,6 +69,7 @@
 import Vditor from 'vditor'
 import "vditor/dist/index.css"
 import {getFileNameByUrl} from "../../util/file-util";
+import {getTextFromHtml} from "../../util/html-util";
 
 export default {
   name: "VditorPublish",
@@ -151,8 +152,9 @@ export default {
     save(form, articleStatus) {
       this.$refs[form].validate((valid) => {
         if (valid && this.validArticle()) {
-          this.articleInfo.coverImg = this.fileList[0].name;
+          this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
           this.articleInfo.status = articleStatus;
+          this.articleInfo.digest = this.genArticleDigest(this.contentEditor.getHTML(), 100);
           let form = new FormData();
           form.append("file", this.fileList[0].raw);
           form.append("articleJSON", JSON.stringify(this.articleInfo));
@@ -173,10 +175,10 @@ export default {
         this.$message.error("请输入文章内容");
         return false;
       }
-      if (this.fileList.length === 0) {
-        this.$message.error("请上传文章封面图片");
-        return false;
-      }
+      // if (this.fileList.length === 0) {
+      //   this.$message.error("请上传文章封面图片");
+      //   return false;
+      // }
       if (this.articleInfo.categories.length === 0) {
         this.$message.error("请选择文章分类标签");
         return false;
@@ -207,6 +209,7 @@ export default {
       this.articleInfo.categories.splice(this.articleInfo.categories.indexOf(cate), 1);
     },
     genArticleDigest(text, length) {
+      text = getTextFromHtml(text);
       return text ? text.substring(0, length) : '';
     }
   }
