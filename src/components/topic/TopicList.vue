@@ -65,7 +65,7 @@ export default {
       }).catch(error => this.$message.error(error.msg));
     },
     addTopic() {
-      this.$router.push('/topic/edit')
+      this.$router.push({name: 'EditTopic'})
     }
   }
 }

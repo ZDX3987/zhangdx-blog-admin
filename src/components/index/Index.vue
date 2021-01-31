@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     menuCollapse(isCollapse) {
-      console.log(this.isCollapse);
       this.isCollapse = isCollapse;
     }
   }

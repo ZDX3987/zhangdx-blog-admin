@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Category from "../components/category/Category";
 import Login from "../components/Login";
-import Regist from "../components/Regist";
 import Index from "../components/index/Index";
 import UserCenter from "../components/usercenter/UserCenter";
 import ArticlePreview from "../components/article/ArticlePreview";
@@ -11,8 +10,7 @@ import ArticleList from "../components/article/ArticleList";
 import DraftBox from "../components/article/DraftBox"
 import ContentSettings from "../components/settings/content/ContentSettings";
 import Home from "../components/home/Home";
-import TopicList from "../components/topic/TopicList";
-import EditTopic from "../components/topic/EditTopic";
+import topic from "./topic";
 
 Vue.use(Router)
 
@@ -20,7 +18,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'Login',
       component: Login,
       meta: {
@@ -38,6 +36,7 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
+      redirect: {name: 'Home'},
       component: Index,
       meta: {
         title: '首页'
@@ -46,7 +45,10 @@ export default new Router({
         {
           path: '/index',
           name: 'Home',
-          component: Home
+          component: Home,
+          meta: {
+            title: '首页'
+          },
         },
         {
           path: '/user-center',
@@ -88,24 +90,7 @@ export default new Router({
             title: '草稿箱'
           }
         },
-        {
-          path: '/topic',
-          name: 'TopicList',
-          component: TopicList,
-          meta: {
-            title: '专题列表'
-          },
-          children: [
-            {
-              path: '/topic/edit',
-              name: 'EditTopic',
-              component: EditTopic,
-              meta: {
-                title: '编辑专题'
-              },
-            }
-          ]
-        },
+        ...topic,
         {
           path: '/category',
           name: 'Category',
@@ -134,3 +119,7 @@ export default new Router({
     }
   ]
 })
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
