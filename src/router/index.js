@@ -12,6 +12,7 @@ import DraftBox from "../components/article/DraftBox"
 import ContentSettings from "../components/settings/content/ContentSettings";
 import Home from "../components/home/Home";
 import TopicList from "../components/topic/TopicList";
+import EditTopic from "../components/topic/EditTopic";
 
 Vue.use(Router)
 
@@ -88,12 +89,22 @@ export default new Router({
           }
         },
         {
-          path: '/article/topic',
+          path: '/topic',
           name: 'TopicList',
           component: TopicList,
           meta: {
             title: '专题列表'
-          }
+          },
+          children: [
+            {
+              path: '/topic/edit',
+              name: 'EditTopic',
+              component: EditTopic,
+              meta: {
+                title: '编辑专题'
+              },
+            }
+          ]
         },
         {
           path: '/category',
