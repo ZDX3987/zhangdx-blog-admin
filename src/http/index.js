@@ -9,7 +9,7 @@ const errorHandle = (status, data) => {
                 message: data.msg,
                 type: 'warning'
             });
-            Router.push('/');
+            Router.push({name: 'Login'});
             break;
         case 403:
             //localStorage.removeItem("Authorization");
@@ -17,7 +17,7 @@ const errorHandle = (status, data) => {
                 message: data.msg,
                 type: 'warning'
             });
-            Router.push('/');
+            Router.push({name: 'Login'});
             break;
         case 500:
             Message({
