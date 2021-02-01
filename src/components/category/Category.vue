@@ -17,11 +17,11 @@
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="editCate(scope.$index, scope.row)">编辑</el-button>
             <el-popconfirm
-              confirmButtonText='好的'
-              cancelButtonText='不用了'
-              icon="el-icon-info"
-              title="确定删除这个分类标签吗？"
-              @onConfirm="deleteCate(scope.$index, scope.row)"
+                confirmButtonText='好的'
+                cancelButtonText='不用了'
+                icon="el-icon-info"
+                title="确定删除这个分类标签吗？"
+                @onConfirm="deleteCate(scope.$index, scope.row)"
             >
               <el-button size="mini" type="danger" slot="reference">删除
               </el-button>
@@ -30,10 +30,10 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        class="page-list"
-        background
-        layout="prev, pager, next"
-        :total="total">
+          class="page-list"
+          background
+          layout="prev, pager, next"
+          :total="total">
       </el-pagination>
       <el-dialog class="category-dialog" title="新建标签"
                  :visible.sync="dialogFormVisible"
@@ -54,7 +54,7 @@
           <el-button type="primary" @click="submitCate('cateForm')">确 定</el-button>
         </div>
       </el-dialog>
-      <CategoryDialog ref="categoryDialog" @onSelect="onSelectRow"/>
+      <category-dialog ref="categoryDialog" @onSelect="onSelectRow"/>
     </div>
   </div>
 </template>
