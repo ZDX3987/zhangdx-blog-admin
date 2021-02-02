@@ -1,6 +1,6 @@
 import http from '../http/index'
 
-const articleapi = {
+export default {
   saveArticle(form) {
     return http.post('/api/article/article', form, {
       headers: {
@@ -43,5 +43,3 @@ const articleapi = {
     return http.delete('/api/category/category/' + cateId);
   }
 }
-
-export default articleapi

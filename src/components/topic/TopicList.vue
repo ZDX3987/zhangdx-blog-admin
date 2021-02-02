@@ -50,17 +50,22 @@ export default {
     }
   },
   created() {
-    this.query();
+    this.query(0);
   },
   methods: {
-    query() {
+    query(pageIndex) {
       let params = {
-        pageIndex: this.pageIndex,
-        pageSize: this.pageSize
+        pageIndex: pageIndex,
+        pageSize: this.pageSize,
+        sort: 'create_date'
       }
+      // let formData = new FormData();
+      // formData.append('pageIndex', pageIndex);
+      // formData.append('pageSize', this.pageSize);
+      // formData.append('sort', 'create_date');
       this.loading = true;
-      this.$api.article.getAllCategory(params).then(res => {
-        this.categoryList = res.data.elements;
+      this.$api.topic.getTopicByPage(params).then(res => {
+        this.topicList = res.data.elements;
         this.loading = false;
       }).catch(error => this.$message.error(error.msg));
     },

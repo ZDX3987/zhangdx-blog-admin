@@ -15,7 +15,7 @@
         <el-col :span="16">
           <el-button size="small" type="primary" plain @click="openArticleDialog">添加文章</el-button>
           <el-button size="small" type="danger" @click="multiDeleteArticle" plain>删除文章</el-button>
-          <el-table ref="selectArticleTable" :data="articleList" height="500"
+          <el-table ref="selectArticleTable" :data="articleList" size="medium"
                     @selection-change="selectArticle" @row-click="rowClick">
             <el-table-column type="selection" width="50" align="center"></el-table-column>
             <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
@@ -69,10 +69,12 @@ export default {
   methods: {
     saveTopic(formName) {
       this.$refs[formName].validate((valid) => {
-        if (!valid) {
+        if (!valid || this.articleList.length === 0) {
           return false;
         }
-        this.$message.success('保存成功');
+        this.$api.topic.saveTopic(this.topicForm).then(res => {
+          this.$message.success('保存成功');
+        }).catch(error => this.$message.error('保存失败'));
       });
     },
     selectArticle(list) {
@@ -91,7 +93,8 @@ export default {
       if (this.selectList.length === 0) {
         return;
       }
-      this.articleList = this.articleList.filter(article => this.selectList.findIndex(select => select.id === article.id));
+      this.articleList = this.articleList.filter(article =>
+          this.selectList.findIndex(select => select.id === article.id) === -1);
     },
     rowClick(row) {
       this.$refs.selectArticleTable.toggleRowSelection(row);
