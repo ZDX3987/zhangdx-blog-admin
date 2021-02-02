@@ -14,28 +14,38 @@
       <el-row>
         <el-col :span="16">
           <el-button size="small" type="primary" plain @click="openArticleDialog">添加文章</el-button>
-          <el-button size="small" type="danger" plain>删除文章</el-button>
-          <el-table :data="tableData" height="500" @selection-change="selectArticle">
-            <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column type="index" label="序号" width="50"></el-table-column>
-            <el-table-column prop="title" label="标题" width="300"></el-table-column>
-            <el-table-column prop="author" label="作者" width="120"></el-table-column>
-            <el-table-column prop="createTime" label="发布时间" width="120"></el-table-column>
+          <el-button size="small" type="danger" @click="multiDeleteArticle" plain>删除文章</el-button>
+          <el-table ref="selectArticleTable" :data="articleList" height="500"
+                    @selection-change="selectArticle" @row-click="rowClick">
+            <el-table-column type="selection" width="50" align="center"></el-table-column>
+            <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
+            <el-table-column prop="title" label="标题" width="300" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column prop="author.username" label="作者" width="120" align="center"></el-table-column>
+            <el-table-column label="标签" width="200" align="center" :show-overflow-tooltip="true">
+              <template slot-scope="scope">
+            <span v-for="(tag, index) of scope.row.categories" :key="tag.id">
+              {{ index !== 0 ? '/' : '' + tag.cateName }}
+            </span>
+                <span v-if="scope.row.categories.length === 0">/</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="createDate" label="发布时间" :formatter="dateFormat" width="120" align="center">
+            </el-table-column>
             <el-table-column width="120" label="操作">
               <template slot-scope="scope">
-                <el-button type="text" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                <el-button type="text" @click="deleteArticle(scope.$index)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
         </el-col>
       </el-row>
     </el-form>
-    <article-dialog ref="articleDialog"></article-dialog>
+    <article-multi-sel-dialog ref="articleDialog" @select-article="addArticle"></article-multi-sel-dialog>
   </div>
 </template>
 
 <script>
-import ArticleDialog from "../dialog/ArticleDialog";
+import ArticleMultiSelDialog from "../dialog/ArticleMultiSelDialog";
 
 export default {
   name: "EditTopic",
@@ -49,15 +59,12 @@ export default {
       rules: {
         title: [{required: true, message: '请输入专题名称', trigger: 'blur'}]
       },
-      tableData: [{
-        createTime: '2016-05-03',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }]
+      articleList: [],
+      selectList: [],
     }
   },
   components: {
-    ArticleDialog
+    ArticleMultiSelDialog
   },
   methods: {
     saveTopic(formName) {
@@ -69,11 +76,29 @@ export default {
       });
     },
     selectArticle(list) {
-      console.log(list)
+      this.selectList = list;
     },
     openArticleDialog() {
       this.$refs.articleDialog.articleDialogVisible = true;
-    }
+    },
+    addArticle(list) {
+      this.articleList = this.articleList.concat(list);
+    },
+    deleteArticle(index) {
+      this.articleList.splice(index, 1);
+    },
+    multiDeleteArticle() {
+      if (this.selectList.length === 0) {
+        return;
+      }
+      this.articleList = this.articleList.filter(article => this.selectList.findIndex(select => select.id === article.id));
+    },
+    rowClick(row) {
+      this.$refs.selectArticleTable.toggleRowSelection(row);
+    },
+    dateFormat(row, column) {
+      return this.$options.filters['dateFormat'](row.createDate, 'yyyy-MM-dd')
+    },
   }
 }
 </script>
