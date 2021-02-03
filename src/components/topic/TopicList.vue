@@ -11,7 +11,8 @@
       <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
       <el-table-column prop="title" label="名称" width="280" align="center"></el-table-column>
       <el-table-column prop="articleCount" label="文章数量" width="100" align="center"></el-table-column>
-      <el-table-column prop="updateDate" label="更新时间" width="280" align="center"></el-table-column>
+      <el-table-column prop="updateDate" label="更新时间" :formatter="dateFormat" width="280" align="center">
+      </el-table-column>
       <el-table-column fixed="right" label="操作" align="center">
         <template slot-scope="scope">
           <el-button size="mini" type="primary" @click="editTopic(scope.$index, scope.row)">编辑</el-button>
@@ -71,7 +72,10 @@ export default {
     },
     addTopic() {
       this.$router.push({name: 'EditTopic'})
-    }
+    },
+    dateFormat(row, column) {
+      return this.$options.filters['dateFormat'](row.createDate, 'yyyy-MM-dd')
+    },
   }
 }
 </script>

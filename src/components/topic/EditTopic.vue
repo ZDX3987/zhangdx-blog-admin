@@ -12,10 +12,10 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="16">
+        <el-col>
           <el-button size="small" type="primary" plain @click="openArticleDialog">添加文章</el-button>
           <el-button size="small" type="danger" @click="multiDeleteArticle" plain>删除文章</el-button>
-          <el-table ref="selectArticleTable" :data="articleList" size="medium"
+          <el-table ref="selectArticleTable" :data="topicForm.articleList" size="medium"
                     @selection-change="selectArticle" @row-click="rowClick">
             <el-table-column type="selection" width="50" align="center"></el-table-column>
             <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
@@ -54,12 +54,11 @@ export default {
       topicForm: {
         id: null,
         title: '',
-        articleIds: []
+        articleList: [],
       },
       rules: {
         title: [{required: true, message: '请输入专题名称', trigger: 'blur'}]
       },
-      articleList: [],
       selectList: [],
     }
   },
@@ -69,11 +68,15 @@ export default {
   methods: {
     saveTopic(formName) {
       this.$refs[formName].validate((valid) => {
-        if (!valid || this.articleList.length === 0) {
+        if (!valid) {
+          return false;
+        } else if (this.topicForm.articleList.length === 0) {
+          this.$message.warning('请添加文章');
           return false;
         }
         this.$api.topic.saveTopic(this.topicForm).then(res => {
           this.$message.success('保存成功');
+          this.$router.push({name: 'TopicList'})
         }).catch(error => this.$message.error('保存失败'));
       });
     },
@@ -84,17 +87,19 @@ export default {
       this.$refs.articleDialog.articleDialogVisible = true;
     },
     addArticle(list) {
-      this.articleList = this.articleList.concat(list);
+      let articleIds = this.topicForm.articleList.map(article => article.id);
+      list = list.filter(select => !articleIds.includes(select.id));
+      this.topicForm.articleList = this.topicForm.articleList.concat(list);
     },
     deleteArticle(index) {
-      this.articleList.splice(index, 1);
+      this.topicForm.articleList.splice(index, 1);
     },
     multiDeleteArticle() {
       if (this.selectList.length === 0) {
         return;
       }
-      this.articleList = this.articleList.filter(article =>
-          this.selectList.findIndex(select => select.id === article.id) === -1);
+      this.topicForm.articleList = this.topicForm.articleList.filter(article =>
+        this.selectList.findIndex(select => select.id === article.id) === -1);
     },
     rowClick(row) {
       this.$refs.selectArticleTable.toggleRowSelection(row);
