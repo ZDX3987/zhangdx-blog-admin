@@ -60,10 +60,6 @@ export default {
         pageSize: this.pageSize,
         sort: 'create_date'
       }
-      // let formData = new FormData();
-      // formData.append('pageIndex', pageIndex);
-      // formData.append('pageSize', this.pageSize);
-      // formData.append('sort', 'create_date');
       this.loading = true;
       this.$api.topic.getTopicByPage(params).then(res => {
         this.topicList = res.data.elements;
@@ -72,6 +68,9 @@ export default {
     },
     addTopic() {
       this.$router.push({name: 'EditTopic'})
+    },
+    editTopic(index, row) {
+      this.$router.push({name: 'EditTopic', params: {operate: 'update', topic: row}})
     },
     dateFormat(row, column) {
       return this.$options.filters['dateFormat'](row.createDate, 'yyyy-MM-dd')

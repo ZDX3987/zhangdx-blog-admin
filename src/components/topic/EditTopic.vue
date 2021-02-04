@@ -51,6 +51,7 @@ export default {
   name: "EditTopic",
   data() {
     return {
+      operate: '',
       topicForm: {
         id: null,
         title: '',
@@ -64,6 +65,12 @@ export default {
   },
   components: {
     ArticleMultiSelDialog
+  },
+  created() {
+    this.operate = this.$route.params.operate;
+    if (this.operate === 'update') {
+      this.topicForm = this.$route.params.topic;
+    }
   },
   methods: {
     saveTopic(formName) {
@@ -99,7 +106,7 @@ export default {
         return;
       }
       this.topicForm.articleList = this.topicForm.articleList.filter(article =>
-        this.selectList.findIndex(select => select.id === article.id) === -1);
+          this.selectList.findIndex(select => select.id === article.id) === -1);
     },
     rowClick(row) {
       this.$refs.selectArticleTable.toggleRowSelection(row);
