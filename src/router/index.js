@@ -8,10 +8,12 @@ import ContentSettings from "../components/settings/content/ContentSettings";
 import Home from "../components/home/Home";
 import topic from "./topic";
 import article from "./article";
+import {getStorageItem} from "../util/storage-unit";
+import {Message} from 'element-ui'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -55,8 +57,8 @@ export default new Router({
             title: '个人中心'
           }
         },
-          ...article,
-          ...topic,
+        ...article,
+        ...topic,
         {
           path: '/category',
           name: 'Category',
@@ -84,8 +86,29 @@ export default new Router({
       }
     }
   ]
+});
+
+export default router;
+
+
+router.beforeEach((to, from, next) => {
+  let token = getStorageItem("Authorization");
+  if (to.name === 'Login') {
+    if (token) {
+      router.push({name: 'Home'});
+    } else {
+      next();
+    }
+  } else {
+    if (token) {
+      next();
+    } else {
+      Message({
+        message: '您还没有登录',
+        type: 'warning'
+      });
+      router.push({name: 'Login'});
+    }
+  }
 })
-const originalPush = Router.prototype.push
-Router.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+

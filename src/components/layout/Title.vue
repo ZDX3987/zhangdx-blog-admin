@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import {removeStorageItem} from "../../util/storage-unit";
+
 export default {
   name: "Title",
   data() {
@@ -100,6 +102,7 @@ export default {
     logout() {
       this.$api.user.logout().then(
         (res) => {
+          removeStorageItem('Authorization');
           this.$message.success(res.msg);
           this.$router.push({name: "Login"});
         },
