@@ -11,4 +11,8 @@ export default {
     getTopicByPage(formData) {
         return http.get('/api/topic/topics', {params: formData})
     },
+
+    getTopicById(topicId) {
+        return http.get('/api/topic/topic/' + topicId);
+    }
 }

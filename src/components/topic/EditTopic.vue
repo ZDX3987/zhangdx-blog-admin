@@ -71,6 +71,9 @@ export default {
     if (this.operate === 'update') {
       this.topicForm = this.$route.params.topic;
     }
+    this.$api.topic.getTopicById(this.topicForm.id).then(res => {
+      this.topicForm = res.data;
+    }).catch(error => this.$message.error('查询失败'))
   },
   methods: {
     saveTopic(formName) {
