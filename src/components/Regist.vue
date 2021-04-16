@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Bg />
+    <Bg/>
     <div class="regist-page">
       <el-row>
         <el-col :span="10" :offset="7">
@@ -9,58 +9,60 @@
             <el-form ref="form" :rules="rules" :model="registUserParam">
               <el-form-item prop="username">
                 <el-input
-                  v-model="registUserParam.username"
-                  placeholder="请输入用户名"
+                    v-model="registUserParam.username"
+                    placeholder="请输入用户名"
                 ></el-input>
               </el-form-item>
               <el-form-item>
                 <el-input
-                  v-model="registUserParam.nickname"
-                  placeholder="请输入昵称"
+                    v-model="registUserParam.nickname"
+                    placeholder="请输入昵称"
                 ></el-input>
               </el-form-item>
               <el-form-item prop="password">
                 <el-input
-                  v-model="registUserParam.password"
-                  placeholder="请输入密码"
-                  show-password
+                    v-model="registUserParam.password"
+                    placeholder="请输入密码"
+                    show-password
                 ></el-input>
               </el-form-item>
               <el-form-item prop="repassword">
                 <el-input
-                  v-model="registUserParam.repassword"
-                  placeholder="请再次输入密码"
-                  show-password
+                    v-model="registUserParam.repassword"
+                    placeholder="请再次输入密码"
+                    show-password
                 ></el-input>
               </el-form-item>
               <el-form-item prop="email">
                 <el-input
-                  v-model="registUserParam.email"
-                  placeholder="请输入邮箱"
+                    v-model="registUserParam.email"
+                    placeholder="请输入邮箱"
                 ></el-input>
               </el-form-item>
               <el-form-item prop="checkCode">
                 <el-row>
                   <el-col :span="16">
                     <el-input
-                      v-model="registUserParam.checkCode"
-                      placeholder="请输入验证码"
+                        v-model="registUserParam.checkCode"
+                        placeholder="请输入内测码"
                     ></el-input>
                   </el-col>
                   <el-col :span="8">
                     <el-button
-                      v-if="checkcode_btn_clicked"
-                      class="code-btn"
-                      v-t="{path: 'regist_text.btn_checkcode_active', args: {expire:checkCode_expire}}"
-                      type="primary"
-                      :disabled="checkcode_btn_clicked"
+                        v-if="checkcode_btn_clicked"
+                        class="code-btn"
+                        v-t="{path: 'regist_text.btn_checkcode_active', args: {expire:checkCode_expire}}"
+                        type="primary"
+                        :disabled="checkcode_btn_clicked"
                     ></el-button>
                     <el-button
-                      class="code-btn"
-                      type="primary"
-                      v-show="!checkcode_btn_clicked"
-                      @click="getCheckCode"
-                    >验证码</el-button>
+                        class="code-btn"
+                        type="primary"
+                        v-show="!checkcode_btn_clicked"
+                        @click="getCheckCode"
+                        disabled
+                    >验证码
+                    </el-button>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -72,23 +74,25 @@
               </el-form-item>
               <el-form-item>
                 <el-button
-                  @click="regist('form')"
-                  :disabled="!agreementCheck"
-                  type="primary"
-                >注册</el-button>
+                    @click="regist('form')"
+                    :disabled="!agreementCheck"
+                    type="primary"
+                >注册
+                </el-button>
               </el-form-item>
             </el-form>
           </div>
         </el-col>
       </el-row>
     </div>
-    <CopyRight />
+    <CopyRight/>
   </div>
 </template>
 
 <script>
 import Bg from "./layout/Bg";
 import CopyRight from './common/CopyRight';
+
 export default {
   name: "Regist",
   components: {
@@ -96,12 +100,20 @@ export default {
     CopyRight
   },
   data() {
-    var repassword = (rule, value, callback) => {
-      if (value != this.registUserParam.password) {
+    let repassword = (rule, value, callback) => {
+      if (value !== this.registUserParam.password) {
         callback(new Error('两次输入的密码不一致！'));
       } else {
         callback();
       }
+    };
+    let betaCode = (rule, value, callback) => {
+      let params = {
+        betaCode: value
+      };
+      this.$api.user.checkBetaCode(params).then(res => {
+        callback();
+      }).catch(error => callback(new Error(error.msg)));
     };
     return {
       checkCode_expire: 10,
@@ -142,24 +154,31 @@ export default {
             message: '请再次输入密码',
             trigger: "blur"
           },
-          { validator: repassword, trigger: "blur" }
+          {validator: repassword, trigger: "blur"}
         ],
         email: [
           {
             required: true,
             message: '请输入邮箱',
             trigger: "blur"
-          }
+          },
         ],
         checkCode: [
           {
             required: true,
-            message: '请输入验证码',
+            message: '请输入内测码',
             trigger: "blur"
-          }
+          },
+          {validator: betaCode, trigger: "blur"}
         ]
       }
     };
+  },
+  created() {
+    this.$message({
+      message: '用户注册功能暂未公开开放，请联系管理员获取内测码体验',
+      type: 'warning'
+    });
   },
   methods: {
     getCheckCode() {
@@ -177,10 +196,11 @@ export default {
         if (valid) {
           this.$api.user.regist(this.registUserParam).then(res => {
             this.$message.success(res.data.msg)
-          }).catch(error => {});
+          }).catch(error => {
+          });
         }
       });
-    }
+    },
   }
 };
 </script>
@@ -191,30 +211,37 @@ export default {
   margin: 0 auto;
   height: 100%;
 }
+
 .regist-title {
   margin-top: 20px;
   color: rgb(176, 183, 189);
 }
+
 .regist-content {
   padding-top: 8%;
   margin-bottom: 5%;
 }
+
 .el-input {
   font-size: 100%;
 }
+
 .el-input >>> input {
   background-color: rgb(0, 30, 66);
   border: 1px solid rgb(58, 95, 119);
   height: 45px;
   color: #fff;
 }
+
 .el-button {
   width: 100%;
   height: 45px;
 }
+
 .code-btn {
   line-height: 100%;
 }
+
 .check-info {
   color: #000;
 }

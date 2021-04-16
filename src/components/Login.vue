@@ -9,35 +9,35 @@
             <el-form ref="form" :model="loginParam" :rules="rules">
               <el-form-item prop="username">
                 <el-input
-                  v-model="loginParam.username"
-                  prefix-icon="fa fa-user"
-                  placeholder="请输入用户名"
+                    v-model="loginParam.username"
+                    prefix-icon="fa fa-user"
+                    placeholder="请输入用户名"
                 ></el-input>
               </el-form-item>
               <el-form-item prop="password">
                 <el-input
-                  v-model="loginParam.password"
-                  prefix-icon="fa fa-lock"
-                  show-password
-                  placeholder="请输入密码"
+                    v-model="loginParam.password"
+                    prefix-icon="fa fa-lock"
+                    show-password
+                    placeholder="请输入密码"
                 ></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button
-                  :loading="login_loading"
-                  :disabled="login_loading"
-                  type="primary"
-                  @click="login('form')"
+                    :loading="login_loading"
+                    :disabled="login_loading"
+                    type="primary"
+                    @click="login('form')"
                 >登录
                 </el-button>
               </el-form-item>
             </el-form>
-            <!--            <el-link class="regist-link" type="success" :underline="false">-->
-            <!--              <router-link :to="{name: 'Regist'}">注册</router-link>-->
-            <!--            </el-link>&nbsp;&nbsp;|&nbsp;&nbsp;-->
-            <!--            <el-link class="regist-link" type="success" :underline="false">-->
-            <!--              <router-link :to="{name: 'Regist'}">忘记密码</router-link>-->
-            <!--            </el-link>-->
+            <el-link class="regist-link" type="success" :underline="false">
+              <router-link :to="{name: 'Regist'}">注册</router-link>
+            </el-link>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <el-link class="regist-link" type="success" :underline="false">
+              <router-link :to="{name: 'Regist'}">忘记密码</router-link>
+            </el-link>
           </div>
         </el-col>
       </el-row>
@@ -143,5 +143,10 @@ export default {
 .regist-link a {
   color: #fff;
   text-decoration: none;
+}
+
+.qq-btn {
+  font-size: 30px;
+  color: #48acee;
 }
 </style>
