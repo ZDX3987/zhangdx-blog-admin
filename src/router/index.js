@@ -11,6 +11,7 @@ import article from "./article";
 import {getStorageItem} from "../util/storage-unit";
 import {Message} from 'element-ui'
 import Regist from "../components/Regist";
+import settings from "./settings";
 
 Vue.use(Router)
 
@@ -60,6 +61,7 @@ const router = new Router({
                 },
                 ...article,
                 ...topic,
+                ...settings,
                 {
                     path: '/category',
                     name: 'Category',
@@ -68,14 +70,7 @@ const router = new Router({
                         title: '分类标签管理'
                     }
                 },
-                {
-                    path: '/settings/content',
-                    name: 'ContentSettings',
-                    component: ContentSettings,
-                    meta: {
-                        title: '内容设置'
-                    }
-                }
+
             ]
         },
         {

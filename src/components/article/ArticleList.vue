@@ -124,6 +124,7 @@ export default {
 <style scoped>
 .list-content {
   background-color: #fff;
+  min-height: 90vh;
 }
 
 .page-list {

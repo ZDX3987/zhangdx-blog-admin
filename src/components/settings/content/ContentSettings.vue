@@ -1,11 +1,11 @@
 <template>
   <div class="content-settings">
     <el-tabs tab-position="left" type="border-card">
-      <el-tab-pane label="菜单设置">
-        <MenuSettings/>
+      <el-tab-pane label="更新日志">
+        <update-log/>
       </el-tab-pane>
       <el-tab-pane label="友链设置">
-        <FriendshipLinkSettings/>
+        <friendship-link-settings/>
       </el-tab-pane>
       <el-tab-pane label="分享设置">分享设置</el-tab-pane>
     </el-tabs>
@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import MenuSettings from "./MenuSettings";
 import FriendshipLinkSettings from "./FriendshipLinkSettings";
+import UpdateLog from "./UpdateLog";
 
 export default {
   name: "ContentSettings",
   components: {
-    MenuSettings,
+    UpdateLog,
     FriendshipLinkSettings
   }
 }
@@ -31,6 +31,6 @@ export default {
 }
 
 .el-tabs {
-  height: 500px;
+  height: 90vh;
 }
 </style>

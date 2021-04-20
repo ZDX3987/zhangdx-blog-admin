@@ -112,7 +112,7 @@ export default {
     initVditor() {
       let that = this;
       this.contentEditor = new Vditor('vditor', {
-        minHeight: 400,
+        minHeight: 500,
         placeholder: '请在此处输入内容...',
         counter: {enable: true, type: "text"},
         cache: {
@@ -217,12 +217,16 @@ export default {
 </script>
 
 <style scoped>
+.article-form {
+  height: 100%;
+}
 .title-input {
   width: 50%;
 }
 
 #vditor {
   margin-bottom: 20px;
+  height: 55vh;
 }
 
 .article-cate-list {

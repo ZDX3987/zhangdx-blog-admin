@@ -82,6 +82,7 @@ export default {
 <style scoped>
 .topic-content {
   background-color: #FFF;
+  height: 90vh;
 }
 
 .btn-group {
