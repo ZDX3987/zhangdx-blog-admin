@@ -14,6 +14,7 @@
             :limit="1"
             :file-list="fileList"
             :on-change="handleChange"
+            accept="image/*,"
           >
             <i slot="default" class="el-icon-plus"></i>
             <div slot="file" slot-scope="{file}">
@@ -68,6 +69,7 @@
 <script>
 import Editor from "wangeditor";
 import {getFileNameByUrl} from "../../util/file-util";
+import {getStorageItem} from '../../util/storage-unit';
 
 export default {
   name: "EditorPublish",
@@ -164,9 +166,9 @@ export default {
       this.editor.config.onchange = (html) => {
         this.editorContent = html;
       };
-      this.editor.config.uploadImgServer = "/api/article/article/editor-upload";
+      this.editor.config.uploadImgServer = "/api/article/article/upload";
       this.editor.config.uploadImgHeaders = {
-        'Authorization': sessionStorage.getItem("Authorization")
+        'Authorization': getStorageItem("Authorization")
       }
       this.editor.config.uploadFileName = 'file';
       this.editor.config.uploadImgHooks = {

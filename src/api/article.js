@@ -18,8 +18,11 @@ export default {
     return http.post('/api/article/check-article/' + id);
   },
 
-  uploadArticleFile(formData) {
-    return http.post('/api/article/article/upload', formData, {
+  uploadArticleFile(file, articleId) {
+    let params = new FormData();
+    params.append('file', file);
+    params.append('articleId', articleId);
+    return http.post('/api/article/article/upload', params, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -41,5 +44,9 @@ export default {
   },
   delCategory(cateId) {
     return http.delete('/api/category/category/' + cateId);
-  }
+  },
+
+  saveEmptyArticle(articleInfo) {
+    return http.post('/api/article/empty-article', articleInfo);
+  },
 }

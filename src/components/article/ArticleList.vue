@@ -34,7 +34,7 @@
             <el-popconfirm
               icon="el-icon-info"
               title="确定删除吗？这将会删除和这篇文章相关的所有内容"
-              @onConfirm="deleteArticle(scope.$index, scope.row)"
+              @confirm="deleteArticle(scope.$index, scope.row)"
             >
               <el-button size="mini" type="danger" slot="reference">删除</el-button>
             </el-popconfirm>

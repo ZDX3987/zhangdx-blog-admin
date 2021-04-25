@@ -21,7 +21,7 @@
             cancelButtonText='不用了'
             icon="el-icon-info"
             title="确定删除这个专题吗？"
-            @onConfirm="deleteTopic(scope.$index, scope.row)"
+            @confirm="deleteTopic(scope.$index, scope.row)"
           >
             <el-button size="mini" type="danger" slot="reference">删除
             </el-button>

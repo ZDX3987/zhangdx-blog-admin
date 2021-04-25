@@ -7,28 +7,29 @@
         </el-form-item>
         <el-form-item label="文章封面">
           <el-upload
-            action="#"
-            list-type="picture-card"
-            ref="upload"
-            :auto-upload="false"
-            :limit="1"
-            :file-list="fileList"
-            :on-change="handleChange"
+              action="#"
+              list-type="picture-card"
+              ref="upload"
+              :auto-upload="false"
+              :limit="1"
+              :file-list="fileList"
+              :on-change="handleChange"
+              accept="image/*,"
           >
             <i slot="default" class="el-icon-plus"></i>
             <div slot="file" slot-scope="{file}">
               <img class="el-upload-list__item-thumbnail" :src="file.url" alt/>
               <span class="el-upload-list__item-actions">
                     <span
-                      class="el-upload-list__item-preview"
-                      @click="handlePictureCardPreview(file)"
+                        class="el-upload-list__item-preview"
+                        @click="handlePictureCardPreview(file)"
                     >
                       <i class="el-icon-zoom-in"></i>
                     </span>
                     <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleRemove(file)"
+                        v-if="!disabled"
+                        class="el-upload-list__item-delete"
+                        @click="handleRemove(file)"
                     >
                       <i class="el-icon-delete"></i>
                     </span>
@@ -70,16 +71,18 @@ import Vditor from 'vditor'
 import "vditor/dist/index.css"
 import {getFileNameByUrl} from "../../util/file-util";
 import {getTextFromHtml} from "../../util/html-util";
+import {getStorageItem} from '../../util/storage-unit';
 
 export default {
   name: "VditorPublish",
   data() {
     return {
       articleInfo: {
+        id: '',
         title: "",
         text: "",
         coverImg: "",
-        status: "",
+        status: 0,
         categories: [],
         source: 2, // 文章来源：markdown编辑器
         digest: ''
@@ -118,11 +121,28 @@ export default {
         cache: {
           enable: false,
         },
+        mode: 'sv',
+        blur: (mdValue) => {
+          if (mdValue === '\n' || that.articleInfo.id) {
+            return;
+          }
+          that.saveEmptyArticle(that, () =>{});
+        },
         upload: {
           url: '/api/article/article/upload',
-          linkToImgUrl: '/api/article/article/upload',
-          headers: {
-            'Authorization': sessionStorage.getItem("Authorization")
+          // linkToImgUrl: '/api/article/article/upload',
+          // headers: {
+          //   'Authorization': getStorageItem("Authorization")
+          // },
+          // fieldName: 'file',
+          // multiple: false,
+          // extraData: {articleId: that.articleInfo.id},
+          handler(files) {
+            if (that.articleInfo.id) {
+              that.handleCustomUploadFile(that, files)
+            } else {
+              that.saveEmptyArticle(that, () => that.handleCustomUploadFile(that, files));
+            }
           },
           format(files, responseText) {
             let responseParse = JSON.parse(responseText)
@@ -152,33 +172,53 @@ export default {
     save(form, articleStatus) {
       this.$refs[form].validate((valid) => {
         if (valid && this.validArticle()) {
-          this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
-          this.articleInfo.status = articleStatus;
-          this.articleInfo.digest = this.genArticleDigest(this.contentEditor.getHTML(), 100);
-          let form = new FormData();
-          form.append("file", this.fileList[0].raw);
-          form.append("articleJSON", JSON.stringify(this.articleInfo));
-          this.$api.article
-            .saveArticle(form)
-            .then(
+          this.saveRealArticle(articleStatus);
+        }
+      });
+    },
+    saveEmptyArticle(that, callBack) {
+      that.$api.article.saveEmptyArticle(that.articleInfo).then(res => {
+        that.articleInfo.id = res.data.id;
+        callBack();
+        that.$message.success('已自动保存到草稿箱');
+      }).catch(error => that.$message.error('自动保存失败'));
+    },
+    handleCustomUploadFile(that, files) {
+      that.$api.article.uploadArticleFile(files[0], that.articleInfo.id).then(uploadRes => {
+        let name = files[0] && files[0].name;
+        let path = uploadRes.data;
+        let succFileText = "";
+        if (that.contentEditor && that.contentEditor.getCurrentMode() === "wysiwyg") {
+          succFileText += `<img alt=${name} src="${path}">`;
+        } else {
+          succFileText += `![${name}](${path})`;
+        }
+        that.contentEditor.insertValue(succFileText);
+        that.contentEditor.tip('上传成功');
+      }).catch(error => that.contentEditor.tip('上传失败'))
+    },
+    saveRealArticle(articleStatus) {
+      this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
+      this.articleInfo.status = articleStatus;
+      this.articleInfo.digest = this.genArticleDigest(this.contentEditor.getHTML(), 100);
+      let form = new FormData();
+      form.append("file", this.fileList[0] ? this.fileList[0].raw : null);
+      form.append("articleJSON", JSON.stringify(this.articleInfo));
+      this.$api.article
+          .saveArticle(form)
+          .then(
               (res) => {
                 this.$message.success(res.msg);
                 this.$router.push({name: 'ArticleList'});
               },
               (error) => this.$message.success(error.msg)
-            );
-        }
-      });
+          );
     },
     validArticle() {
       if ((this.articleInfo.text = this.contentEditor.getValue()) === '') {
         this.$message.error("请输入文章内容");
         return false;
       }
-      // if (this.fileList.length === 0) {
-      //   this.$message.error("请上传文章封面图片");
-      //   return false;
-      // }
       if (this.articleInfo.categories.length === 0) {
         this.$message.error("请选择文章分类标签");
         return false;
@@ -220,6 +260,7 @@ export default {
 .article-form {
   height: 100%;
 }
+
 .title-input {
   width: 50%;
 }
