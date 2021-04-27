@@ -119,11 +119,11 @@ export default {
       this.$refs[form].validate((valid) => {
         if (valid && this.validArticle()) {
           this.articleInfo.text = this.editor.txt.html();
-          this.articleInfo.coverImg = this.fileList[0].name;
+          this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
           this.articleInfo.status = articleStatus;
           this.articleInfo.digest = this.genArticleDigest(this.editor.txt.text(), 100);
           let form = new FormData();
-          form.append("file", this.fileList[0].raw);
+          form.append("file", this.fileList[0] ? this.fileList[0].raw : null);
           form.append("articleJSON", JSON.stringify(this.articleInfo));
           this.$api.article
               .saveArticle(form)
