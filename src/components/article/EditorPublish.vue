@@ -7,29 +7,29 @@
         </el-form-item>
         <el-form-item label="文章封面">
           <el-upload
-            action="#"
-            list-type="picture-card"
-            ref="upload"
-            :auto-upload="false"
-            :limit="1"
-            :file-list="fileList"
-            :on-change="handleChange"
-            accept="image/*,"
+              action="#"
+              list-type="picture-card"
+              ref="upload"
+              :auto-upload="false"
+              :limit="1"
+              :file-list="fileList"
+              :on-change="handleChange"
+              accept="image/*,"
           >
             <i slot="default" class="el-icon-plus"></i>
             <div slot="file" slot-scope="{file}">
               <img class="el-upload-list__item-thumbnail" :src="file.url" alt/>
               <span class="el-upload-list__item-actions">
                     <span
-                      class="el-upload-list__item-preview"
-                      @click="handlePictureCardPreview(file)"
+                        class="el-upload-list__item-preview"
+                        @click="handlePictureCardPreview(file)"
                     >
                       <i class="el-icon-zoom-in"></i>
                     </span>
                     <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleRemove(file)"
+                        v-if="!disabled"
+                        class="el-upload-list__item-delete"
+                        @click="handleRemove(file)"
                     >
                       <i class="el-icon-delete"></i>
                     </span>
@@ -77,6 +77,7 @@ export default {
     return {
       editor: null,
       articleInfo: {
+        id: '',
         title: "",
         text: "",
         coverImg: "",
@@ -125,14 +126,14 @@ export default {
           form.append("file", this.fileList[0].raw);
           form.append("articleJSON", JSON.stringify(this.articleInfo));
           this.$api.article
-            .saveArticle(form)
-            .then(
-              (res) => {
-                this.$message.success(res.msg);
-                this.$router.push({name: 'ArticleList'});
-              },
-              (error) => this.$message.success(error.msg)
-            );
+              .saveArticle(form)
+              .then(
+                  (res) => {
+                    this.$message.success(res.msg);
+                    this.$router.push({name: 'ArticleList'});
+                  },
+                  (error) => this.$message.success(error.msg)
+              );
         }
       });
     },
@@ -141,10 +142,6 @@ export default {
         this.$message.error("请输入文章内容");
         return false;
       }
-      // if (this.fileList.length === 0) {
-      //   this.$message.error("请上传文章封面图片");
-      //   return false;
-      // }
       if (this.articleInfo.categories.length === 0) {
         this.$message.error("请选择文章分类标签");
         return false;
@@ -163,20 +160,22 @@ export default {
     },
     initEditor() {
       this.editor = new Editor("#editor");
-      this.editor.config.onchange = (html) => {
-        this.editorContent = html;
-      };
-      this.editor.config.uploadImgServer = "/api/article/article/upload";
-      this.editor.config.uploadImgHeaders = {
-        'Authorization': getStorageItem("Authorization")
-      }
-      this.editor.config.uploadFileName = 'file';
-      this.editor.config.uploadImgHooks = {
-        customInsert: function (insertImgFn, result) {
-          insertImgFn(result.data);
+      this.editor.config.onchange = (html) => this.editorContent = html;
+      this.editor.config.onblur = (newHtml) => {
+        if (newHtml === '' || this.articleInfo.id) {
+          return;
         }
+        this.saveEmptyArticle(() => {
+        });
       }
       this.editor.config.zIndex = 1;
+      this.editor.config.customUploadImg = (resultFiles, insertImgFn) => {
+        if (this.articleInfo.id) {
+          this.handleUploadFile(resultFiles[0], insertImgFn);
+        } else {
+          this.saveEmptyArticle(() => this.handleUploadFile(resultFiles[0], insertImgFn));
+        }
+      }
       this.editor.config.pasteFilterStyle = false;
       this.editor.create();
     },
@@ -199,6 +198,19 @@ export default {
     dateFormat(date) {
       return this.$options.filters['dateFormat'](date, 'yyyyMMddhhmmss')
     },
+    saveEmptyArticle(callBack) {
+      this.$api.article.saveEmptyArticle(this.articleInfo).then(res => {
+        this.articleInfo.id = res.data.id;
+        callBack();
+        this.$message.success('已自动保存到草稿箱');
+      }).catch(error => this.$message.error('自动保存失败'));
+    },
+    handleUploadFile(file, callBack) {
+      this.$api.article.uploadArticleFile(file, this.articleInfo.id).then(uploadRes => {
+        let path = uploadRes.data;
+        callBack(path);
+      }).catch(error => this.$message.error('上传失败'));
+    }
   },
 }
 </script>

@@ -130,13 +130,6 @@ export default {
         },
         upload: {
           url: '/api/article/article/upload',
-          // linkToImgUrl: '/api/article/article/upload',
-          // headers: {
-          //   'Authorization': getStorageItem("Authorization")
-          // },
-          // fieldName: 'file',
-          // multiple: false,
-          // extraData: {articleId: that.articleInfo.id},
           handler(files) {
             if (that.articleInfo.id) {
               that.handleCustomUploadFile(that, files)
@@ -195,7 +188,7 @@ export default {
         }
         that.contentEditor.insertValue(succFileText);
         that.contentEditor.tip('上传成功');
-      }).catch(error => that.contentEditor.tip('上传失败'))
+      }).catch(error => that.contentEditor.tip('上传失败'));
     },
     saveRealArticle(articleStatus) {
       this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
