@@ -1,12 +1,42 @@
-import ContentSettings from "../components/settings/content/ContentSettings";
+import UpdateLogDetail from '../components/settings/content/update-log/UpdateLogDetail';
+import FriendshipLinkSettings from '../components/settings/content/FriendshipLinkSettings';
+import UpdateLogList from '../components/settings/content/update-log/UpdateLogList';
+import UpdateLog from '../components/settings/content/update-log/UpdateLog';
 
 export default [
     {
-        path: '/settings/content',
-        name: 'ContentSettings',
-        component: ContentSettings,
+        path: '/settings/update-log',
+        name: 'UpdateLog',
+        component: UpdateLog,
+        redirect: {name: 'UpdateLogList'},
+        children: [
+            {
+                path: 'list',
+                name: 'UpdateLogList',
+                component: UpdateLogList,
+                meta: {
+                    title: '日志列表'
+                }
+            },
+            {
+                path: 'modify',
+                name: 'UpdateLogDetail',
+                component: UpdateLogDetail,
+                meta: {
+                    title: '新增日志'
+                }
+            }
+        ],
         meta: {
-            title: '内容设置'
+            title: '更新日志'
+        }
+    },
+    {
+        path: '/settings/friend-links',
+        name: 'FriendshipLinks',
+        component: FriendshipLinkSettings,
+        meta: {
+            title: '友链设置'
         }
     }
 ]

@@ -42,33 +42,30 @@
         </el-table-column>
       </el-table>
     </div>
-    <update-log-dialog ref="updateLogDialog"/>
   </div>
 </template>
 
 <script>
-import UpdateLogDialog from "./UpdateLogDialog";
 
 export default {
-  name: "UpdateLog",
+  name: "UpdateLogList",
   data() {
     return {
       updateLogList: []
     }
   },
   components: {
-    UpdateLogDialog
   },
   methods: {
     addLog() {
-      this.$refs.updateLogDialog.updateLogDialogVisible = true;
+      this.$router.push({name: 'UpdateLogDetail'});
     }
   }
 }
 </script>
 
 <style scoped>
-.table-style {
+.log-content {
 
 }
 </style>

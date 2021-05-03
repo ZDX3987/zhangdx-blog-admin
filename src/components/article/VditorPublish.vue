@@ -71,7 +71,6 @@ import Vditor from 'vditor'
 import "vditor/dist/index.css"
 import {getFileNameByUrl} from "../../util/file-util";
 import {getTextFromHtml} from "../../util/html-util";
-import {getStorageItem} from '../../util/storage-unit';
 
 export default {
   name: "VditorPublish",

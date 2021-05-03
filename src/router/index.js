@@ -4,7 +4,6 @@ import Category from "../components/category/Category";
 import Login from "../components/Login";
 import Index from "../components/index/Index";
 import UserCenter from "../components/usercenter/UserCenter";
-import ContentSettings from "../components/settings/content/ContentSettings";
 import Home from "../components/home/Home";
 import topic from "./topic";
 import article from "./article";

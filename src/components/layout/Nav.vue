@@ -50,9 +50,15 @@
           <span>系统设置</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="5-1">
-            <router-link :to="{name: 'ContentSettings'}">内容设置</router-link>
-          </el-menu-item>
+          <el-submenu index="5-1">
+            <template slot="title">内容设置</template>
+            <el-menu-item index="5-1-1">
+              <router-link :to="{name: 'UpdateLogList'}">更新日志</router-link>
+            </el-menu-item>
+            <el-menu-item index="5-1-2">
+              <router-link :to="{name: 'FriendshipLinks'}">友链设置</router-link>
+            </el-menu-item>
+          </el-submenu>
           <el-menu-item index="5-2">个人信息设置</el-menu-item>
           <el-menu-item index="5-3">系统用户设置</el-menu-item>
         </el-menu-item-group>

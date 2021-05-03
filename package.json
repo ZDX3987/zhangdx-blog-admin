@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "echarts": "^5.1.0",
     "echarts-gl": "^1.1.2",
     "element-ui": "^2.15.1",
     "font-awesome": "^4.7.0",
