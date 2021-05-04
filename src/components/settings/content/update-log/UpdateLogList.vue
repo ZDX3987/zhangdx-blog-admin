@@ -8,23 +8,19 @@
           </el-button-group>
         </el-col>
       </el-row>
-      <el-table :data="updateLogList">
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            这是日志内容
-          </template>
-        </el-table-column>
+      <el-table :data="updateLogList" v-loading="loading">
         <el-table-column
-            label="序号"
-            prop="index">
+            width="50"
+            type="index">
         </el-table-column>
         <el-table-column
             label="标题"
-            prop="name">
+            prop="title">
         </el-table-column>
         <el-table-column
             label="时间"
-            prop="desc">
+            :formatter="dateFormat"
+            prop="updateDate">
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -41,6 +37,16 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+          @size-change="queryLog"
+          @current-change="queryLog"
+          :current-page="currentPage"
+          :page-sizes="[15, 30, 50]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          background
+      ></el-pagination>
     </div>
   </div>
 </template>
@@ -51,14 +57,31 @@ export default {
   name: "UpdateLogList",
   data() {
     return {
-      updateLogList: []
+      updateLogList: [],
+      pageSize: 15,
+      currentPage: 1,
+      total: 0,
+      loading: false,
     }
   },
-  components: {
+  created() {
+    this.queryLog(1);
   },
   methods: {
     addLog() {
       this.$router.push({name: 'UpdateLogDetail'});
+    },
+    queryLog(currentPage) {
+      this.loading = true;
+      let pageIndex = currentPage - 1;
+      this.$api.settings.getUpdateLogByPage(pageIndex, this.pageSize).then(res => {
+        this.updateLogList = res.data.elements;
+        this.total = res.data.totalCount;
+      }).catch(error => this.$message.error('查询失败'))
+          .finally(() => this.loading = false);
+    },
+    dateFormat(row) {
+      return this.$options.filters['dateFormat'](row.createDate)
     }
   }
 }

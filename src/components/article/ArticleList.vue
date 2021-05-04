@@ -7,7 +7,7 @@
             <el-input v-model="queryParams.authorName" placeholder="请输入作者名字"></el-input>
           </el-form-item>
           <el-form-item size="small">
-            <el-button type="primary" @click="queryArticle(pageIndex)">查询</el-button>
+            <el-button type="primary" @click="queryArticle(1)">查询</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -43,9 +43,9 @@
       </el-table>
       <div class="page-list">
         <el-pagination
-          @size-change="queryArticle(pageIndex)"
-          @current-change="queryArticle(pageIndex)"
-          :current-page="pageIndex"
+          @size-change="queryArticle"
+          @current-change="queryArticle"
+          :current-page="currentPage"
           :page-sizes="[15, 30, 50]"
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
@@ -67,7 +67,7 @@ export default {
         authorName: "",
       },
       pageSize: 15,
-      pageIndex: 0,
+      currentPage: 1,
       total: 0,
       loading: false,
       queryStatus: [0, 1, 2],
@@ -81,18 +81,14 @@ export default {
     };
   },
   created() {
-    this.queryArticle(0);
+    this.queryArticle(1);
   },
   methods: {
-    queryArticle(pageIndex) {
+    queryArticle(currentPage) {
+      this.currentPage = currentPage;
+      let pageIndex = this.currentPage - 1;
       this.loading = true;
-      this.pageIndex = pageIndex;
-      let formData = new FormData();
-      formData.append("pageSize", this.pageSize);
-      formData.append("pageIndex", pageIndex);
-      formData.append("articleStatus", this.queryStatus);
-      formData.append("sort", this.sort);
-      this.$api.article.getArticleByPage(formData).then(
+      this.$api.article.getArticleByPage(this.pageSize, pageIndex, this.queryStatus, this.sort).then(
         (res) => {
           this.articleList = res.data.elements;
           this.total = res.data.totalCount;
@@ -111,11 +107,11 @@ export default {
     deleteArticle(index, row) {
       this.$api.article.delArticle(row.id).then(res => {
         this.$message.success(res.msg);
-        this.queryArticle(0);
+        this.queryArticle(1);
       }).catch(error => this.$message.error(error.msg));
     },
-    dateFormat(row, column) {
-      return this.$options.filters['dateFormat'](row.createDate, 'yyyy-MM-dd')
+    dateFormat(row) {
+      return this.$options.filters['dateFormat'](row.createDate)
     }
   },
 };

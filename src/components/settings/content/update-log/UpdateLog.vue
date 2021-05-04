@@ -1,6 +1,6 @@
 <template>
   <div class="update-log">
-    <router-view></router-view>
+    <router-view class="update-log-view"></router-view>
   </div>
 </template>
 
@@ -14,7 +14,9 @@ export default {
 .update-log {
   background-color: #FFF;
   height: 90vh;
-  margin-top: 20px;
-  padding-bottom: 20px;
+}
+.update-log-view {
+  margin: 20px;
+  padding-top: 20px;
 }
 </style>

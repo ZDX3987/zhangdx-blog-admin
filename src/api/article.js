@@ -8,7 +8,12 @@ export default {
       }
     })
   },
-  getArticleByPage(formData) {
+  getArticleByPage(pageSize, pageIndex, queryStatus, sort) {
+    let formData = new FormData();
+    formData.append("pageSize", pageSize);
+    formData.append("pageIndex", pageIndex);
+    formData.append("articleStatus", queryStatus);
+    formData.append("sort", sort);
     return http.post('/api/article/articles', formData);
   },
   getArticleById(id) {

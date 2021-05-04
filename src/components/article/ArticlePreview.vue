@@ -7,7 +7,7 @@
           <el-row class="article-info">
             <el-col :span="8" class="article-date">
               <span class="fa fa-calendar-o"></span>
-              {{ articleDTO.createDate | dateFormat("yyyy-MM-dd") }}
+              {{ articleDTO.createDate | dateFormat }}
             </el-col>
             <el-col :span="12" class="article-author">
               <el-avatar

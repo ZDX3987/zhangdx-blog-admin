@@ -72,8 +72,8 @@ export default {
     editTopic(index, row) {
       this.$router.push({name: 'EditTopic', params: {operate: 'update', topic: row}})
     },
-    dateFormat(row, column) {
-      return this.$options.filters['dateFormat'](row.createDate, 'yyyy-MM-dd')
+    dateFormat(row) {
+      return this.$options.filters['dateFormat'](row.createDate)
     },
   }
 }
