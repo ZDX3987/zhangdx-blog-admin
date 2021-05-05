@@ -34,6 +34,10 @@ const settingsapi = {
             'pageSize': pageSize
         }
         return http.get('/api/update-log/update-log', {params: params});
+    },
+
+    deleteUpdateLog(id) {
+        return http.delete('/api/update-log/update-log/' + id);
     }
 }
 

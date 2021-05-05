@@ -19,11 +19,19 @@ export default [
                 }
             },
             {
-                path: 'modify',
-                name: 'UpdateLogDetail',
+                path: 'add',
+                name: 'AddUpdateLogDetail',
                 component: UpdateLogDetail,
                 meta: {
                     title: '新增日志'
+                }
+            },
+            {
+                path: 'modify',
+                name: 'ModifyUpdateLogDetail',
+                component: UpdateLogDetail,
+                meta: {
+                    title: '修改日志'
                 }
             }
         ],

@@ -18,7 +18,7 @@
             prop="title">
         </el-table-column>
         <el-table-column
-            label="时间"
+            label="最后修改时间"
             :formatter="dateFormat"
             prop="updateDate">
         </el-table-column>
@@ -27,26 +27,31 @@
             <el-button
                 size="mini"
                 type="primary"
-                @click="handleEdit(scope.$index, scope.row)">编辑
+                @click="editUpdateLog(scope.$index, scope.row)">编辑
             </el-button>
-            <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.$index, scope.row)">删除
-            </el-button>
+            <el-popconfirm
+                icon="el-icon-info"
+                title="确定删除吗这个日志吗？"
+                @confirm="deleteUpdateLog(scope.$index, scope.row)"
+            >
+              <el-button size="mini" type="danger" slot="reference">删除</el-button>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-          @size-change="queryLog"
-          @current-change="queryLog"
-          :current-page="currentPage"
-          :page-sizes="[15, 30, 50]"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          background
-      ></el-pagination>
+      <div class="page-list">
+        <el-pagination
+            @size-change="queryLog"
+            @current-change="queryLog"
+            :current-page="currentPage"
+            :page-sizes="[15, 30, 50]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+            hide-on-single-page
+            background
+        ></el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -69,7 +74,7 @@ export default {
   },
   methods: {
     addLog() {
-      this.$router.push({name: 'UpdateLogDetail'});
+      this.$router.push({name: 'AddUpdateLogDetail'});
     },
     queryLog(currentPage) {
       this.loading = true;
@@ -80,8 +85,17 @@ export default {
       }).catch(error => this.$message.error('查询失败'))
           .finally(() => this.loading = false);
     },
+    editUpdateLog(index, row) {
+      this.$router.push({name: 'ModifyUpdateLogDetail', params: {operate: 'update', updateLog: row}})
+    },
+    deleteUpdateLog(index, row) {
+      this.$api.settings.deleteUpdateLog(row.id).then(res => {
+        this.$message.success(res.msg);
+        this.queryLog(1);
+      }).catch(error => this.$message.error(error.msg));
+    },
     dateFormat(row) {
-      return this.$options.filters['dateFormat'](row.createDate)
+      return this.$options.filters['dateFormat'](row.updateDate)
     }
   }
 }
@@ -90,5 +104,8 @@ export default {
 <style scoped>
 .log-content {
 
+}
+.page-list {
+  margin-top: 20px;
 }
 </style>
