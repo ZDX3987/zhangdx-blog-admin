@@ -34,7 +34,7 @@
             <el-popconfirm
               icon="el-icon-info"
               title="确定删除吗？这将会删除和这篇文章相关的所有内容"
-              @onConfirm="deleteArticle(scope.$index, scope.row)"
+              @confirm="deleteArticle(scope.$index, scope.row)"
             >
               <el-button size="mini" type="danger" slot="reference">删除</el-button>
             </el-popconfirm>
@@ -102,7 +102,7 @@ export default {
       this.$router.push({name: 'ArticlePreview', params: {id: row.id}})
     },
     editArticle(index, row) {
-      console.log(row)
+      this.$router.push({name: 'PublishArticle', params: {operate: 'update', article: row}})
     },
     deleteArticle(index, row) {
       this.$api.article.delArticle(row.id).then(res => {

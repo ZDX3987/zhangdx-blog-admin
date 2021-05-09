@@ -158,7 +158,9 @@ export default {
     },
     setUpdateData() {
       this.articleInfo = this.updateArticle;
-      this.fileList.push({name: getFileNameByUrl(this.updateArticle.coverImg), url: this.updateArticle.coverImg});
+      if (this.updateArticle.coverImg) {
+        this.fileList.push({name: getFileNameByUrl(this.updateArticle.coverImg), url: this.updateArticle.coverImg});
+      }
       this.contentEditor.setValue(this.updateArticle.text);
     },
     save(form, articleStatus) {
@@ -169,6 +171,10 @@ export default {
       });
     },
     saveEmptyArticle(that, callBack) {
+      that.articleInfo.coverImg = that.fileList[0] ? that.fileList[0].name : '';
+      that.articleInfo.status = 0;
+      that.articleInfo.digest = that.genArticleDigest(that.contentEditor.getHTML(), 100);
+      that.articleInfo.text = that.contentEditor.getValue();
       that.$api.article.saveEmptyArticle(that.articleInfo).then(res => {
         that.articleInfo.id = res.data.id;
         callBack();
@@ -213,6 +219,10 @@ export default {
       }
       if (this.articleInfo.categories.length === 0) {
         this.$message.error("请选择文章分类标签");
+        return false;
+      }
+      if (!this.articleInfo.id) {
+        this.$message.error("正在保存草稿，请稍后在试");
         return false;
       }
       return true;

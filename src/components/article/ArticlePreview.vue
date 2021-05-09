@@ -9,29 +9,30 @@
               <span class="fa fa-calendar-o"></span>
               {{ articleDTO.createDate | dateFormat }}
             </el-col>
-            <el-col :span="12" class="article-author">
+            <el-col :span="12" class="article-author" v-if="articleDTO.author">
               <el-avatar
-                :src="articleDTO.author.avatar"
-                size="small"
+                  :src="articleDTO.author.avatar"
+                  size="small"
               ></el-avatar>
               {{ articleDTO.author.username }}
             </el-col>
           </el-row>
         </el-col>
         <el-col :span="4" :offset="8">
-          <el-popconfirm v-if="articleDTO.status === 1" title="确定通过该文章吗？" @onConfirm="checkArticle">
-            <el-button type="primary" slot="reference" icon="fa fa-check-circle"
-            >通过审核
+          <el-popconfirm v-if="articleDTO.status === 0 || articleDTO.status === 1" title="确定通过该文章吗？"
+                         @confirm="checkArticle">
+            <el-button type="primary" slot="reference" icon="fa fa-check-circle">
+              {{ articleDTO.status === 0 ? '提交发布' : '通过审核' }}
             </el-button
             >
           </el-popconfirm>
         </el-col>
       </el-row>
       <el-divider></el-divider>
-      <el-image
-        class="article-coverImg"
-        :src="articleDTO.coverImg"
-        fit="scale-down"
+      <el-image v-if="articleDTO.coverImg"
+                class="article-coverImg"
+                :src="articleDTO.coverImg"
+                fit="scale-down"
       ></el-image>
       <div id="showText" ref="showText"></div>
     </div>
@@ -46,39 +47,46 @@ export default {
   name: "ArticlePreview",
   data() {
     return {
-      articleId: "",
-      articleDTO: "",
+      articleDTO: {
+        id: '',
+        title: "",
+        text: "",
+        coverImg: "",
+        status: 0,
+        author: null,
+        createDate: new Date(),
+      },
     };
   },
   mounted() {
     VditorPreview.mermaidRender(document);
-    this.articleId = this.$route.params.id;
+    this.articleDTO.id = this.$route.params.id;
     this.$api.article
-      .getArticleById(this.articleId)
-      .then((res) => {
-        this.articleDTO = res.data;
-        this.$route.meta.title = this.articleDTO.title;
-        this.renderArticle(this.articleDTO);
-      })
-      .catch((error) => {
-        this.$message.error(error);
-      });
+        .getArticleById(this.articleDTO.id)
+        .then((res) => {
+          this.articleDTO = res.data;
+          this.$route.meta.title = this.articleDTO.title;
+          this.renderArticle(this.articleDTO);
+        })
+        .catch((error) => {
+          this.$message.error(error);
+        });
   },
   methods: {
     renderArticle(article) {
       this.$nextTick(() => {
         if (article.source === 2) {
           VditorPreview.preview(this.$refs.showText, article.text);
-          VditorPreview.outlineRender(VditorPreview.md2html(article.text), this.$refs.showText)
-
         } else {
           this.$refs.showText.innerHTML = article.text;
         }
       });
     },
     checkArticle() {
-      this.$api.article.toCheckArticle(this.articleDTO.id).then(res => {
+      let toStatus = this.articleDTO.status === 0 ? 1 : 2;
+      this.$api.article.toCheckArticle(this.articleDTO.id, toStatus).then(res => {
         this.$message.success(res.msg);
+        this.$router.push({name: 'DraftBox'})
       }).catch(error => this.$message.error(res.msg));
     },
     convertHtml(markdownText) {

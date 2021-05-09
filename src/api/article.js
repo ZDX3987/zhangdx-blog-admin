@@ -19,8 +19,10 @@ export default {
   getArticleById(id) {
     return http.get('/api/article/article/' + id);
   },
-  toCheckArticle(id) {
-    return http.post('/api/article/check-article/' + id);
+  toCheckArticle(id, toStatus) {
+    let formData = new FormData();
+    formData.append("toStatus", toStatus);
+    return http.put('/api/article/check-article/' + id, formData);
   },
 
   uploadArticleFile(file, articleId) {
