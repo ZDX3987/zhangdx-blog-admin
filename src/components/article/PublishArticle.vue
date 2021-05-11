@@ -86,6 +86,6 @@ export default {
 
 <style scoped>
 .el-tabs {
-  height: 90vh;
+  min-height: 90vh;
 }
 </style>

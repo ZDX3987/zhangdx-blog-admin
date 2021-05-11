@@ -70,7 +70,7 @@ export default {
       currentPage: 1,
       total: 0,
       loading: false,
-      queryStatus: [0, 1, 2],
+      queryStatus: [1, 2],
       sort: "DESC",
       statusEnum: [
         {text: "已保存", type: ""},

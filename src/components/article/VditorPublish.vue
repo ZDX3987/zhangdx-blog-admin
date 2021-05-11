@@ -199,11 +199,9 @@ export default {
       this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
       this.articleInfo.status = articleStatus;
       this.articleInfo.digest = this.genArticleDigest(this.contentEditor.getHTML(), 100);
-      let form = new FormData();
-      form.append("file", this.fileList[0] ? this.fileList[0].raw : null);
-      form.append("articleJSON", JSON.stringify(this.articleInfo));
+      let file = this.fileList[0] ? this.fileList[0].raw : null;
       this.$api.article
-          .saveArticle(form)
+          .saveArticle(file, this.articleInfo)
           .then(
               (res) => {
                 this.$message.success(res.msg);

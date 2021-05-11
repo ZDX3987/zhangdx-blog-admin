@@ -143,7 +143,7 @@ export default {
 <style scoped>
 .category-content {
   background-color: #FFF;
-  height: 90vh;
+  min-height: 90vh;
 }
 
 .btn-group {

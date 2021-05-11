@@ -112,7 +112,9 @@ export default {
   methods: {
     setUpdateData() {
       this.articleInfo = this.updateArticle;
-      this.fileList.push({name: getFileNameByUrl(this.updateArticle.coverImg), url: this.updateArticle.coverImg});
+      if (this.updateArticle.coverImg) {
+        this.fileList.push({name: getFileNameByUrl(this.updateArticle.coverImg), url: this.updateArticle.coverImg});
+      }
       this.editor.txt.html(this.updateArticle.text);
     },
     save(form, articleStatus) {
@@ -122,11 +124,9 @@ export default {
           this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
           this.articleInfo.status = articleStatus;
           this.articleInfo.digest = this.genArticleDigest(this.editor.txt.text(), 100);
-          let form = new FormData();
-          form.append("file", this.fileList[0] ? this.fileList[0].raw : null);
-          form.append("articleJSON", JSON.stringify(this.articleInfo));
+          let file = this.fileList[0] ? this.fileList[0].raw : null;
           this.$api.article
-              .saveArticle(form)
+              .saveArticle(file, this.articleInfo)
               .then(
                   (res) => {
                     this.$message.success(res.msg);

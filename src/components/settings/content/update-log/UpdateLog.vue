@@ -13,7 +13,7 @@ export default {
 <style scoped>
 .update-log {
   background-color: #FFF;
-  height: 90vh;
+  min-height: 90vh;
 }
 .update-log-view {
   margin: 20px;
