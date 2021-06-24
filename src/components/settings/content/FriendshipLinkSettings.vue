@@ -20,7 +20,7 @@
               cancelButtonText='不用了'
               icon="el-icon-info"
               title="确定删除这个友链吗？"
-              @onConfirm="deleteLink(scope.$index, scope.row)"
+              @confirm="deleteLink(scope.$index, scope.row)"
           >
             <el-button size="mini" type="danger" slot="reference">删除
             </el-button>
