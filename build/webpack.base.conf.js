@@ -3,7 +3,6 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -81,37 +80,5 @@ module.exports = {
     child_process: 'empty'
   },
     plugins: [
-        new HtmlWebpackExternalsPlugin({
-            externals: [{
-                module: 'vue',
-                entry: 'https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.min.js',
-                global: 'Vue'
-            },
-                {
-                    module: 'vue-router',
-                    entry: 'https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.min.js',
-                    global: 'VueRouter'
-                },
-                {
-                    module: 'element-ui',
-                    entry: 'https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.1/index.min.js',
-                    global: 'ELEMENT'
-                },
-                {
-                    module: 'axios',
-                    entry: 'https://cdn.bootcdn.net/ajax/libs/axios/0.20.0/axios.min.js',
-                    global: 'axios'
-                },
-                {
-                    module: 'marked',
-                    entry: 'https://cdn.bootcdn.net/ajax/libs/marked/1.2.9/marked.min.js',
-                    global: 'marked'
-                },
-                {
-                    module: 'moment',
-                    entry: 'https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.min.js',
-                    global: 'moment'
-                }]
-        })
     ]
 }

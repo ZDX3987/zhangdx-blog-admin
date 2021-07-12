@@ -1,19 +1,16 @@
-import UpdateLogDetail from '../components/settings/content/update-log/UpdateLogDetail';
-import FriendshipLinkSettings from '../components/settings/content/FriendshipLinkSettings';
 import UpdateLogList from '../components/settings/content/update-log/UpdateLogList';
-import UpdateLog from '../components/settings/content/update-log/UpdateLog';
 
 export default [
     {
         path: '/settings/update-log',
         name: 'UpdateLog',
-        component: UpdateLog,
+        component: () => import('../components/settings/content/update-log/UpdateLog'),
         redirect: {name: 'UpdateLogList'},
         children: [
             {
                 path: 'list',
                 name: 'UpdateLogList',
-                component: UpdateLogList,
+                component: () => import('../components/settings/content/update-log/UpdateLogList'),
                 meta: {
                     title: '日志列表'
                 }
@@ -21,7 +18,7 @@ export default [
             {
                 path: 'add',
                 name: 'AddUpdateLogDetail',
-                component: UpdateLogDetail,
+                component: () => import('../components/settings/content/update-log/UpdateLogDetail'),
                 meta: {
                     title: '新增日志'
                 }
@@ -29,7 +26,7 @@ export default [
             {
                 path: 'modify',
                 name: 'ModifyUpdateLogDetail',
-                component: UpdateLogDetail,
+                component: () => import('../components/settings/content/update-log/UpdateLogDetail'),
                 meta: {
                     title: '修改日志'
                 }
@@ -42,7 +39,7 @@ export default [
     {
         path: '/settings/friend-links',
         name: 'FriendshipLinks',
-        component: FriendshipLinkSettings,
+        component: () => import('../components/settings/content/FriendshipLinkSettings'),
         meta: {
             title: '友链设置'
         }

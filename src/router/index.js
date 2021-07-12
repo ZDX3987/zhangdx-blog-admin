@@ -28,7 +28,7 @@ const router = new Router({
         {
             path: '/regist',
             name: 'Regist',
-            component: Regist,
+            component: () => import('../components/Regist'),
             meta: {
                 title: '注册'
             }
@@ -53,7 +53,7 @@ const router = new Router({
                 {
                     path: '/user-center',
                     name: 'UserCenter',
-                    component: UserCenter,
+                    component: () => import('../components/usercenter/UserCenter'),
                     meta: {
                         title: '个人中心'
                     }
@@ -64,7 +64,7 @@ const router = new Router({
                 {
                     path: '/category',
                     name: 'Category',
-                    component: Category,
+                    component: () => import('../components/category/Category'),
                     meta: {
                         title: '分类标签管理'
                     }
@@ -75,7 +75,7 @@ const router = new Router({
         {
             path: '/error',
             name: 'Error',
-            component: Error,
+            component: () => import('../components/common/Error'),
             meta: {
                 title: '页面找不到了'
             }

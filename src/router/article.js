@@ -1,13 +1,8 @@
-import ArticleList from "../components/article/ArticleList";
-import ArticlePreview from "../components/article/ArticlePreview";
-import PublishArticle from "../components/article/PublishArticle";
-import DraftBox from "../components/article/DraftBox";
-
 export default [
     {
         path: '/article/list',
         name: 'ArticleList',
-        component: ArticleList,
+        component: () => import('../components/article/ArticleList'),
         meta: {
             title: '文章列表'
         }
@@ -15,7 +10,7 @@ export default [
     {
         path: '/article/publish',
         name: 'PublishArticle',
-        component: PublishArticle,
+        component: () => import('../components/article/PublishArticle'),
         meta: {
             title: '新建文章'
         }
@@ -23,7 +18,7 @@ export default [
     {
         path: '/article/draftbox',
         name: 'DraftBox',
-        component: DraftBox,
+        component: () => import('../components/article/DraftBox'),
         meta: {
             title: '草稿箱'
         }
@@ -32,7 +27,7 @@ export default [
     {
         path: '/article/:id',
         name: 'ArticlePreview',
-        component: ArticlePreview,
+        component: () => import('../components/article/ArticlePreview'),
         meta: {
             title: '文章预览'
         }
