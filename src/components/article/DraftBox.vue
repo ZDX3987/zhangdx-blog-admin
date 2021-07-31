@@ -31,6 +31,7 @@
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="editArticle(scope.$index, scope.row)">编辑</el-button>
+            <el-button size="mini" type="primary" @click="downloadArticle(scope.$index, scope.row)">下载</el-button>
             <el-popconfirm
               icon="el-icon-info"
               title="确定删除吗？这将会删除和这篇文章相关的所有内容"
@@ -58,6 +59,8 @@
 </template>
 
 <script>
+import {downloadMdFile} from '../../util/file-util';
+
 export default {
     name: 'DraftBox',
     data() {
@@ -103,6 +106,12 @@ export default {
     },
     editArticle(index, row) {
       this.$router.push({name: 'PublishArticle', params: {operate: 'update', article: row}})
+    },
+    downloadArticle(index, row) {
+      this.$api.article.download(row.id).then(res => {
+        downloadMdFile(res, row.title + '.md');
+        this.$message.success('下载成功');
+      })
     },
     deleteArticle(index, row) {
       this.$api.article.delArticle(row.id).then(res => {

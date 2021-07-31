@@ -12,11 +12,11 @@
         </el-form>
       </div>
       <el-table
-        header-row-class-name="table-header"
-        :default-sort="{prop: 'createDate', order: 'descending'}"
-        :data="articleList"
-        v-loading="loading"
-        @row-dblclick="previewArticle"
+          header-row-class-name="table-header"
+          :default-sort="{prop: 'createDate', order: 'descending'}"
+          :data="articleList"
+          v-loading="loading"
+          @row-dblclick="previewArticle"
       >
         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
         <el-table-column prop="title" label="标题" width="300" align="center"></el-table-column>
@@ -31,10 +31,11 @@
         <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="editArticle(scope.$index, scope.row)">编辑</el-button>
+            <el-button size="mini" type="primary" @click="downloadArticle(scope.$index, scope.row)">下载</el-button>
             <el-popconfirm
-              icon="el-icon-info"
-              title="确定删除吗？这将会删除和这篇文章相关的所有内容"
-              @confirm="deleteArticle(scope.$index, scope.row)"
+                icon="el-icon-info"
+                title="确定删除吗？这将会删除和这篇文章相关的所有内容"
+                @confirm="deleteArticle(scope.$index, scope.row)"
             >
               <el-button size="mini" type="danger" slot="reference">删除</el-button>
             </el-popconfirm>
@@ -43,14 +44,14 @@
       </el-table>
       <div class="page-list">
         <el-pagination
-          @size-change="queryArticle"
-          @current-change="queryArticle"
-          :current-page="currentPage"
-          :page-sizes="[15, 30, 50]"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          background
+            @size-change="queryArticle"
+            @current-change="queryArticle"
+            :current-page="currentPage"
+            :page-sizes="[15, 30, 50]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+            background
         ></el-pagination>
       </div>
     </div>
@@ -58,6 +59,8 @@
 </template>
 
 <script>
+import {downloadMdFile} from '../../util/file-util';
+
 export default {
   name: "ArticleList",
   data() {
@@ -89,13 +92,13 @@ export default {
       let pageIndex = this.currentPage - 1;
       this.loading = true;
       this.$api.article.getArticleByPage(this.pageSize, pageIndex, this.queryStatus, this.sort).then(
-        (res) => {
-          this.articleList = res.data.elements;
-          this.total = res.data.totalCount;
-          this.loading = false;
-        },
-        (error) => {
-        }
+          (res) => {
+            this.articleList = res.data.elements;
+            this.total = res.data.totalCount;
+            this.loading = false;
+          },
+          (error) => {
+          }
       );
     },
     previewArticle(row) {
@@ -103,6 +106,12 @@ export default {
     },
     editArticle(index, row) {
       this.$router.push({name: 'PublishArticle', params: {operate: 'update', article: row}})
+    },
+    downloadArticle(index, row) {
+      this.$api.article.download(row.id).then(res => {
+        downloadMdFile(res, row.title + '.md');
+        this.$message.success('下载成功');
+      })
     },
     deleteArticle(index, row) {
       this.$api.article.delArticle(row.id).then(res => {

@@ -59,4 +59,9 @@ export default {
   saveEmptyArticle(articleInfo) {
     return http.post('/api/article/empty-article', articleInfo);
   },
+    download(articleId) {
+      return http.get('/api/article/download/' + articleId, {
+            responseType: 'blob'
+      });
+    }
 }
