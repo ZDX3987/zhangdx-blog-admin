@@ -1,25 +1,26 @@
 <template>
-  <div>
-    <div class="article-form">
-      <el-form ref="form" :model="articleInfo" :rules="articleRules" label-width="80px">
-        <el-form-item prop="title" label="文章标题">
-          <el-input v-model="articleInfo.title" class="title-input"></el-input>
-        </el-form-item>
-        <el-form-item label="文章封面">
-          <el-upload
-              action="#"
-              list-type="picture-card"
-              ref="upload"
-              :auto-upload="false"
-              :limit="1"
-              :file-list="fileList"
-              :on-change="handleChange"
-              accept="image/*,"
-          >
-            <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{file}">
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt/>
-              <span class="el-upload-list__item-actions">
+  <div class="article-form">
+    <el-row>
+      <el-col :span="22">
+        <el-form ref="form" :model="articleInfo" :rules="articleRules" label-width="80px">
+          <el-form-item prop="title" label="文章标题">
+            <el-input v-model="articleInfo.title" class="title-input"></el-input>
+          </el-form-item>
+          <el-form-item label="文章封面">
+            <el-upload
+                action="#"
+                list-type="picture-card"
+                ref="upload"
+                :auto-upload="false"
+                :limit="1"
+                :file-list="fileList"
+                :on-change="handleChange"
+                accept="image/*,"
+            >
+              <i slot="default" class="el-icon-plus"></i>
+              <div slot="file" slot-scope="{file}">
+                <img class="el-upload-list__item-thumbnail" :src="file.url" alt/>
+                <span class="el-upload-list__item-actions">
                     <span
                         class="el-upload-list__item-preview"
                         @click="handlePictureCardPreview(file)"
@@ -34,35 +35,41 @@
                       <i class="el-icon-delete"></i>
                     </span>
                   </span>
-            </div>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt/>
-          </el-dialog>
-        </el-form-item>
-        <el-form-item label="文章标签">
-          <el-tag class="article-cate-list"
-                  v-for="cate in articleInfo.categories"
-                  :key="cate.id"
-                  closable
-                  :type="cate.type"
-                  @close="spliceCate(cate)">
-            {{ cate.cateName }}
-          </el-tag>
-          <el-button type="primary" size="small" @click="openCateDialog">添加标签</el-button>
-        </el-form-item>
-      </el-form>
-      <div id="vditor"></div>
-      <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start" v-if="operate!=='update'">
-        <el-button type="primary" @click="save('form', 1)">发布</el-button>
-      </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="保存至草稿箱" placement="top-end" v-if="operate!=='update'">
-        <el-button @click="save('form', 0)">保存</el-button>
-      </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="保存本次修改" placement="top-end" v-if="operate==='update'">
-        <el-button type="primary" @click="save('form', articleInfo.status)">保存</el-button>
-      </el-tooltip>
-    </div>
+              </div>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt/>
+            </el-dialog>
+          </el-form-item>
+          <el-form-item label="文章标签">
+            <el-tag class="article-cate-list"
+                    v-for="cate in articleInfo.categories"
+                    :key="cate.id"
+                    closable
+                    :type="cate.type"
+                    @close="spliceCate(cate)">
+              {{ cate.cateName }}
+            </el-tag>
+            <el-button type="primary" size="small" @click="openCateDialog">添加标签</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <el-col :span="2">
+        <el-upload action="/" :on-change="importMD" accept="md" :auto-upload="false" :show-file-list="false">
+          <el-button type="primary" size="small">导入MarkDown</el-button>
+        </el-upload>
+      </el-col>
+    </el-row>
+    <div id="vditor"></div>
+    <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start" v-if="operate!=='update'">
+      <el-button type="primary" @click="save('form', 1)">发布</el-button>
+    </el-tooltip>
+    <el-tooltip class="item" effect="dark" content="保存至草稿箱" placement="top-end" v-if="operate!=='update'">
+      <el-button @click="save('form', 0)">保存</el-button>
+    </el-tooltip>
+    <el-tooltip class="item" effect="dark" content="保存本次修改" placement="top-end" v-if="operate==='update'">
+      <el-button type="primary" @click="save('form', articleInfo.status)">保存</el-button>
+    </el-tooltip>
   </div>
 </template>
 
@@ -125,7 +132,8 @@ export default {
           if (mdValue === '\n' || that.articleInfo.id) {
             return;
           }
-          that.saveEmptyArticle(that, () =>{});
+          that.saveEmptyArticle(that, () => {
+          });
         },
         upload: {
           url: '/api/article/article/upload',
@@ -251,6 +259,17 @@ export default {
     genArticleDigest(text, length) {
       text = getTextFromHtml(text);
       return text ? text.substring(0, length) : '';
+    },
+    importMD(file) {
+      if (!file.name.endsWith('.md')) {
+        this.$message.warning('只能导入Markdown文件')
+        return;
+      }
+      let fileReader = new FileReader();
+      fileReader.readAsText(file.raw);
+      fileReader.onload = (e) => {
+        this.contentEditor.setValue(e.target.result, true);
+      }
     }
   }
 }
