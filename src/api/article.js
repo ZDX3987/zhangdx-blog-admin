@@ -57,7 +57,7 @@ export default {
   },
 
   saveEmptyArticle(articleInfo) {
-    return http.post('/api/article/empty-article', articleInfo);
+    return http.post('/api/article/draft-article', articleInfo);
   },
     download(articleId) {
       return http.get('/api/article/download/' + articleId, {
