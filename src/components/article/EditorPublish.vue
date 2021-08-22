@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="article-form">
-      <el-form ref="form" :model="articleInfo" :rules="articleRules" label-width="80px">
+      <el-form ref="articleForm" :model="articleInfo" :rules="articleRules" label-width="80px">
         <el-form-item prop="title" label="文章标题">
           <el-input v-model="articleInfo.title" class="title-input"></el-input>
         </el-form-item>
@@ -53,14 +53,14 @@
         </el-form-item>
       </el-form>
       <div id="editor" class="my-editor"></div>
-      <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start" v-if="operate!=='update'">
-        <el-button type="primary" @click="save('form', 1)">发布</el-button>
+      <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start">
+        <el-button :disabled="!articleInfo.id" type="primary" @click="saveToAudit">发布</el-button>
       </el-tooltip>
       <el-tooltip class="item" effect="dark" content="保存至草稿箱" placement="top-end" v-if="operate!=='update'">
-        <el-button @click="save('form', 0)">保存</el-button>
+        <el-button :disabled="!articleInfo.id" @click="saveRealArticle(0)">保存</el-button>
       </el-tooltip>
       <el-tooltip class="item" effect="dark" content="保存本次修改" placement="top-end" v-if="operate==='update'">
-        <el-button type="primary" @click="save('form', articleInfo.status)">保存</el-button>
+        <el-button @click="saveRealArticle(articleInfo.status)">保存</el-button>
       </el-tooltip>
     </div>
   </div>
@@ -69,7 +69,6 @@
 <script>
 import Editor from "wangeditor";
 import {getFileNameByUrl} from "../../util/file-util";
-import {getStorageItem} from '../../util/storage-unit';
 
 export default {
   name: "EditorPublish",
@@ -117,26 +116,6 @@ export default {
       }
       this.editor.txt.html(this.updateArticle.text);
     },
-    save(form, articleStatus) {
-      this.$refs[form].validate((valid) => {
-        if (valid && this.validArticle()) {
-          this.articleInfo.text = this.editor.txt.html();
-          this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
-          this.articleInfo.status = articleStatus;
-          this.articleInfo.digest = this.genArticleDigest(this.editor.txt.text(), 100);
-          let file = this.fileList[0] ? this.fileList[0].raw : null;
-          this.$api.article
-              .saveArticle(file, this.articleInfo)
-              .then(
-                  (res) => {
-                    this.$message.success(res.msg);
-                    this.$router.push({name: 'ArticleList'});
-                  },
-                  (error) => this.$message.success(error.msg)
-              );
-        }
-      });
-    },
     validArticle() {
       if (this.editor.txt.text() === "") {
         this.$message.error("请输入文章内容");
@@ -165,7 +144,7 @@ export default {
         if (newHtml === '' || this.articleInfo.id) {
           return;
         }
-        this.saveEmptyArticle(() => {
+        this.saveDraftArticle(() => {
         });
       }
       this.editor.config.zIndex = 1;
@@ -173,7 +152,7 @@ export default {
         if (this.articleInfo.id) {
           this.handleUploadFile(resultFiles[0], insertImgFn);
         } else {
-          this.saveEmptyArticle(() => this.handleUploadFile(resultFiles[0], insertImgFn));
+          this.saveDraftArticle(() => this.handleUploadFile(resultFiles[0], insertImgFn));
         }
       }
       this.editor.config.pasteFilterStyle = false;
@@ -198,9 +177,36 @@ export default {
     dateFormat(date) {
       return this.$options.filters['dateFormat'](date, 'yyyyMMddhhmmss')
     },
-    saveEmptyArticle(callBack) {
-      this.$api.article.saveEmptyArticle(this.articleInfo).then(res => {
-        this.articleInfo.id = res.data.id;
+    saveToAudit() {
+      this.$refs['articleForm'].validate((valid) => {
+        if (valid && this.validArticle()) {
+          this.saveRealArticle(1);
+        }
+      });
+    },
+    saveRealArticle(articleStatus) {
+      this.articleInfo.text = this.editor.txt.html();
+      this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
+      this.articleInfo.status = articleStatus;
+      this.articleInfo.digest = this.genArticleDigest(this.editor.txt.text(), 100);
+      let file = this.fileList[0] ? this.fileList[0].raw : null;
+      this.$api.article
+          .updateArticle(file, this.articleInfo)
+          .then(
+              (res) => {
+                this.$message.success(res.msg);
+                this.$router.push({name: 'ArticleList'});
+              },
+              (error) => this.$message.success(error.msg)
+          );
+    },
+    saveDraftArticle(callBack) {
+      this.articleInfo.text = this.editor.txt.html();
+      this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
+      this.articleInfo.status = 0;
+      this.articleInfo.digest = this.genArticleDigest(this.editor.txt.text(), 100);
+      this.$api.article.saveDraftArticle(this.articleInfo).then(res => {
+        this.articleInfo = res.data;
         callBack();
         this.$message.success('已自动保存到草稿箱');
       }).catch(error => this.$message.error('自动保存失败'));

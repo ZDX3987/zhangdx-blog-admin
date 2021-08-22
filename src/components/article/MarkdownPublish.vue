@@ -104,7 +104,7 @@ export default {
           let form = new FormData();
           let file = this.fileList[0] ? this.fileList[0].raw : null;
           this.$api.article
-            .saveArticle(file, this.articleInfo)
+              .updateArticle(file, this.articleInfo)
             .then(
               (res) => {
                 this.$message.success(res.msg);

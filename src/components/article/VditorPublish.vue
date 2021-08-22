@@ -2,7 +2,7 @@
   <div class="article-form">
     <el-row>
       <el-col :span="22">
-        <el-form ref="form" :model="articleInfo" :rules="articleRules" label-width="80px">
+        <el-form ref="articleForm" :model="articleInfo" :rules="articleRules" label-width="80px">
           <el-form-item prop="title" label="文章标题">
             <el-input v-model="articleInfo.title" class="title-input"></el-input>
           </el-form-item>
@@ -61,14 +61,14 @@
       </el-col>
     </el-row>
     <div id="vditor"></div>
-    <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start" v-if="operate!=='update'">
-      <el-button type="primary" @click="save('form', 1)">发布</el-button>
+    <el-tooltip class="item" effect="dark" content="提交至管理员审核" placement="top-start">
+      <el-button :disabled="!articleInfo.id" type="primary" @click="saveToAudit">发布</el-button>
     </el-tooltip>
     <el-tooltip class="item" effect="dark" content="保存至草稿箱" placement="top-end" v-if="operate!=='update'">
-      <el-button @click="save('form', 0)">保存</el-button>
+      <el-button :disabled="!articleInfo.id" @click="saveRealArticle(0)">保存</el-button>
     </el-tooltip>
     <el-tooltip class="item" effect="dark" content="保存本次修改" placement="top-end" v-if="operate==='update'">
-      <el-button type="primary" @click="save('form', articleInfo.status)">保存</el-button>
+      <el-button @click="saveRealArticle(articleInfo.status)">保存</el-button>
     </el-tooltip>
   </div>
 </template>
@@ -132,8 +132,7 @@ export default {
           if (mdValue === '\n' || that.articleInfo.id) {
             return;
           }
-          that.saveEmptyArticle(that, () => {
-          });
+          that.saveDraftArticle(that, () => that.contentEditor.setValue(that.articleInfo.text, true));
         },
         upload: {
           url: '/api/article/article/upload',
@@ -141,7 +140,7 @@ export default {
             if (that.articleInfo.id) {
               that.handleCustomUploadFile(that, files)
             } else {
-              that.saveEmptyArticle(that, () => that.handleCustomUploadFile(that, files));
+              that.saveDraftArticle(that, () => that.handleCustomUploadFile(that, files));
             }
           },
           format(files, responseText) {
@@ -171,20 +170,20 @@ export default {
       }
       this.contentEditor.setValue(this.updateArticle.text);
     },
-    save(form, articleStatus) {
-      this.$refs[form].validate((valid) => {
+    saveToAudit() {
+      this.$refs['articleForm'].validate((valid) => {
         if (valid && this.validArticle()) {
-          this.saveRealArticle(articleStatus);
+          this.saveRealArticle(1);
         }
       });
     },
-    saveEmptyArticle(that, callBack) {
+    saveDraftArticle(that, callBack) {
       that.articleInfo.coverImg = that.fileList[0] ? that.fileList[0].name : '';
       that.articleInfo.status = 0;
       that.articleInfo.digest = that.genArticleDigest(that.contentEditor.getHTML(), 100);
       that.articleInfo.text = that.contentEditor.getValue();
-      that.$api.article.saveEmptyArticle(that.articleInfo).then(res => {
-        that.articleInfo.id = res.data.id;
+      that.$api.article.saveDraftArticle(that.articleInfo).then(res => {
+        that.articleInfo = res.data;
         callBack();
         that.$message.success('已自动保存到草稿箱');
       }).catch(error => that.$message.error('自动保存失败'));
@@ -207,9 +206,10 @@ export default {
       this.articleInfo.coverImg = this.fileList[0] ? this.fileList[0].name : '';
       this.articleInfo.status = articleStatus;
       this.articleInfo.digest = this.genArticleDigest(this.contentEditor.getHTML(), 100);
+      this.articleInfo.text = this.contentEditor.getValue();
       let file = this.fileList[0] ? this.fileList[0].raw : null;
       this.$api.article
-          .saveArticle(file, this.articleInfo)
+          .updateArticle(file, this.articleInfo)
           .then(
               (res) => {
                 this.$message.success(res.msg);

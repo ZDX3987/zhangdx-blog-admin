@@ -1,11 +1,11 @@
 import http from '../http/index'
 
 export default {
-  saveArticle(file, article) {
+  updateArticle(file, article) {
     let form = new FormData();
     form.append("file", file);
     form.append('articleJSON', JSON.stringify(article));
-    return http.post('/api/article/article', form, {
+    return http.put('/api/article/article', form, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -56,7 +56,7 @@ export default {
     return http.delete('/api/category/category/' + cateId);
   },
 
-  saveEmptyArticle(articleInfo) {
+  saveDraftArticle(articleInfo) {
     return http.post('/api/article/draft-article', articleInfo);
   },
     download(articleId) {
