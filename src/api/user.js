@@ -1,5 +1,7 @@
 import http from '@/http/index'
 
+let url = '/api/user'
+
 const userapi = {
     login(params) {
         return http.post('/api/login', params, {
@@ -16,13 +18,13 @@ const userapi = {
         return http.get('/api/logout');
     },
     getCurrUser() {
-        return http.get('/api/user/curruser');
+        return http.get(url + '/curruser');
     },
     updateUserInfo(userInfo) {
-        return http.post('/api/user/user', userInfo);
+        return http.post(url + '/user', userInfo);
     },
     uploadAvatar(file) {
-        return http.post('/api/user/avatar', file, {
+        return http.post(url + '/avatar', file, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -30,6 +32,13 @@ const userapi = {
     },
     checkBetaCode(params) {
         return http.get('/api/regist/beta_code', {params: params});
+    },
+
+    getNewestRegister(queryDate) {
+        let formData = {
+            queryDate: queryDate
+        };
+        return http.get(url + '/newest-register', {params: formData});
     }
 }
 export default userapi
