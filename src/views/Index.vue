@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Nav from "../layout/Nav";
-import Title from "../layout/Title";
+import Nav from "../components/layout/Nav";
+import Title from "../components/layout/Title";
 
 export default {
   name: "Index",

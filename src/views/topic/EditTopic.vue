@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import ArticleMultiSelDialog from "../dialog/ArticleMultiSelDialog";
+import ArticleMultiSelDialog from "../../components/dialog/ArticleMultiSelDialog";
 
 export default {
   name: "EditTopic",

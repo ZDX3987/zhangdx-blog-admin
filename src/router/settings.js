@@ -1,16 +1,16 @@
-import UpdateLogList from '../components/settings/content/update-log/UpdateLogList';
+import UpdateLogList from '../views/settings/UpdateLogList';
 
 export default [
     {
         path: '/settings/update-log',
         name: 'UpdateLog',
-        component: () => import('../components/settings/content/update-log/UpdateLog'),
+        component: () => import('../views/settings/UpdateLog'),
         redirect: {name: 'UpdateLogList'},
         children: [
             {
                 path: 'list',
                 name: 'UpdateLogList',
-                component: () => import('../components/settings/content/update-log/UpdateLogList'),
+                component: () => import('../views/settings/UpdateLogList'),
                 meta: {
                     title: '日志列表'
                 }
@@ -18,7 +18,7 @@ export default [
             {
                 path: 'add',
                 name: 'AddUpdateLogDetail',
-                component: () => import('../components/settings/content/update-log/UpdateLogDetail'),
+                component: () => import('../views/settings/UpdateLogDetail'),
                 meta: {
                     title: '新增日志'
                 }
@@ -26,7 +26,7 @@ export default [
             {
                 path: 'modify',
                 name: 'ModifyUpdateLogDetail',
-                component: () => import('../components/settings/content/update-log/UpdateLogDetail'),
+                component: () => import('../views/settings/UpdateLogDetail'),
                 meta: {
                     title: '修改日志'
                 }
@@ -39,7 +39,7 @@ export default [
     {
         path: '/settings/friend-links',
         name: 'FriendshipLinks',
-        component: () => import('../components/settings/content/FriendshipLinkSettings'),
+        component: () => import('../views/settings/FriendshipLinkSettings'),
         meta: {
             title: '友链设置'
         }

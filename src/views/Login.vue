@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import Bg from "./layout/Bg";
-import CopyRight from './common/CopyRight';
+import Bg from "../components/layout/Bg";
+import CopyRight from '../components/common/CopyRight';
 
 export default {
   name: "Login",

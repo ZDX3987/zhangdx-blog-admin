@@ -1,11 +1,11 @@
-import TopicList from "../components/topic/TopicList";
-import EditTopic from "../components/topic/EditTopic";
+import TopicList from "../views/topic/TopicList";
+import EditTopic from "../views/topic/EditTopic";
 
 export default [
   {
     path: 'topic',
     name: 'TopicIndex',
-    component: () => import('../components/topic/TopicIndex'),
+    component: () => import('../views/topic/TopicIndex'),
     redirect: {name: 'TopicList'},
     meta: {
       title: '专题管理'
@@ -14,7 +14,7 @@ export default [
       {
         path: 'list',
         name: 'TopicList',
-        component: () => import('../components/topic/TopicList'),
+        component: () => import('../views/topic/TopicList'),
         meta: {
           title: '专题列表'
         }
@@ -22,7 +22,7 @@ export default [
       {
         path: 'edit',
         name: 'EditTopic',
-        component: () => import('../components/topic/EditTopic'),
+        component: () => import('../views/topic/EditTopic'),
         meta: {
           title: '编辑专题'
         },

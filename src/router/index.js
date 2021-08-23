@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Category from "../components/category/Category";
-import Login from "../components/Login";
-import Index from "../components/index/Index";
-import UserCenter from "../components/usercenter/UserCenter";
-import Home from "../components/home/Home";
+import Category from "../views/category/Category";
+import Login from "../views/Login";
+import Index from "../views";
+import UserCenter from "../views/UserCenter";
+import Home from "../views/home/Home";
 import topic from "./topic";
 import article from "./article";
 import {getStorageItem} from "../util/storage-unit";
 import {Message} from 'element-ui'
-import Regist from "../components/Regist";
+import Regist from "../views/Regist";
 import settings from "./settings";
 
 Vue.use(Router)
@@ -28,7 +28,7 @@ const router = new Router({
         {
             path: '/regist',
             name: 'Regist',
-            component: () => import('../components/Regist'),
+            component: () => import('../views/Regist'),
             meta: {
                 title: '注册'
             }
@@ -53,7 +53,7 @@ const router = new Router({
                 {
                     path: '/user-center',
                     name: 'UserCenter',
-                    component: () => import('../components/usercenter/UserCenter'),
+                    component: () => import('../views/UserCenter'),
                     meta: {
                         title: '个人中心'
                     }
@@ -64,7 +64,7 @@ const router = new Router({
                 {
                     path: '/category',
                     name: 'Category',
-                    component: () => import('../components/category/Category'),
+                    component: () => import('../views/category/Category'),
                     meta: {
                         title: '分类标签管理'
                     }
@@ -75,7 +75,7 @@ const router = new Router({
         {
             path: '/error',
             name: 'Error',
-            component: () => import('../components/common/Error'),
+            component: () => import('../views/common/Error'),
             meta: {
                 title: '页面找不到了'
             }

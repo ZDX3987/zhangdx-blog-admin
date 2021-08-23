@@ -2,7 +2,7 @@ export default [
     {
         path: '/article/list',
         name: 'ArticleList',
-        component: () => import('../components/article/ArticleList'),
+        component: () => import('../views/article/ArticleList'),
         meta: {
             title: '文章列表'
         }
@@ -10,7 +10,7 @@ export default [
     {
         path: '/article/publish',
         name: 'PublishArticle',
-        component: () => import('../components/article/PublishArticle'),
+        component: () => import('../views/article/PublishArticle'),
         meta: {
             title: '新建文章'
         }
@@ -18,7 +18,7 @@ export default [
     {
         path: '/article/draftbox',
         name: 'DraftBox',
-        component: () => import('../components/article/DraftBox'),
+        component: () => import('../views/article/DraftBox'),
         meta: {
             title: '草稿箱'
         }
@@ -27,7 +27,7 @@ export default [
     {
         path: '/article/:id',
         name: 'ArticlePreview',
-        component: () => import('../components/article/ArticlePreview'),
+        component: () => import('../views/article/ArticlePreview'),
         meta: {
             title: '文章预览'
         }

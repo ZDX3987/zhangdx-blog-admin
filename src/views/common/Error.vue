@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import CopyRight from "./CopyRight";
+import CopyRight from "../../components/common/CopyRight";
 export default {
   name: "Error",
   data() {

@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { calDaysOfDate } from "../../util/date-util.js";
+import { calDaysOfDate } from "../util/date-util.js";
 export default {
   name: "UserCenter",
   data() {

@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import CategoryDialog from "../dialog/CategoryDialog";
-import EditorPublish from "./EditorPublish";
-import MarkdownPublish from "./MarkdownPublish";
-import VditorPublish from "./VditorPublish";
+import CategoryDialog from "../../components/dialog/CategoryDialog";
+import EditorPublish from "../../components/article/EditorPublish";
+import MarkdownPublish from "../../components/article/MarkdownPublish";
+import VditorPublish from "../../components/article/VditorPublish";
 
 export default {
   name: "Publish",

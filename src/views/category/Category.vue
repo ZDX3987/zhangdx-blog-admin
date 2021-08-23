@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import CategoryDialog from "../dialog/CategoryDialog";
+import CategoryDialog from "../../components/dialog/CategoryDialog";
 
 export default {
   name: 'Category',
