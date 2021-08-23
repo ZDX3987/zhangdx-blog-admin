@@ -2,14 +2,23 @@
   <el-card shadow="never">
     <div slot="header" class="clearfix">
       <span>注册用户</span>
-      <div class="data-picker">
+      <div class="date-picker">
         <el-date-picker size="mini" v-model="defaultDate" type="date" :editable="false"
-                        format="yyyy 年 MM 月 dd 日"
+                        format="yyyy 年 MM 月 dd 日" :clearable="false"
                         :picker-options="datePickerOptions" @change="changeDateQuery"></el-date-picker>
       </div>
     </div>
-
-    <span class="float-right">昨日 12</span>
+    <el-empty class="register-list-empty" v-if="registerList.length === 0" description="无新增用户"
+              :image-size="80"></el-empty>
+    <el-carousel v-else :interval="4000" type="card" height="120px" indicator-position="none">
+      <el-carousel-item v-for="register in registerList" :key="register.id">
+        <div class="register-item">
+          <img :src="register.avatar" :alt="register.username">
+          <h4>{{ register.nickname }}</h4>
+        </div>
+      </el-carousel-item>
+    </el-carousel>
+    <span class="float-right">昨日 {{ registerList.length }}</span>
   </el-card>
 </template>
 
@@ -26,7 +35,8 @@ export default {
         disabledDate: (currentDate) => {
           return currentDate > prevDate(new Date());
         }
-      }
+      },
+      registerList: []
     }
   },
   created() {
@@ -37,8 +47,8 @@ export default {
       this.query(queryDate);
     },
     query(queryDate) {
-      console.log(queryDate)
       this.$api.user.getNewestRegister(moment(queryDate).format()).then(res => {
+        this.registerList = res.data;
       });
     }
   }
@@ -46,7 +56,23 @@ export default {
 </script>
 
 <style scoped>
-.data-picker {
+.date-picker {
   float: right;
+}
+
+.register-item {
+  height: 120px;
+  text-align: center;
+}
+
+.register-item img {
+  object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.register-list-empty {
+  padding: 0;
 }
 </style>

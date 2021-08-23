@@ -131,7 +131,7 @@ const webpackConfig = merge(baseWebpackConfig, {
               },
               {
                   module: 'element-ui',
-                  entry: 'https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.1/index.min.js',
+                  entry: 'https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.5/index.min.js',
                   global: 'ELEMENT'
               },
               {

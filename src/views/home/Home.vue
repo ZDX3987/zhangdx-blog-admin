@@ -4,12 +4,16 @@
       <el-col :span="8">
         <new-user-card/>
       </el-col>
+      <el-col :offset="1" :span="15">
+        <new-article-card/>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
 import NewUserCard from '../../components/home/NewUserCard';
+import NewArticleCard from '../../components/home/NewArticleCard';
 
 export default {
   name: "Home",
@@ -17,7 +21,8 @@ export default {
     return {}
   },
   components: {
-    NewUserCard
+    NewUserCard,
+    NewArticleCard
   }
 }
 </script>
