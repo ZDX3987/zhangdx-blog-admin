@@ -14,14 +14,17 @@
 </template>
 
 <script>
+import {prevDate} from 'element-ui/src/utils/date-util';
+import moment from 'moment';
+
 export default {
   name: "NewUserCard",
   data() {
     return {
-      defaultDate: new Date().setDate(new Date().getDate() - 1),
+      defaultDate: prevDate(new Date()),
       datePickerOptions: {
         disabledDate: (currentDate) => {
-          return currentDate >= new Date(new Date().getTime() - 24 * 3600 * 1000);
+          return currentDate > prevDate(new Date());
         }
       }
     }
@@ -34,7 +37,8 @@ export default {
       this.query(queryDate);
     },
     query(queryDate) {
-      this.$api.user.getNewestRegister(queryDate).then(res => {
+      console.log(queryDate)
+      this.$api.user.getNewestRegister(moment(queryDate).format()).then(res => {
       });
     }
   }
