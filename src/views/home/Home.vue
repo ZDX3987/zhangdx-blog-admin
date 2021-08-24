@@ -1,10 +1,10 @@
 <template>
   <div class="home-content">
-    <el-row>
+    <el-row :gutter="20">
       <el-col :span="8">
         <new-user-card/>
       </el-col>
-      <el-col :offset="1" :span="15">
+      <el-col :span="16">
         <new-article-card/>
       </el-col>
     </el-row>

@@ -1,5 +1,5 @@
 <template>
-  <el-card shadow="never">
+  <el-card shadow="never" class="new-user-card">
     <div slot="header" class="clearfix">
       <span>注册用户</span>
       <div class="date-picker">
@@ -18,7 +18,10 @@
         </div>
       </el-carousel-item>
     </el-carousel>
-    <span class="float-right">昨日 {{ registerList.length }}</span>
+    <div>昨日
+      <span>{{ registerList.length }}</span>&nbsp;
+      <span v-if="registerList.length > 0" class="fa fa-long-arrow-up"></span>
+    </div>
   </el-card>
 </template>
 
@@ -56,6 +59,10 @@ export default {
 </script>
 
 <style scoped>
+.new-user-card {
+  height: 240px;
+}
+
 .date-picker {
   float: right;
 }
