@@ -4,7 +4,7 @@
       <span>文章数据</span>
     </div>
     <el-row :gutter="20">
-      <el-col v-for="item in dataGrowthList" :lg="6" :md="8" :sm="12">
+      <el-col v-for="item in dataGrowthList" :key="item.title" :lg="6" :md="8" :sm="12">
         <div class="article-data-item">
           <span class="label-text">{{ item.title }}</span>
           <div class="data-count">{{ item.growthNum }}</div>
