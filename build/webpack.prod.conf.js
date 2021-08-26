@@ -148,6 +148,11 @@ const webpackConfig = merge(baseWebpackConfig, {
                   module: 'moment',
                   entry: 'https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.min.js',
                   global: 'moment'
+              },
+              {
+                  module: 'echarts',
+                  entry: 'https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js',
+                  global: 'echarts'
               }]
       })
   ]

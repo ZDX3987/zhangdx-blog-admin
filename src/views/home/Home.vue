@@ -8,6 +8,11 @@
         <new-article-card :data-growth-list="dataGrowthList"/>
       </el-col>
     </el-row>
+    <el-row class="home-second-row">
+      <el-col>
+        <data-chart-card/>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -15,6 +20,7 @@
 import NewUserCard from '../../components/home/NewUserCard';
 import NewArticleCard from '../../components/home/NewArticleCard';
 import moment from 'moment';
+import DataChartCard from '../../components/home/DataChartCard';
 
 export default {
   name: "Home",
@@ -26,7 +32,8 @@ export default {
   },
   components: {
     NewUserCard,
-    NewArticleCard
+    NewArticleCard,
+    DataChartCard
   },
   created() {
     this.queryData(new Date());
@@ -52,5 +59,9 @@ export default {
 <style scoped>
 .home-content {
   height: 90vh;
+}
+
+.home-second-row {
+  margin-top: 20px;
 }
 </style>
