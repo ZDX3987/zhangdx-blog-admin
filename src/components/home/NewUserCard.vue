@@ -19,7 +19,7 @@
       </el-carousel-item>
     </el-carousel>
     <div>昨日
-      <span>{{ registerList.length }}</span>&nbsp;
+      <span :class="registerList.length ? 'compare-count-span' : ''">{{ registerList.length }}</span>&nbsp;
       <span v-if="registerList.length > 0" class="fa fa-long-arrow-up"></span>
     </div>
   </el-card>
@@ -27,7 +27,6 @@
 
 <script>
 import {prevDate} from 'element-ui/src/utils/date-util';
-import moment from 'moment';
 
 export default {
   name: "NewUserCard",
@@ -39,20 +38,14 @@ export default {
           return currentDate > prevDate(new Date());
         }
       },
-      registerList: []
     }
   },
-  created() {
-    this.query(this.defaultDate);
+  props: {
+    registerList: Array
   },
   methods: {
     changeDateQuery(queryDate) {
-      this.query(queryDate);
-    },
-    query(queryDate) {
-      this.$api.user.getNewestRegister(moment(queryDate).format()).then(res => {
-        this.registerList = res.data;
-      });
+      this.$emit('dateChange', queryDate);
     }
   }
 }

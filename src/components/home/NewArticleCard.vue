@@ -4,13 +4,13 @@
       <span>文章数据</span>
     </div>
     <el-row :gutter="20">
-      <el-col v-for="i in 4" :lg="6" :md="8" :sm="12">
+      <el-col v-for="item in dataGrowthList" :lg="6" :md="8" :sm="12">
         <div class="article-data-item">
-          <span class="label-text">测试</span>
-          <div class="data-count">12</div>
+          <span class="label-text">{{ item.title }}</span>
+          <div class="data-count">{{ item.growthNum }}</div>
           <div class="compare-count">较昨日
-            <span>4</span>&nbsp;
-            <span class="fa fa-long-arrow-up"></span>
+            <span :class="item.compareNum ? 'compare-count-span' : ''">{{ item.compareNum }}</span>&nbsp;
+            <span v-if="item.compareNum" class="fa fa-long-arrow-up"></span>
           </div>
         </div>
       </el-col>
@@ -20,7 +20,13 @@
 
 <script>
 export default {
-  name: "NewArticleCard"
+  name: "NewArticleCard",
+  data() {
+    return {}
+  },
+  props: {
+    dataGrowthList: Array
+  }
 }
 </script>
 
@@ -51,7 +57,7 @@ export default {
   line-height: 20px;
 }
 
-.compare-count span {
+.compare-count-span {
   color: #007dff;
 }
 </style>
