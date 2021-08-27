@@ -21,11 +21,11 @@
         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
         <el-table-column prop="title" label="标题" width="300" align="center"></el-table-column>
         <el-table-column prop="author.username" label="作者" width="180" align="center"></el-table-column>
-        <el-table-column sortable prop="updateDate" :formatter="dateFormat" label="发布时间" width="180"
+        <el-table-column sortable prop="updateDate" :formatter="dateFormat" label="更新时间" width="180"
                          align="center"></el-table-column>
         <el-table-column label="状态" width="100" align="center">
           <template slot-scope="scope">
-            <el-tag :type="statusEnum[scope.row.status].type">{{ statusEnum[scope.row.status].text }}</el-tag>
+            <el-tag :type="status[scope.row.status]">{{ scope.row.status }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
@@ -81,6 +81,12 @@ export default {
         {text: "已发布", type: "success"},
         {text: "已删除", type: "danger"},
       ],
+      status: {
+        "已保存": "",
+        "待审核": "warning",
+        "已发布": "success",
+        "已删除": "danger"
+      }
     };
   },
   created() {
