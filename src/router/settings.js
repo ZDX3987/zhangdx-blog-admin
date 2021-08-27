@@ -43,5 +43,13 @@ export default [
         meta: {
             title: '友链设置'
         }
+    },
+    {
+        path: '/settings/system-control',
+        name: 'SystemControl',
+        component: () => import('../views/systemcontrol/SystemControl'),
+        meta: {
+            title: '系统数据管理'
+        }
     }
 ]
