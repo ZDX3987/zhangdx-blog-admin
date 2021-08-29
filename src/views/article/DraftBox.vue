@@ -25,7 +25,7 @@
                          align="center"></el-table-column>
         <el-table-column label="状态" width="100" align="center">
           <template slot-scope="scope">
-            <el-tag :type="statusEnum[scope.row.status].type">{{ statusEnum[scope.row.status].text }}</el-tag>
+            <el-tag :type="status[scope.row.status]">{{ scope.row.status }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
@@ -73,14 +73,14 @@ export default {
       currentPage: 1,
       total: 0,
       loading: false,
-      queryStatus: [0],
+      queryStatus: [0, 1],
       sort: "DESC",
-      statusEnum: [
-        {text: "已保存", type: ""},
-        {text: "待审核", type: "warning"},
-        {text: "已发布", type: "success"},
-        {text: "已删除", type: "danger"},
-      ],
+      status: {
+        "已保存": "",
+        "待审核": "warning",
+        "已发布": "success",
+        "已删除": "danger"
+      }
     };
   },
   created() {

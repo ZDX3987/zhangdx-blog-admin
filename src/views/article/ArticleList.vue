@@ -75,12 +75,6 @@ export default {
       loading: false,
       queryStatus: [1, 2],
       sort: "DESC",
-      statusEnum: [
-        {text: "已保存", type: ""},
-        {text: "待审核", type: "warning"},
-        {text: "已发布", type: "success"},
-        {text: "已删除", type: "danger"},
-      ],
       status: {
         "已保存": "",
         "待审核": "warning",
