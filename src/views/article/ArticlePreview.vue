@@ -19,12 +19,13 @@
           </el-row>
         </el-col>
         <el-col :span="4" :offset="8">
-          <el-popconfirm v-if="articleDTO.status === 0 || articleDTO.status === 1" title="确定通过该文章吗？"
-                         @confirm="checkArticle">
+          <el-popconfirm
+              v-if="articleDTO.status === articleStatus[0].text || articleDTO.status === articleStatus[1].text"
+              title="确定通过该文章吗？"
+              @confirm="checkArticle">
             <el-button type="primary" slot="reference" icon="fa fa-check-circle">
-              {{ articleDTO.status === 0 ? '提交发布' : '通过审核' }}
-            </el-button
-            >
+              {{ articleDTO.status === articleStatus[0].text ? '提交发布' : '通过审核' }}
+            </el-button>
           </el-popconfirm>
         </el-col>
       </el-row>
@@ -41,7 +42,9 @@
 
 <script>
 import marked from "marked";
-import VditorPreview from 'vditor/dist/method.min'
+import VditorPreview from 'vditor/dist/method.min';
+
+const {ArticleStatus} = require('../../util/article-status');
 
 export default {
   name: "ArticlePreview",
@@ -57,6 +60,7 @@ export default {
         createDate: new Date(),
         updateDate: new Date(),
       },
+      articleStatus: [ArticleStatus[0], ArticleStatus[1]]
     };
   },
   mounted() {
