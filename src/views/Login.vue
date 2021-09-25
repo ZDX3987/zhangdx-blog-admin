@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="login-page">
     <Bg/>
-    <div class="login-page">
-      <el-row type="flex" justify="center">
-        <el-col :lg="8" :md="10" :sm="12" :xs="20">
+    <el-row type="flex" justify="center">
+      <el-col :xl="8" :lg="12" :md="16" :sm="18" :xs="20">
+        <div class="login-dialog">
           <h1 class="login-title">登录</h1>
           <div class="login-content">
             <el-form ref="form" :model="loginParam" :rules="rules">
@@ -39,9 +39,9 @@
               <router-link :to="{name: 'Regist'}">忘记密码</router-link>
             </el-link>
           </div>
+        </div>
         </el-col>
       </el-row>
-    </div>
     <CopyRight/>
   </div>
 </template>
@@ -114,14 +114,21 @@ export default {
   height: 100vh;
 }
 
+.login-dialog {
+  max-height: 42vh;
+  background-color: rgba(239, 241, 244, 0.2);
+  position: relative;
+  top: 25vh;
+  padding: 3% 8%;
+  border-radius: 5px;
+}
+
 .login-title {
   color: rgb(176, 183, 189);
-  margin-top: 20%;
 }
 
 .login-content {
-  padding-top: 8%;
-  margin-bottom: 20%;
+  padding-top: 6%;
 }
 
 .el-input {
@@ -129,7 +136,7 @@ export default {
 }
 
 .el-input >>> input {
-  background-color: rgb(0, 30, 66);
+  background-color: rgb(69, 61, 83);
   border: 1px solid rgb(58, 95, 119);
   height: 50px;
   color: #fff;

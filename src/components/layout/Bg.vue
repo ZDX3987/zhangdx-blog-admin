@@ -1,5 +1,6 @@
 <template>
-  <div class="hp-bg" :style="bg_img[0]"></div>
+  <!--  <div class="hp-bg" :style="bg_img[0]"></div>-->
+  <div class="hp-bg background-2"></div>
 </template>
 
 <script>
@@ -10,7 +11,7 @@ export default {
       bg_img: ["background-image: url('https://file.zhangdx.cn/login-bg.jpg');"],
       img: ['http://file.zhangdx.cn/hp-bg.jpg', '/static/images/hp-bg.jpg']
     };
-  }
+  },
 };
 </script>
 
@@ -21,6 +22,7 @@ export default {
   height: 100%;
   position: fixed;
   left: 0;
+  top: 0;
   z-index: -100;
 }
 </style>
