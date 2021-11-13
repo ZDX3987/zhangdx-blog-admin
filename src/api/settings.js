@@ -38,6 +38,10 @@ const settingsapi = {
 
     deleteUpdateLog(id) {
         return http.delete('/api/update-log/update-log/' + id);
+    },
+
+    getOnlineCount() {
+        return http.get('/api/settings/online-count-info');
     }
 }
 

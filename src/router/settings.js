@@ -45,6 +45,14 @@ export default [
         }
     },
     {
+        path: '/settings/sys-user',
+        name: 'SysUserSetting',
+        component: () => import('../views/settings/SysUserSetting'),
+        meta: {
+            title: '系统用户设置'
+        }
+    },
+    {
         path: '/settings/system-control',
         name: 'SystemControl',
         component: () => import('../views/systemcontrol/SystemControl'),

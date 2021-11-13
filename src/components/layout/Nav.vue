@@ -60,7 +60,9 @@
             </el-menu-item>
           </el-submenu>
           <el-menu-item index="5-2">个人信息设置</el-menu-item>
-          <el-menu-item index="5-3">系统用户设置</el-menu-item>
+          <el-menu-item index="5-3">
+            <router-link :to="{name: 'SysUserSetting'}">系统用户设置</router-link>
+          </el-menu-item>
           <el-menu-item index="5-4">
             <router-link :to="{name: 'SystemControl'}">系统数据管理</router-link>
           </el-menu-item>

@@ -62,6 +62,7 @@
 
 <script>
 import {removeStorageItem} from "../../util/storage-unit";
+import {closeWebSocket, initWebSocket} from '../../websocket';
 
 export default {
   name: "Title",
@@ -76,12 +77,16 @@ export default {
   },
   created() {
     this.$api.user
-      .getCurrUser()
-      .then((res) => {
-        this.userInfo = res.data;
-      })
-      .catch((error) => {
-      });
+        .getCurrUser()
+        .then((res) => {
+          this.userInfo = res.data;
+          initWebSocket(res.data.username);
+        })
+        .catch((error) => {
+        });
+  },
+  beforeDestroy() {
+    closeWebSocket();
   },
   watch: {
     $route: {
