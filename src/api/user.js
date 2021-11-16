@@ -39,6 +39,14 @@ const userapi = {
             queryDate: queryDate
         };
         return http.get(url + '/newest-register', {params: formData});
+    },
+
+    getSysUserByPage(currentPage, pageSize) {
+        let formData = {
+            currentPage,
+            pageSize
+        };
+        return http.get(url + '/sys-user-page', {params: formData});
     }
 }
 export default userapi
