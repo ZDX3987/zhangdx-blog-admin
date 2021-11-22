@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="sysUserList" style="width: 100%">
+    <el-table :data="sysUserList" style="width: 100%" stripe v-loading="loading">
       <el-table-column type="index" label="序号"></el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="nickname" label="昵称"></el-table-column>
@@ -13,18 +13,24 @@
                      :src="socialUser.avatar" :title="socialUser.source"></el-avatar>
         </template>
       </el-table-column>
-      <el-table-column
-          fixed="right"
-          label="操作"
-          width="100">
+      <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-          <el-link type="danger">禁用</el-link>
+          <el-button
+              type="primary"
+              size="mini"
+              @click="handleEdit(scope.$index, scope.row)">编辑
+          </el-button>
+          <el-button
+              size="mini"
+              :type="scope.row.status ? 'danger' : 'primary'"
+              @click="handleDelete(scope.$index, scope.row)">{{ scope.row.status ? '禁用' : '启用' }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background layout="prev, pager, next"
-                   :total="total" :current-page="currentPage">
+    <el-pagination background layout="prev, pager, next" :page-size="pageSize"
+                   :hide-on-single-page="true"
+                   :total="total" :current-page="currentPage" @current-change="query($event)">
     </el-pagination>
   </div>
 </template>
@@ -37,7 +43,8 @@ export default {
       sysUserList: [],
       total: 1,
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10,
+      loading: false
     }
   },
   created() {
@@ -45,11 +52,12 @@ export default {
   },
   methods: {
     query(currentPage) {
+      this.loading = true;
       this.$api.user.getSysUserByPage(currentPage, this.pageSize).then(res => {
         this.sysUserList = res.data.records;
         this.total = res.data.total;
       }).catch(error => {
-      });
+      }).finally(() => this.loading = false);
     },
     dateFormat(row) {
       return this.$options.filters['dateFormat'](row.createTime)
