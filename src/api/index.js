@@ -4,6 +4,7 @@ import settings from './settings'
 import topic from './topic'
 import dataCenter from './data-center'
 import systemControl from './system-control'
+import content from './content'
 
 export default {
     user,
@@ -11,5 +12,6 @@ export default {
     settings,
     topic,
     dataCenter,
-    systemControl
+    systemControl,
+    content
 }

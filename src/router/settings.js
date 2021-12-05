@@ -37,9 +37,9 @@ export default [
         }
     },
     {
-        path: '/settings/update-log',
-        name: 'ContentList',
-        component: () => import('../views/content/ContentList'),
+        path: '/content',
+        name: 'Content',
+        component: () => import('../views/content/Content'),
         redirect: {name: 'ContentList'},
         children: [
             {
@@ -52,18 +52,18 @@ export default [
             },
             {
                 path: 'add',
-                name: 'AddUpdateLogDetail',
-                component: () => import('../views/settings/UpdateLogDetail'),
+                name: 'AddContentDetail',
+                component: () => import('../views/content/ContentEdit'),
                 meta: {
                     title: '新增页面内容'
                 }
             },
             {
                 path: 'modify',
-                name: 'ModifyUpdateLogDetail',
-                component: () => import('../views/settings/UpdateLogDetail'),
+                name: 'ModifyContentDetail',
+                component: () => import('../views/content/ContentEdit'),
                 meta: {
-                    title: '修改日志'
+                    title: '修改页面内容'
                 }
             }
         ],

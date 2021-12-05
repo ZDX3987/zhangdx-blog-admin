@@ -9,31 +9,13 @@
         </el-col>
       </el-row>
       <el-table :data="updateLogList" v-loading="loading">
-        <el-table-column
-            width="50"
-            type="index">
-        </el-table-column>
-        <el-table-column
-            label="标题"
-            prop="title">
-        </el-table-column>
-        <el-table-column
-            label="最后修改时间"
-            :formatter="dateFormat"
-            prop="updateDate">
-        </el-table-column>
+        <el-table-column width="50" type="index"></el-table-column>
+        <el-table-column label="标题" prop="title"></el-table-column>
+        <el-table-column label="最后修改时间" :formatter="dateFormat" prop="updateDate"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-                size="mini"
-                type="primary"
-                @click="editUpdateLog(scope.$index, scope.row)">编辑
-            </el-button>
-            <el-popconfirm
-                icon="el-icon-info"
-                title="确定删除吗这个日志吗？"
-                @confirm="deleteUpdateLog(scope.$index, scope.row)"
-            >
+            <el-button size="mini" type="primary" @click="editUpdateLog(scope.$index, scope.row)">编辑</el-button>
+            <el-popconfirm icon="el-icon-info" title="确定删除吗这个日志吗？" @confirm="deleteUpdateLog(scope.$index, scope.row)">
               <el-button size="mini" type="danger" slot="reference">删除</el-button>
             </el-popconfirm>
           </template>
@@ -105,6 +87,7 @@ export default {
 .log-content {
 
 }
+
 .page-list {
   margin-top: 20px;
 }
