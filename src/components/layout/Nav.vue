@@ -2,12 +2,12 @@
   <el-scrollbar wrapClass="scrollbar-wrapper" class="bg-color">
     <h4 class="nav-title">{{ isCollapse ? 'Z' : title }}</h4>
     <el-menu
-      default-active="2"
-      background-color="#304156"
-      text-color="#bfcbd9"
-      active-text-color="#409eff"
-      :collapse="isCollapse"
-      class="menu-list"
+        default-active="2"
+        background-color="#304156"
+        text-color="#bfcbd9"
+        active-text-color="#409eff"
+        :collapse="isCollapse"
+        class="menu-list"
     >
       <router-link :to="{name: 'Home'}">
         <el-menu-item index="1">
@@ -46,24 +46,30 @@
       </router-link>
       <el-submenu index="5">
         <template slot="title">
+          <i class="el-icon-collection-tag"></i>
+          <span>内容设置</span>
+        </template>
+        <el-menu-item index="5-1">
+          <router-link :to="{name: 'FriendshipLinks'}">友链设置</router-link>
+        </el-menu-item>
+        <el-menu-item index="5-2">
+          <router-link :to="{name: 'ContentList'}">页面内容设置</router-link>
+        </el-menu-item>
+        <el-menu-item index="5-3">
+          <router-link :to="{name: 'UpdateLogList'}">更新日志</router-link>
+        </el-menu-item>
+      </el-submenu>
+      <el-submenu index="6">
+        <template slot="title">
           <i class="el-icon-setting"></i>
           <span>系统设置</span>
         </template>
         <el-menu-item-group>
-          <el-submenu index="5-1">
-            <template slot="title">内容设置</template>
-            <el-menu-item index="5-1-1">
-              <router-link :to="{name: 'UpdateLogList'}">更新日志</router-link>
-            </el-menu-item>
-            <el-menu-item index="5-1-2">
-              <router-link :to="{name: 'FriendshipLinks'}">友链设置</router-link>
-            </el-menu-item>
-          </el-submenu>
-          <el-menu-item index="5-2">个人信息设置</el-menu-item>
-          <el-menu-item index="5-3">
+          <el-menu-item index="6-1">个人信息设置</el-menu-item>
+          <el-menu-item index="6-2">
             <router-link :to="{name: 'SysUserSetting'}">系统用户设置</router-link>
           </el-menu-item>
-          <el-menu-item index="5-4">
+          <el-menu-item index="6-3">
             <router-link :to="{name: 'SystemControl'}">系统数据管理</router-link>
           </el-menu-item>
         </el-menu-item-group>

@@ -44,7 +44,7 @@
 import marked from "marked";
 import VditorPreview from 'vditor/dist/method.min';
 
-const {ArticleStatus} = require('../../util/article-status');
+const {StatusUtils} = require('../../util/status-utils');
 
 export default {
   name: "ArticlePreview",
@@ -60,7 +60,7 @@ export default {
         createDate: new Date(),
         updateDate: new Date(),
       },
-      articleStatus: [ArticleStatus[0], ArticleStatus[1]]
+      articleStatus: [StatusUtils[0], StatusUtils[1]]
     };
   },
   mounted() {

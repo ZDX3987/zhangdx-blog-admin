@@ -37,6 +37,41 @@ export default [
         }
     },
     {
+        path: '/settings/update-log',
+        name: 'ContentList',
+        component: () => import('../views/content/ContentList'),
+        redirect: {name: 'ContentList'},
+        children: [
+            {
+                path: 'list',
+                name: 'ContentList',
+                component: () => import('../views/content/ContentList'),
+                meta: {
+                    title: '页面内容列表'
+                }
+            },
+            {
+                path: 'add',
+                name: 'AddUpdateLogDetail',
+                component: () => import('../views/settings/UpdateLogDetail'),
+                meta: {
+                    title: '新增页面内容'
+                }
+            },
+            {
+                path: 'modify',
+                name: 'ModifyUpdateLogDetail',
+                component: () => import('../views/settings/UpdateLogDetail'),
+                meta: {
+                    title: '修改日志'
+                }
+            }
+        ],
+        meta: {
+            title: '页面内容管理'
+        }
+    },
+    {
         path: '/settings/friend-links',
         name: 'FriendshipLinks',
         component: () => import('../views/settings/FriendshipLinkSettings'),
