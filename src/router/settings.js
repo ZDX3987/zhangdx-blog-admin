@@ -94,5 +94,13 @@ export default [
         meta: {
             title: '系统数据管理'
         }
+    },
+    {
+        path: '/settings/menu',
+        name: 'Menu',
+        component: () => import('../views/menu'),
+        meta: {
+            title: '菜单管理'
+        }
     }
 ]

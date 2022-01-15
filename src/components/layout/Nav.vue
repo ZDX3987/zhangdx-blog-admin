@@ -72,6 +72,9 @@
           <el-menu-item index="6-3">
             <router-link :to="{name: 'SystemControl'}">系统数据管理</router-link>
           </el-menu-item>
+          <el-menu-item index="6-4">
+            <router-link :to="{name: 'Menu'}">菜单管理</router-link>
+          </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="6">
