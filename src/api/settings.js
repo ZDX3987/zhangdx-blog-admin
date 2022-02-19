@@ -43,11 +43,15 @@ const settingsapi = {
     getOnlineCount() {
         return http.get('/api/settings/online-count-info');
     },
-    createMenu(menuItem) {
+    saveMenu(menuItem) {
         return http.post('/api/menu', menuItem);
     },
     getMenuList() {
         return http.get('/api/menu/list');
+    },
+
+    sortMenuList(menuList) {
+        return http.put('/api/menu/sort', menuList);
     }
 }
 

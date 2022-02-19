@@ -25,7 +25,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="createMenu">确 定</el-button>
+      <el-button type="primary" @click="saveMenu">确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -58,21 +58,27 @@ export default {
     }
   },
   methods: {
-    createMenu() {
+    saveMenu() {
       this.$refs.menuItem.validate((valid) => {
         if (!valid) {
           return;
         }
-        this.menuItem.parentId = this.parentMenu.id
+        if (!this.menuItem.id) {
+          this.menuItem.parentId = this.parentMenu.id
+          this.menuItem.level = this.parentMenu.level ? this.parentMenu.level + 1 : 1;
+        }
         this.menuItem.status = this.menuActive ? 1 : 0;
-        this.menuItem.level = this.parentMenu.level ? this.parentMenu.level + 1 : 1;
-        this.$api.settings.createMenu(this.menuItem).then(res => this.$message.success(res.msg))
-            .catch(() => this.$message.error('创建失败')).finally(() => this.close());
+        this.$api.settings.saveMenu(this.menuItem).then(res => this.$message.success(res.msg))
+            .catch(() => this.$message.error('保存失败')).finally(() => {
+          this.$emit('edit-callback');
+          this.close();
+        });
       });
     },
     close() {
       this.dialogVisible = false
       this.menuItem = this.$options.data().menuItem
+      this.parentMenu = {}
     }
   }
 }
