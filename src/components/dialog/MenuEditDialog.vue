@@ -7,10 +7,10 @@
       <el-form-item label="文本" label-width="100px">
         <el-input v-model="menuItem.text" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="路由" label-width="100px" prop="router">
+      <el-form-item label="路由" label-width="100px">
         <el-input v-model="menuItem.router" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="组件" label-width="100px" prop="componentName">
+      <el-form-item label="组件" label-width="100px">
         <el-input v-model="menuItem.componentName" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="父菜单" label-width="100px">
@@ -50,9 +50,7 @@ export default {
       },
       menuActive: true,
       menuRule: {
-        name: [{required: true, message: '请输入菜单名称', trigger: 'blur'}],
-        router: [{required: true, message: '请输入菜单名称', trigger: 'blur'}],
-        componentName: [{required: true, message: '请输入菜单名称', trigger: 'blur'}],
+        name: [{required: true, message: '请输入菜单名称', trigger: 'blur'}]
       },
       parentMenu: {}
     }
