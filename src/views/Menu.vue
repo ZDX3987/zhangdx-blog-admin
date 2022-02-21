@@ -50,8 +50,11 @@ export default {
     addMenu(parentMenu) {
       if (parentMenu) {
         parentMenu = JSON.parse(JSON.stringify(parentMenu));
+        this.$refs.menuEditDialog.seqNum = parentMenu.childrenMenu.length + 1;
         parentMenu.childrenMenu = [];
         this.$refs.menuEditDialog.parentMenu = parentMenu;
+      } else {
+        this.$refs.menuEditDialog.seqNum = this.menuList.length + 1;
       }
       this.$refs.menuEditDialog.dialogVisible = true;
     },

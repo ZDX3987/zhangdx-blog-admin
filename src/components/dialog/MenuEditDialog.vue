@@ -52,7 +52,8 @@ export default {
       menuRule: {
         name: [{required: true, message: '请输入菜单名称', trigger: 'blur'}]
       },
-      parentMenu: {}
+      parentMenu: {},
+      seqNum: 1
     }
   },
   methods: {
@@ -65,7 +66,9 @@ export default {
           this.menuItem.parentId = this.parentMenu.id
           this.menuItem.level = this.parentMenu.level ? this.parentMenu.level + 1 : 1;
         }
+        this.menuItem.seqNum = this.seqNum;
         this.menuItem.status = this.menuActive ? 1 : 0;
+        console.log(this.menuItem)
         this.$api.settings.saveMenu(this.menuItem).then(res => this.$message.success(res.msg))
             .catch(() => this.$message.error('保存失败')).finally(() => {
           this.$emit('edit-callback');
