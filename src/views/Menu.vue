@@ -15,8 +15,9 @@
           <span>
           <el-link v-if="data.level < 2" type="primary" @click="addMenu(data)">添加子菜单</el-link>
           <el-link type="primary" @click="editMenu(data)">编辑</el-link>
-            <el-popconfirm :title="data.level === 1 ? '删除一级菜单将会同时删除子菜单，确认删除吗？' : '确认删除这个菜单吗？'"
-                           @confirm="deleteMenu(data)">
+            <el-popconfirm
+                :title="data.level === 1 && data.childrenMenu.length > 0 ? '删除一级菜单将会同时删除子菜单，确认删除吗？' : '确认删除这个菜单吗？'"
+                @confirm="deleteMenu(data)">
           <el-link slot="reference" type="danger">删除</el-link>
             </el-popconfirm>
         </span>
@@ -59,13 +60,15 @@ export default {
       this.$refs.menuEditDialog.dialogVisible = true;
     },
     deleteMenu(menu) {
-      if (menu.level == 1) {
-      }
+      this.$api.settings.deleteMenu(menu.id).then(res => {
+        this.getMenuList();
+        this.$message.success('删除成功');
+      }).catch(() => this.$message.error('删除失败'))
     },
     getMenuList() {
       this.$api.settings.getMenuList().then(res => {
         this.menuList = res.data;
-      }).catch(() => this.$message.error('菜单加载失败'))
+      }).catch(() => this.$message.error('加载失败'))
     },
     sortClick() {
       if (this.draggable) {

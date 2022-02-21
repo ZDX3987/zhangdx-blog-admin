@@ -52,6 +52,13 @@ const settingsapi = {
 
     sortMenuList(menuList) {
         return http.put('/api/menu/sort', menuList);
+    },
+
+    deleteMenu(delMenuId) {
+        let params = {
+            'delMenuId': delMenuId
+        }
+        return http.delete('/api/menu', {params: params});
     }
 }
 
