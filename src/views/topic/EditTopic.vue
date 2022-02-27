@@ -22,11 +22,10 @@
             <el-table-column prop="title" label="标题" width="300" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="author.username" label="作者" width="120" align="center"></el-table-column>
             <el-table-column label="标签" width="200" align="center" :show-overflow-tooltip="true">
-              <template slot-scope="scope">
-            <span v-for="(tag, index) of scope.row.categories" :key="tag.id">
-              {{ index !== 0 ? '/' : '' + tag.cateName }}
-            </span>
-                <span v-if="scope.row.categories.length === 0">/</span>
+              <template v-slot="scope">
+                                <span v-for="(tag, index) of scope.row.categories" :key="tag.id">
+                              {{ (index !== 0 ? ' / ' : '') + tag.cateName }}
+                            </span>
               </template>
             </el-table-column>
             <el-table-column prop="createDate" label="发布时间" :formatter="dateFormat" width="120" align="center">
