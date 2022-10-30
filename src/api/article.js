@@ -11,12 +11,17 @@ export default {
             }
         })
     },
-    getArticleByPage(pageSize, pageIndex, queryStatus, sort) {
+    getArticleByPage(pageSize, pageIndex, queryStatus, sort, queryDate) {
         let formData = new FormData();
         formData.append("pageSize", pageSize);
         formData.append("pageIndex", pageIndex);
         formData.append("status", queryStatus);
         formData.append("sortType", sort);
+        formData.append("queryType", 1);
+        if (queryDate) {
+            formData.append("startDate", queryDate[0] + ' 00:00:00');
+            formData.append("endDate", queryDate[1] + ' 23:59:59');
+        }
         return http.post('/api/article/articles', formData);
     },
     getArticleById(id) {

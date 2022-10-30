@@ -8,13 +8,20 @@
           </el-form-item>
           <el-form-item label="文章状态">
             <el-select v-model="queryParams.queryStatus" multiple clearable placeholder="文章状态">
-              <el-option label="已保存" value="0"></el-option>
-              <el-option label="待审核" value="1"></el-option>
-              <el-option label="已发布" value="2"></el-option>
-              <el-option label="已删除" value="3"></el-option>
+              <el-option v-for="(value, key, index) in status" :label="key" :value="value.value"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item size="small">
+          <el-form-item label="发布时间">
+            <el-date-picker
+                v-model="queryParams.queryDate"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item size="middle">
             <el-button type="primary" @click="queryArticle(1)">查询</el-button>
           </el-form-item>
         </el-form>
@@ -33,9 +40,11 @@
                          align="center"></el-table-column>
         <el-table-column label="状态" width="100" align="center">
           <template slot-scope="scope">
-            <el-tag :type="status[scope.row.status]">{{ scope.row.status }}</el-tag>
+            <el-tag :type="status[scope.row.status].color">{{ scope.row.status }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column sortable prop="publishDate" :formatter="dateFormat" label="发布时间" width="180"
+                         align="center"></el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="editArticle(scope.$index, scope.row)">编辑</el-button>
@@ -57,8 +66,8 @@
             :current-page="currentPage"
             :page-sizes="[15, 30, 50]"
             :page-size="pageSize"
+            :page-count="pageCount"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="total"
             background
         ></el-pagination>
       </div>
@@ -76,18 +85,26 @@ export default {
       articleList: [],
       queryParams: {
         authorName: "",
-        queryStatus: [0, 1, 2, 3]
+        sort: 2,
+        queryStatus: [],
+        queryDate: null
       },
-      pageSize: 15,
+      pageSize: 10,
       currentPage: 1,
-      total: 0,
+      pageCount: 0,
       loading: false,
-      sort: 2,
+
+      articleStatus: [
+        {name: "已保存", value: 0, color: ""},
+        {name: "待审核", value: 1, color: "warning"},
+        {name: "已发布", value: 2, color: "success"},
+        {name: "已删除", value: 3, color: "danger"},
+      ],
       status: {
-        "已保存": "",
-        "待审核": "warning",
-        "已发布": "success",
-        "已删除": "danger"
+        "已保存": {name: "已保存", value: 0, color: ""},
+        "待审核": {name: "待审核", value: 1, color: "warning"},
+        "已发布": {name: "已发布", value: 2, color: "success"},
+        "已删除": {name: "已删除", value: 3, color: "danger"}
       }
     };
   },
@@ -99,14 +116,17 @@ export default {
       this.currentPage = currentPage;
       let pageIndex = this.currentPage - 1;
       this.loading = true;
-      this.$api.article.getArticleByPage(this.pageSize, pageIndex, this.queryParams.queryStatus, this.sort).then(
+      let queryStatus = this.queryParams.queryStatus;
+      if (queryStatus.length === 0) {
+        queryStatus = [0, 1, 2, 3];
+      }
+      this.$api.article.getArticleByPage(this.pageSize, pageIndex, queryStatus, this.queryParams.sort, this.queryParams.queryDate).then(
           (res) => {
             this.articleList = res.data.records;
-            this.total = res.data.total;
+            this.pageCount = res.data.pages;
             this.loading = false;
           },
-          (error) => {
-          }
+          (error) => this.$message.error("文章查询失败！")
       );
     },
     previewArticle(row) {
@@ -127,8 +147,8 @@ export default {
         this.queryArticle(1);
       }).catch(error => this.$message.error(error.msg));
     },
-    dateFormat(row) {
-      return this.$options.filters['dateFormat'](row.updateDate)
+    dateFormat(row, column, cellValue) {
+      return this.$options.filters['dateFormat'](cellValue)
     }
   },
 };
