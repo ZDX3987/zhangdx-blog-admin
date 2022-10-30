@@ -6,6 +6,14 @@
           <el-form-item :model="queryParams" label="作者" size="small">
             <el-input v-model="queryParams.authorName" placeholder="请输入作者名字"></el-input>
           </el-form-item>
+          <el-form-item label="文章状态">
+            <el-select v-model="queryParams.queryStatus" multiple clearable placeholder="文章状态">
+              <el-option label="已保存" value="0"></el-option>
+              <el-option label="待审核" value="1"></el-option>
+              <el-option label="已发布" value="2"></el-option>
+              <el-option label="已删除" value="3"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item size="small">
             <el-button type="primary" @click="queryArticle(1)">查询</el-button>
           </el-form-item>
@@ -68,13 +76,13 @@ export default {
       articleList: [],
       queryParams: {
         authorName: "",
+        queryStatus: [0, 1, 2, 3]
       },
       pageSize: 15,
       currentPage: 1,
       total: 0,
       loading: false,
-      queryStatus: [1, 2],
-      sort: "DESC",
+      sort: 2,
       status: {
         "已保存": "",
         "待审核": "warning",
@@ -91,10 +99,10 @@ export default {
       this.currentPage = currentPage;
       let pageIndex = this.currentPage - 1;
       this.loading = true;
-      this.$api.article.getArticleByPage(this.pageSize, pageIndex, this.queryStatus, this.sort).then(
+      this.$api.article.getArticleByPage(this.pageSize, pageIndex, this.queryParams.queryStatus, this.sort).then(
           (res) => {
-            this.articleList = res.data.elements;
-            this.total = res.data.totalCount;
+            this.articleList = res.data.records;
+            this.total = res.data.total;
             this.loading = false;
           },
           (error) => {

@@ -1,7 +1,8 @@
 <template>
   <div>
     <el-dialog :visible.sync="articleDialogVisible">
-      <el-table size="medium" ref="articleMultiSelTable" :data="articleList" @selection-change="selectChange" @row-click="rowClick">
+      <el-table size="medium" ref="articleMultiSelTable" :data="articleList" @selection-change="selectChange"
+                @row-click="rowClick">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
         <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
         <el-table-column prop="title" :show-overflow-tooltip="true" label="标题" width="300"></el-table-column>
@@ -52,7 +53,7 @@ export default {
       total: 0,
       loading: false,
       queryStatus: [0, 1, 2],
-      sort: "DESC",
+      sort: 2,
       selectArticle: []
     }
   },
@@ -66,8 +67,8 @@ export default {
       this.loading = true;
       this.$api.article.getArticleByPage(this.pageSize, pageIndex, this.queryStatus, this.sort).then(
           (res) => {
-            this.articleList = res.data.elements;
-            this.total = res.data.totalCount;
+            this.articleList = res.data.records;
+            this.total = res.data.total;
             this.loading = false;
           });
     },
