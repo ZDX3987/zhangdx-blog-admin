@@ -98,7 +98,7 @@ export default [
     {
         path: '/settings/menu',
         name: 'Menu',
-        component: () => import('../views/menu'),
+        component: () => import('../views/Menu'),
         meta: {
             title: '菜单管理'
         }
