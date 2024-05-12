@@ -1,4 +1,4 @@
-name: Blog Client Publish
+name: Blog Admin Publish
 
 on:
   push:
