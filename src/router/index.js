@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Category from "../views/category/Category";
 import Login from "../views/Login";
-import Index from "../views";
+import Index from "../views/Index";
 import UserCenter from "../views/UserCenter";
 import Home from "../views/home/Home";
 import topic from "./topic";
