@@ -23,7 +23,7 @@ jobs:
 
       - name: Build Project
         run: npm run build ;
-          mkdir admin ;
+          mkdir client ;
           cp -r dist/* client/
 
       - name: Upload Build Artifacts
