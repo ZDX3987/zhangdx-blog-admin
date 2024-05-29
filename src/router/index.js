@@ -73,6 +73,14 @@ const router = new Router({
             ]
         },
         {
+            path: '/receive_token',
+            name: 'ReceiveToken',
+            component: () => import('../views/ReceiveToken'),
+            meta: {
+                title: '授权登录'
+            }
+        },
+        {
             path: '/error',
             name: 'Error',
             component: () => import('../views/common/Error'),
@@ -88,7 +96,7 @@ export default router;
 
 router.beforeEach((to, from, next) => {
     let token = getStorageItem("Authorization");
-    if (to.name === 'Login' || to.name === 'Regist') {
+    if (to.name === 'Login' || to.name === 'Regist' || to.name === 'ReceiveToken') {
         if (token) {
             router.push({name: 'Home'});
         } else {

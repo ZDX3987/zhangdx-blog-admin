@@ -23,11 +23,11 @@
                 ></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button
-                    :loading="login_loading"
-                    :disabled="login_loading"
-                    type="primary"
-                    @click="login('form')"
+                <el-button class="login_btn"
+                           :loading="login_loading"
+                           :disabled="login_loading"
+                           type="primary"
+                           @click="login('form')"
                 >登录
                 </el-button>
               </el-form-item>
@@ -39,9 +39,17 @@
               <router-link :to="{name: 'Regist'}">忘记密码</router-link>
             </el-link>
           </div>
+          <div class="login_social_icon">
+            <span class="login-type-item m-3" v-for="type of loginType" :key="type.type" :class="type.icon"
+                  :title="type.text"
+                  :style="{color:type.color}" @click="launchLogin(type.type)"></span>
+          </div>
+          <div>
+            <p class="agreement-info mt-3 mb-0">授权登录即表示同意获取用户信息注册本系统账号</p>
+          </div>
         </div>
-        </el-col>
-      </el-row>
+      </el-col>
+    </el-row>
     <CopyRight/>
   </div>
 </template>
@@ -78,7 +86,12 @@ export default {
           }
         ]
       },
-      login_loading: false
+      login_loading: false,
+      loginType: [
+        {type: 'QQ', icon: 'iconfont iconQQ', color: 'rgb(94,164,210)', text: 'QQ'},
+        {type: 'gitee', icon: 'iconfont iconmayun', color: 'rgb(178,53,37)', text: '码云'},
+        {type: 'GITHUB', icon: 'iconfont iconhuaban881', color: 'rgb(51,51,51)', text: 'Github'},
+      ]
     };
   },
   created() {
@@ -103,6 +116,16 @@ export default {
           this.login('form');
         }
       }
+    },
+    launchLogin(type) {
+      // 解决Safari无法打卡新窗口问题
+      let newWindow = window.open('', '_blank', "width=1000,height=600,menubar=yes,location=yes,resizable=yes,scrollbars=true,status=true");
+      this.$api.oauthApi.login(type, 'LOGIN', -1).then(res => {
+        newWindow.location = res.data;
+      }).catch(error => this.$message.error(error));
+    },
+    close() {
+      this.$store.commit('showLoginDialog', false);
     }
   }
 };
@@ -119,7 +142,7 @@ export default {
   background-color: rgba(239, 241, 244, 0.2);
   position: relative;
   top: 25vh;
-  padding: 3% 8%;
+  padding: 2rem 5rem;
   border-radius: 5px;
 }
 
@@ -129,6 +152,11 @@ export default {
 
 .login-content {
   padding-top: 6%;
+  margin-bottom: 2rem;
+}
+
+.login_btn {
+  width: 100%;
 }
 
 .el-input {
@@ -142,17 +170,22 @@ export default {
   color: #fff;
 }
 
-.el-button {
-  width: 100%;
-}
-
 .regist-link a {
   color: #fff;
   text-decoration: none;
 }
 
-.qq-btn {
+.login_social_icon {
+
+}
+
+.login-type-item {
   font-size: 30px;
-  color: #48acee;
+  margin: 0 1rem;
+}
+
+
+.agreement-info {
+  color: #8c939d;
 }
 </style>

@@ -5,6 +5,7 @@ import topic from './topic'
 import dataCenter from './data-center'
 import systemControl from './system-control'
 import content from './content'
+import oauthApi from './oauth'
 
 export default {
     user,
@@ -13,5 +14,6 @@ export default {
     topic,
     dataCenter,
     systemControl,
-    content
+    content,
+    oauthApi
 }
